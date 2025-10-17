@@ -12,7 +12,19 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
     init() {
       const urlLang = new URLSearchParams(window.location.search).get('lang');
       const storedLang = localStorage.getItem('selectedLanguage');
-      this.currentLang = urlLang || storedLang || 'en';
+      
+      // Force English as default - clear any stored Russian preference
+      if (!urlLang && (!storedLang || storedLang === 'ru')) {
+        localStorage.removeItem('selectedLanguage');
+        this.currentLang = 'en';
+      } else {
+        this.currentLang = urlLang || storedLang || 'en';
+      }
+      
+      // Ensure we always have a valid language (en, de, or ru)
+      if (!['en', 'de', 'ru'].includes(this.currentLang)) {
+        this.currentLang = 'en';
+      }
       
       console.log('LanguageManager initializing with:', this.currentLang);
       

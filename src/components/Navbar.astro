@@ -294,6 +294,15 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log('LanguageManager not available yet');
     }
   };
+
+  // Add function to reset language to English default
+  window.resetLanguage = () => {
+    localStorage.removeItem('selectedLanguage');
+    if (window.LanguageManager) {
+      window.LanguageManager.switchLanguage('en');
+      console.log('Language reset to English default');
+    }
+  };
   
   console.log("Lang toggle script loaded:", typeof window.toggleLang);
 });
