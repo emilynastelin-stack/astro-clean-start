@@ -2,7 +2,7 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import SongCard from '../components/SongCard.astro';
 
-// Get search query from URL parameters
+// Get search query from URL parameters - but this will be cleared client-side if it's a refresh
 const searchQuery = Astro.url.searchParams.get('q') || '';
 console.log('Server-side searchQuery:', searchQuery);
 ---
@@ -155,6 +155,79 @@ console.log('Server-side searchQuery:', searchQuery);
   <script>
     console.log('Script tag loaded');
     
+    // Function to normalize text for accent and umlaut handling
+    // Examples: "Dvořák" -> "dvorak", "Müller" -> "muller", "Tchaikovsky" -> "tchaikovsky"
+    function normalizeText(text) {
+      if (!text || typeof text !== 'string') return '';
+      
+      return text
+        .toLowerCase()
+        .normalize('NFD') // Decompose accented characters (é -> e + ´)
+        .replace(/[\u0300-\u036f]/g, '') // Remove accent marks (´, `, ^, ~, etc.)
+        .replace(/[æ]/g, 'ae') // Nordic æ -> ae
+        .replace(/[ø]/g, 'o')  // Nordic ø -> o
+        .replace(/[å]/g, 'a')  // Nordic å -> a  
+        .replace(/[ß]/g, 'ss') // German ß -> ss
+        .replace(/[œ]/g, 'oe') // French œ -> oe
+        .replace(/[ł]/g, 'l')  // Polish ł -> l
+        .replace(/[ñ]/g, 'n'); // Spanish ñ -> n
+    }
+    
+    // Check if this is a page refresh and clear search parameters
+    function clearSearchOnRefresh() {
+      // Check if the page was refreshed (has search params but no referrer from our domain)
+      const urlParams = new URLSearchParams(window.location.search);
+      const hasSearchParams = urlParams.has('q') || Array.from(urlParams.keys()).length > 0;
+      
+      console.log('Checking for refresh:', {
+        hasSearchParams,
+        referrer: document.referrer,
+        currentUrl: window.location.href,
+        searchParams: window.location.search
+      });
+      
+      if (hasSearchParams) {
+        const referrer = document.referrer;
+        const currentDomain = window.location.origin;
+        
+        // Multiple ways to detect refresh:
+        // 1. No referrer (direct refresh/F5)
+        // 2. Referrer is same URL (refresh)
+        // 3. Performance navigation type indicates reload
+        const isDirectRefresh = !referrer;
+        const isSamePageRefresh = referrer === window.location.href;
+        const isPerformanceRefresh = window.performance && 
+                                   window.performance.navigation && 
+                                   window.performance.navigation.type === 1;
+        
+        if (isDirectRefresh || isSamePageRefresh || isPerformanceRefresh) {
+          console.log('Page refresh detected, clearing search parameters', {
+            isDirectRefresh,
+            isSamePageRefresh,
+            isPerformanceRefresh
+          });
+          
+          // Clear URL parameters without page reload
+          const newUrl = window.location.pathname;
+          window.history.replaceState({}, document.title, newUrl);
+          
+          // Clear search input
+          const searchInput = document.querySelector('input[name="q"]');
+          if (searchInput) {
+            searchInput.value = '';
+          }
+          
+          // Clear all filter checkboxes
+          document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+            cb.checked = false;
+          });
+          
+          return true; // Indicates search was cleared
+        }
+      }
+      return false; // No clearing occurred
+    }
+    
     document.addEventListener('DOMContentLoaded', function() {
       console.log('DOM Content Loaded - Script is running!');
       
@@ -173,7 +246,8 @@ console.log('Server-side searchQuery:', searchQuery);
         return;
       }
       
-      // Script is working, no need for test content anymore
+      // Check for refresh and clear search if needed
+      const searchWasCleared = clearSearchOnRefresh();
 
       let composers = [];
       let currentPage = 1;
@@ -187,31 +261,36 @@ console.log('Server-side searchQuery:', searchQuery);
         console.log('Composers array:', composers);
         console.log('Number of composers:', composers.length);
         
-        // Check if there's a search query from URL and apply it
-        let urlQuery = searchInput ? searchInput.value.trim() : '';
-        console.log('URL search query detected:', urlQuery);
-        console.log('Search input element:', searchInput);
-        console.log('Search input value:', searchInput ? searchInput.value : 'NO INPUT ELEMENT');
-        console.log('Current URL:', window.location.href);
-        console.log('URL search params:', window.location.search);
-        
-        // Fallback: if the input value is empty, try to get it from URL params directly
-        if (!urlQuery) {
-          const urlParams = new URLSearchParams(window.location.search);
-          const queryParam = urlParams.get('q');
-          if (queryParam && searchInput) {
-            console.log('Setting search input value from URL params:', queryParam);
-            searchInput.value = queryParam;
-            urlQuery = queryParam;
+        // Check if there's a search query from URL and apply it (unless cleared by refresh)
+        if (!searchWasCleared) {
+          let urlQuery = searchInput ? searchInput.value.trim() : '';
+          console.log('URL search query detected:', urlQuery);
+          console.log('Search input element:', searchInput);
+          console.log('Search input value:', searchInput ? searchInput.value : 'NO INPUT ELEMENT');
+          console.log('Current URL:', window.location.href);
+          console.log('URL search params:', window.location.search);
+          
+          // Fallback: if the input value is empty, try to get it from URL params directly
+          if (!urlQuery) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const queryParam = urlParams.get('q');
+            if (queryParam && searchInput) {
+              console.log('Setting search input value from URL params:', queryParam);
+              searchInput.value = queryParam;
+              urlQuery = queryParam;
+            }
           }
-        }
-        
-        if (urlQuery) {
-          console.log('Applying initial search query:', urlQuery);
-          updateResults(); // This will apply the search filter
+          
+          if (urlQuery) {
+            console.log('Applying initial search query:', urlQuery);
+            updateResults(); // This will apply the search filter
+          } else {
+            console.log('No search query, showing all results');
+            renderResults(composers); // show all initially if no search query
+          }
         } else {
-          console.log('No search query, showing all results');
-          renderResults(composers); // show all initially if no search query
+          console.log('Search was cleared due to refresh, showing all results');
+          renderResults(composers); // show all results after refresh clearing
         }
       })
         .catch(err => console.error('Failed to fetch composers:', err));
@@ -337,13 +416,23 @@ console.log('Server-side searchQuery:', searchQuery);
           }
         });
 
-        // Filter by search text
-        const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+        // Filter by search text with normalization
+        const query = searchInput ? searchInput.value.trim() : '';
         console.log('Search query being applied:', query);
         if(query){
           const beforeSearch = filtered.length;
-          filtered = filtered.filter(c => c.Composer.toLowerCase().includes(query));
-          console.log(`Search filter: ${beforeSearch} -> ${filtered.length} results for query "${query}"`);
+          const normalizedQuery = normalizeText(query);
+          console.log('Normalized query:', normalizedQuery);
+          
+          filtered = filtered.filter(c => {
+            const normalizedComposer = normalizeText(c.Composer);
+            const normalizedTitle = normalizeText(c.Title || '');
+            
+            return normalizedComposer.includes(normalizedQuery) || 
+                   normalizedTitle.includes(normalizedQuery);
+          });
+          
+          console.log(`Search filter: ${beforeSearch} -> ${filtered.length} results for query "${query}" (normalized: "${normalizedQuery}")`);
         }
 
         renderResults(filtered);
