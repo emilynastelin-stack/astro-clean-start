@@ -3,25 +3,33 @@ const { composer } = Astro.props;
 ---
 
 <div class="composer-details">
-  <div class="composer-details-header">Additional Info</div>
+  <div class="composer-details-header" data-translate="composer.additionalInfo">Additional Info</div>
 
   {composer ? (
     <div class="composer-details-content">
       <h3>{composer.Composer}</h3>
       <p class="lifespan"><em>{composer.Lifespan || "—"}</em></p>
 
-      <p><b>Russian:</b> {composer["Композитор"] || "—"}</p>
+      <p><b><span data-translate="composer.russian">Russian</span>:</b> {composer["Композитор"] || "—"}</p>
       <p><b>{composer.Language}:</b> {composer.Native || "—"}</p>
 
-      <p><b>Country:</b> {composer.Country || "—"}</p>
-      <p><b>Soviet Republic:</b> {composer["Soviet republic"] || "—"}</p>
+      <p><b><span data-translate="composer.country">Country</span>:</b> 
+        <span class="country-value" data-country={composer.Country}>{composer.Country || "—"}</span>
+      </p>
+      <p><b><span data-translate="composer.republic">Soviet Republic</span>:</b> 
+        <span class="republic-value" data-republic={composer["Soviet republic"]}>{composer["Soviet republic"] || "—"}</span>
+      </p>
 
-      <p><b>Gender:</b> {composer.Gender || "—"}</p>
+      <p><b><span data-translate="composer.gender">Gender</span>:</b> 
+        {composer.Gender === "Male" ? <span data-translate="filter.male">Male</span> : 
+         composer.Gender === "Female" ? <span data-translate="filter.female">Female</span> : 
+         composer.Gender || "—"}
+      </p>
 
-      {composer.Notes && <p><b>Notes:</b> {composer.Notes}</p>}
+      {composer.Notes && <p><b><span data-translate="composer.notes">Notes</span>:</b> {composer.Notes}</p>}
     </div>
   ) : (
-    <p>Select a piece or composer to see details here.</p>
+    <p data-translate="composer.select">Select a piece or composer to see details here.</p>
   )}
 </div>
 
@@ -61,3 +69,78 @@ const { composer } = Astro.props;
   font-size: 0.95rem;
 }
 </style>
+
+<script>
+// Function to translate country and republic values dynamically
+function translateComposerValues() {
+  if (!window.LanguageManager) return;
+  
+  const currentLang = window.LanguageManager.currentLang;
+  
+  // Translate country values
+  const countryElements = document.querySelectorAll('.country-value');
+  countryElements.forEach(el => {
+    const country = el.getAttribute('data-country');
+    if (country) {
+      const countryKey = `country.${country.toLowerCase().replace(/\s+/g, '')}`;
+      const translation = window.LanguageManager.getTranslation(countryKey, currentLang);
+      if (translation && translation !== countryKey) {
+        el.textContent = translation;
+      }
+    }
+  });
+  
+  // Translate republic values
+  const republicElements = document.querySelectorAll('.republic-value');
+  republicElements.forEach(el => {
+    const republic = el.getAttribute('data-republic');
+    if (republic) {
+      // Map republic names to translation keys
+      const republicMap = {
+        'Armenian SSR': 'republic.armenian',
+        'Azerbaijan SSR': 'republic.azerbaijan',
+        'Byelorussian SSR': 'republic.byelorussian',
+        'Estonian SSR': 'republic.estonian',
+        'Georgian SSR': 'republic.georgian',
+        'Kazakh SSR': 'republic.kazakh',
+        'Kirghiz SSR': 'republic.kirghiz',
+        'Latvian SSR': 'republic.latvian',
+        'Lithuanian SSR': 'republic.lithuanian',
+        'Moldavian SSR': 'republic.moldavian',
+        'Russian SFSR': 'republic.russian',
+        'Tajik SSR': 'republic.tajik',
+        'Turkmen SSR': 'republic.turkmen',
+        'Ukrainian SSR': 'republic.ukrainian',
+        'Uzbek SSR': 'republic.uzbek'
+      };
+      
+      const republicKey = republicMap[republic];
+      if (republicKey) {
+        const translation = window.LanguageManager.getTranslation(republicKey, currentLang);
+        if (translation && translation !== republicKey) {
+          el.textContent = translation;
+        }
+      }
+    }
+  });
+}
+
+// Initialize translations when component loads
+document.addEventListener('DOMContentLoaded', () => {
+  // Try immediately if LanguageManager is ready
+  if (window.LanguageManager) {
+    translateComposerValues();
+  } else {
+    // Wait for LanguageManager to load
+    const checkLanguageManager = setInterval(() => {
+      if (window.LanguageManager) {
+        translateComposerValues();
+        clearInterval(checkLanguageManager);
+      }
+    }, 100);
+  }
+});
+
+// Re-translate when language changes
+document.addEventListener('languageChanged', translateComposerValues);
+</script>

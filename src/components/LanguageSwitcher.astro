@@ -116,6 +116,9 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
       // Update document language attribute
       document.documentElement.lang = lang === 'en' ? 'en' : lang === 'de' ? 'de' : 'ru';
       console.log('Set document language to:', document.documentElement.lang);
+      
+      // Dispatch language change event for other components
+      document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
     },
     
     // Get translation for a key
@@ -181,6 +184,13 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
           'republic.turkmen': 'Turkmen SSR',
           'republic.ukrainian': 'Ukrainian SSR',
           'republic.uzbek': 'Uzbek SSR',
+          'composer.additionalInfo': 'Additional Info',
+          'composer.russian': 'Russian',
+          'composer.country': 'Country',
+          'composer.republic': 'Soviet Republic', 
+          'composer.gender': 'Gender',
+          'composer.notes': 'Notes',
+          'composer.select': 'Select a piece or composer to see details here.',
           'results.title': 'Results',
           'results.noResults': 'No music found for selected filters.',
           'results.helpExpand': 'You can help by expanding it',
@@ -264,6 +274,13 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
           'republic.turkmen': 'Turkmenische SSR',
           'republic.ukrainian': 'Ukrainische SSR',
           'republic.uzbek': 'Usbekische SSR',
+          'composer.additionalInfo': 'Zusätzliche Informationen',
+          'composer.russian': 'Russisch',
+          'composer.country': 'Land',
+          'composer.republic': 'Sowjetrepublik',
+          'composer.gender': 'Geschlecht',
+          'composer.notes': 'Notizen',
+          'composer.select': 'Wählen Sie ein Stück oder einen Komponisten aus, um weitere Details zu sehen.',
           'results.title': 'Ergebnisse',
           'results.noResults': 'Keine Musik für die ausgewählten Filter gefunden.',
           'results.helpExpand': 'Sie können helfen, indem Sie es erweitern',
@@ -347,6 +364,13 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
           'republic.turkmen': 'Туркменская ССР',
           'republic.ukrainian': 'Украинская ССР',
           'republic.uzbek': 'Узбекская ССР',
+          'composer.additionalInfo': 'Дополнительная информация',
+          'composer.russian': 'Русский',
+          'composer.country': 'Страна',
+          'composer.republic': 'Советская республика',
+          'composer.gender': 'Пол',
+          'composer.notes': 'Примечания',
+          'composer.select': 'Выберите произведение или композитора, чтобы увидеть подробности.',
           'results.title': 'Результаты',
           'results.noResults': 'Музыка для выбранных фильтров не найдена.',
           'results.helpExpand': 'Вы можете помочь, расширив его',
