@@ -42,11 +42,11 @@ const bibliography = [
   overflow-y: auto;
 }
 
-/* Adjust viewport calculations for smaller mobile footer */
+/* Adjust viewport calculations for mobile (no footer) */
 @media (max-width: 768px) {
   .page-container {
-    min-height: calc(100vh - 240px) !important; /* Account for navbar + smaller mobile footer */
-    max-height: calc(100vh - 240px) !important;
+    min-height: calc(100vh - 120px) !important; /* Account for navbar only, no footer */
+    max-height: calc(100vh - 120px) !important;
   }
 }
 

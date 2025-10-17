@@ -231,6 +231,9 @@ console.log('Server-side searchQuery:', searchQuery);
     document.addEventListener('DOMContentLoaded', function() {
       console.log('DOM Content Loaded - Script is running!');
       
+      // Add results-page class to body for footer styling
+      document.body.classList.add('results-page');
+      
       const centerPanel = document.getElementById('results-list');
       const searchInput = document.querySelector('input[name="q"]');
       const showAllBtn = document.getElementById('show-all-btn');

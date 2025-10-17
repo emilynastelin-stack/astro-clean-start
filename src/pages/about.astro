@@ -3,14 +3,14 @@ import MainLayout from "../layouts/MainLayout.astro";
 ---
 
 <style>
-  /* Adjust viewport calculations for smaller mobile footer */
+  /* Adjust viewport calculations for mobile (no footer) */
   @media (max-width: 768px) {
     .main-content {
-      min-height: calc(100vh - 240px) !important; /* Account for navbar + smaller mobile footer */
+      min-height: calc(100vh - 120px) !important; /* Account for navbar only, no footer */
     }
     
     .main-content > div {
-      max-height: calc(100vh - 290px) !important; /* Account for navbar + smaller mobile footer + padding */
+      max-height: calc(100vh - 170px) !important; /* Account for navbar + padding, no footer */
     }
   }
 </style>

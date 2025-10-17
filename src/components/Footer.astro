@@ -57,9 +57,17 @@ footer {
   right: 15px;
 }
 
-/* Mobile adjustments */
+/* Hide footer on mobile by default */
 @media (max-width: 768px) {
   footer {
+    display: none;
+  }
+}
+
+/* Show footer on mobile only on results page */
+@media (max-width: 768px) {
+  body.results-page footer {
+    display: flex;
     flex-direction: column;
     text-align: center;
     height: 50px; /* smaller height than navbar */
@@ -68,13 +76,15 @@ footer {
     padding: 0.5rem 1rem; /* reduced padding */
   }
 
-  /* Hide desktop content on mobile */
-  .left, .center, .right {
+  /* Hide desktop content on mobile results page */
+  body.results-page .left, 
+  body.results-page .center, 
+  body.results-page .right {
     display: none;
   }
 
-  /* Show Russian title on mobile */
-  footer::before {
+  /* Show Russian title on mobile results page */
+  body.results-page footer::before {
     content: "Архив советской трубной музыки";
     color: white;
   }
