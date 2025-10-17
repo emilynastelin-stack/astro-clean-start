@@ -50,9 +50,8 @@ console.log('Server-side searchQuery:', searchQuery);
         </fieldset>
         <fieldset>
           <legend data-translate="filter.gender">Gender</legend>
-          {["Male","Female"].map(g => (
-            <label><input type="checkbox" name="Gender" value={g} /> {g}</label>
-          ))}
+          <label><input type="checkbox" name="Gender" value="Male" /> <span data-translate="filter.male">Male</span></label>
+          <label><input type="checkbox" name="Gender" value="Female" /> <span data-translate="filter.female">Female</span></label>
         </fieldset>
         <fieldset>
           <legend data-translate="filter.type">Type</legend>
@@ -127,10 +126,9 @@ console.log('Server-side searchQuery:', searchQuery);
           ))}
         </fieldset>
         <fieldset>
-          <legend>Gender</legend>
-          {["Male","Female"].map(g => (
-            <label><input type="checkbox" name="Gender" value={g} class="mobile-filter-checkbox" /> {g}</label>
-          ))}
+          <legend data-translate="filter.gender">Gender</legend>
+          <label><input type="checkbox" name="Gender" value="Male" class="mobile-filter-checkbox" /> <span data-translate="filter.male">Male</span></label>
+          <label><input type="checkbox" name="Gender" value="Female" class="mobile-filter-checkbox" /> <span data-translate="filter.female">Female</span></label>
         </fieldset>
         <fieldset>
           <legend>Type</legend>

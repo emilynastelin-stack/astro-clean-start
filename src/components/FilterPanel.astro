@@ -88,15 +88,15 @@ const { title, children } = Astro.props;
   <label><input type="checkbox" name="Type" value="Fantasy/variations" /> Fantasy/variations</label>
 
   <h3 data-translate="filter.gender">Gender</h3>
-  <label><input type="checkbox" name="Gender" value="Male" /> Male</label>
-  <label><input type="checkbox" name="Gender" value="Female" /> Female</label>
+  <label><input type="checkbox" name="Gender" value="Male" /> <span data-translate="filter.male">Male</span></label>
+  <label><input type="checkbox" name="Gender" value="Female" /> <span data-translate="filter.female">Female</span></label>
 
   <h3 data-translate="filter.instrumentation">Instrumentation</h3>
-  <label><input type="checkbox" name="Instrumentation" value="Unaccompanied" /> Unaccompanied</label>
-  <label><input type="checkbox" name="Instrumentation" value="Trumpet and piano" /> Trumpet and piano</label>
-  <label><input type="checkbox" name="Instrumentation" value="Trumpet and orchestra" /> Trumpet and orchestra</label>
-  <label><input type="checkbox" name="Instrumentation" value="Trumpet duet" /> Trumpet duet</label>
-  <label><input type="checkbox" name="Instrumentation" value="Mixed ensemble" /> Mixed ensemble</label>
+  <label><input type="checkbox" name="Instrumentation" value="Unaccompanied" /> <span data-translate="filter.unaccompanied">Unaccompanied</span></label>
+  <label><input type="checkbox" name="Instrumentation" value="Trumpet and piano" /> <span data-translate="filter.trumpetPiano">Trumpet and piano</span></label>
+  <label><input type="checkbox" name="Instrumentation" value="Trumpet and orchestra" /> <span data-translate="filter.trumpetOrchestra">Trumpet and orchestra</span></label>
+  <label><input type="checkbox" name="Instrumentation" value="Trumpet duet" /> <span data-translate="filter.trumpetDuet">Trumpet duet</span></label>
+  <label><input type="checkbox" name="Instrumentation" value="Mixed ensemble" /> <span data-translate="filter.mixedEnsemble">Mixed ensemble</span></label>
 
   {children}
 </div>
