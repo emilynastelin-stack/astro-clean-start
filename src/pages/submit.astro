@@ -98,11 +98,11 @@ import MainLayout from "../layouts/MainLayout.astro";
     padding-bottom: 0.3rem;
   }
 
-  /* Adjust viewport calculations for mobile footer */
+  /* Adjust viewport calculations for smaller mobile footer */
   @media (max-width: 768px) {
     .main-content {
-      min-height: calc(100vh - 260px) !important; /* Account for navbar + mobile footer */
-      max-height: calc(100vh - 260px) !important;
+      min-height: calc(100vh - 240px) !important; /* Account for navbar + smaller mobile footer */
+      max-height: calc(100vh - 240px) !important;
     }
     
     .form-container, .intro-section {
@@ -130,7 +130,7 @@ import MainLayout from "../layouts/MainLayout.astro";
     />
   </div>
 
-  <main style="display:flex; flex-direction:column; align-items:center; padding:2rem 1rem; margin-top:-1.5rem; min-height:calc(100vh - 200px); max-height:calc(100vh - 200px); overflow-y:auto;" class="main-content">
+  <main style="display:flex; flex-direction:column; align-items:center; padding:2rem 1rem; margin-top:-1.5rem; min-height:calc(100vh - 250px); max-height:calc(100vh - 250px); overflow-y:auto;" class="main-content">
     
     <!-- Intro / contribute section -->
     <div class="intro-section">

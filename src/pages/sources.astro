@@ -37,16 +37,16 @@ const bibliography = [
   gap: 1.5rem;
   max-width: 1000px;
   margin: 0 auto;
-  min-height: calc(100vh - 200px);
-  max-height: calc(100vh - 200px);
+  min-height: calc(100vh - 250px);
+  max-height: calc(100vh - 250px);
   overflow-y: auto;
 }
 
-/* Adjust viewport calculations for mobile footer */
+/* Adjust viewport calculations for smaller mobile footer */
 @media (max-width: 768px) {
   .page-container {
-    min-height: calc(100vh - 260px) !important; /* Account for navbar + mobile footer */
-    max-height: calc(100vh - 260px) !important;
+    min-height: calc(100vh - 240px) !important; /* Account for navbar + smaller mobile footer */
+    max-height: calc(100vh - 240px) !important;
   }
 }
 
