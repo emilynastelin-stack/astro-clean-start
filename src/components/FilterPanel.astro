@@ -24,7 +24,7 @@ const { title, children } = Astro.props;
   {title && <h2>{title}</h2>}
 
 
-  <h3>Country</h3>
+  <h3 data-translate="filter.country">Country</h3>
   <label><input type="checkbox" name="Country" value="Armenia" /> Armenia</label>
   <label><input type="checkbox" name="Country" value="Russia" /> Russia</label>
   <label><input type="checkbox" name="Country" value="Ukraine" /> Ukraine</label>
@@ -43,7 +43,7 @@ const { title, children } = Astro.props;
   <label><input type="checkbox" name="Country" value="Bulgaria" /> Bulgaria</label>
   <label><input type="checkbox" name="Country" value="Poland/Russia" /> Poland/Russia</label>
 
-  <h3>Soviet Republic</h3>
+  <h3 data-translate="filter.republic">Soviet Republic</h3>
   <label><input type="checkbox" name="SovietRepublic" value="Armenian SSR" /> Armenian SSR</label>
   <label><input type="checkbox" name="SovietRepublic" value="Azerbaijan SSR" /> Azerbaijan SSR</label>
   <label><input type="checkbox" name="SovietRepublic" value="Byelorussian SSR" /> Byelorussian SSR</label>
@@ -65,7 +65,7 @@ const { title, children } = Astro.props;
   <label><input type="checkbox" name="SovietRepublic" value="Ukrainian SSR" /> Ukrainian SSR</label>
   <label><input type="checkbox" name="SovietRepublic" value="Uzbek SSR" /> Uzbek SSR</label>
 
-  <h3>Decade</h3>
+  <h3 data-translate="filter.decade">Decade</h3>
   <label><input type="checkbox" name="Decade" value="1890s" /> 1890s</label>
   <label><input type="checkbox" name="Decade" value="1900s" /> 1900s</label>
   <label><input type="checkbox" name="Decade" value="1910s" /> 1910s</label>
@@ -78,7 +78,7 @@ const { title, children } = Astro.props;
   <label><input type="checkbox" name="Decade" value="1980s" /> 1980s</label>
   <label><input type="checkbox" name="Decade" value="1990s" /> 1990s</label>
 
-  <h3>Type of Piece</h3>
+  <h3 data-translate="filter.pieceType">Type of Piece</h3>
   <label><input type="checkbox" name="Type" value="Scherzo" /> Scherzo</label>
   <label><input type="checkbox" name="Type" value="Cornet solo" /> Cornet solo</label>
   <label><input type="checkbox" name="Type" value="Sonata/Sonatina" /> Sonata/Sonatina</label>
@@ -87,11 +87,11 @@ const { title, children } = Astro.props;
   <label><input type="checkbox" name="Type" value="Concert Piece" /> Concert Piece</label>
   <label><input type="checkbox" name="Type" value="Fantasy/variations" /> Fantasy/variations</label>
 
-  <h3>Gender</h3>
+  <h3 data-translate="filter.gender">Gender</h3>
   <label><input type="checkbox" name="Gender" value="Male" /> Male</label>
   <label><input type="checkbox" name="Gender" value="Female" /> Female</label>
 
-  <h3>Instrumentation</h3>
+  <h3 data-translate="filter.instrumentation">Instrumentation</h3>
   <label><input type="checkbox" name="Instrumentation" value="Unaccompanied" /> Unaccompanied</label>
   <label><input type="checkbox" name="Instrumentation" value="Trumpet and piano" /> Trumpet and piano</label>
   <label><input type="checkbox" name="Instrumentation" value="Trumpet and orchestra" /> Trumpet and orchestra</label>
