@@ -189,7 +189,7 @@ nav {
 
   <!-- Language toggle -->
   <div class="language-toggle" id="langToggle">
-    <button class="toggle-button" id="toggleButton">EN</button>
+    <button class="toggle-button" id="toggleButton" data-lang-toggle>EN</button>
     <div class="language-menu" id="langMenu">
       <div data-lang="EN">🇬🇧 English</div>
       <div data-lang="RU">🇷🇺 Русский</div>
@@ -269,5 +269,17 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.addEventListener('click', () => menu.classList.remove('show-menu'));
+
+  // Make toggleLang available globally for testing
+  window.toggleLang = (lang) => {
+    if (window.LanguageManager) {
+      console.log('toggleLang called with:', lang);
+      window.LanguageManager.switchLanguage(lang.toLowerCase());
+    } else {
+      console.log('LanguageManager not available yet');
+    }
+  };
+  
+  console.log("Lang toggle script loaded:", typeof window.toggleLang);
 });
 </script>
