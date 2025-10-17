@@ -58,12 +58,7 @@ console.log('Server-side searchQuery:', searchQuery);
             <label><input type="checkbox" name="Type" value={t} /> {t}</label>
           ))}
         </fieldset>
-        <fieldset>
-          <legend>Instrumentation</legend>
-          {["Unaccompanied","Trumpet and piano","Trumpet and orchestra","Trumpet duet","Mixed ensemble","Not yet specified"].map(i => (
-            <label><input type="checkbox" name="L" value={i} /> {i}</label>
-          ))}
-        </fieldset>
+
       </div>
     </div>
 
@@ -141,12 +136,7 @@ console.log('Server-side searchQuery:', searchQuery);
             <label><input type="checkbox" name="Type" value={t} class="mobile-filter-checkbox" /> {t}</label>
           ))}
         </fieldset>
-        <fieldset>
-          <legend>Instrumentation</legend>
-          {["Unaccompanied","Trumpet and piano","Trumpet and orchestra","Trumpet duet","Mixed ensemble","Not yet specified"].map(i => (
-            <label><input type="checkbox" name="L" value={i} class="mobile-filter-checkbox" /> {i}</label>
-          ))}
-        </fieldset>
+
       </div>
     </div>
   </div>
@@ -298,7 +288,7 @@ console.log('Server-side searchQuery:', searchQuery);
       })
         .catch(err => console.error('Failed to fetch composers:', err));
 
-      const filters = ['Country','Soviet Republic','Gender','Type','L'];
+      const filters = ['Country','Soviet Republic','Gender','Type'];
       const checkboxMap = {};
 
       filters.forEach(key => {
@@ -339,8 +329,6 @@ console.log('Server-side searchQuery:', searchQuery);
         console.log('Soviet Republic value:', `"${composer["Soviet Republic"]}"`);
         console.log('Gender value:', `"${composer.Gender}"`);
         console.log('Type value:', `"${composer.Type}"`);
-        console.log('Instrumentation value:', `"${composer.Instrumentation}"`);
-        console.log('Column L value:', `"${composer.L}"`);
         console.log('All field names:');
         Object.keys(composer).forEach(key => console.log(`"${key}": "${composer[key]}"`));
         
@@ -397,23 +385,7 @@ console.log('Server-side searchQuery:', searchQuery);
             console.log(`Sample data values for ${key}:`, composers.slice(0,10).map(c => `"${c[key]}"`));
             const beforeFilter = filtered.length;
             
-            // Special handling for L column (Instrumentation) with blank values
-            if(key === 'L') {
-              filtered = filtered.filter(c => {
-                const value = c[key];
-                const isEmpty = !value || value.trim() === '';
-                
-                return selected.some(selectedValue => {
-                  if(selectedValue === 'Not yet specified') {
-                    return isEmpty;
-                  } else {
-                    return value === selectedValue;
-                  }
-                });
-              });
-            } else {
-              filtered = filtered.filter(c => selected.includes(c[key]));
-            }
+            filtered = filtered.filter(c => selected.includes(c[key]));
             
             console.log(`${key} filter: ${beforeFilter} -> ${filtered.length} results`);
           }
