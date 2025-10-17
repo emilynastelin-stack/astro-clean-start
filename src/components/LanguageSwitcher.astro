@@ -3,7 +3,7 @@
 const currentLang = Astro.url.searchParams.get('lang') || 'en';
 ---
 
-<script>
+<script is:inline>
   // Language management functions
   window.LanguageManager = {
     currentLang: 'en',
@@ -14,6 +14,8 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
       const storedLang = localStorage.getItem('selectedLanguage');
       this.currentLang = urlLang || storedLang || 'en';
       
+      console.log('LanguageManager initializing with:', this.currentLang);
+      
       // Update UI based on current language
       this.applyLanguage(this.currentLang);
       
@@ -21,6 +23,9 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
       const toggleButton = document.getElementById('toggleButton');
       if (toggleButton) {
         toggleButton.textContent = this.currentLang.toUpperCase();
+        console.log('Updated toggle button to:', this.currentLang.toUpperCase());
+      } else {
+        console.log('Toggle button not found during init');
       }
       
       console.log('Language initialized:', this.currentLang);
@@ -28,6 +33,7 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
     
     // Switch to a new language
     switchLanguage(newLang) {
+      console.log('Switching language from', this.currentLang, 'to', newLang);
       this.currentLang = newLang;
       localStorage.setItem('selectedLanguage', newLang);
       
@@ -43,6 +49,9 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
       const toggleButton = document.getElementById('toggleButton');
       if (toggleButton) {
         toggleButton.textContent = newLang.toUpperCase();
+        console.log('Updated toggle button to:', newLang.toUpperCase());
+      } else {
+        console.log('Toggle button not found during switch');
       }
       
       console.log('Language switched to:', newLang);
@@ -50,36 +59,51 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
     
     // Apply language to all elements with data-lang attributes
     applyLanguage(lang) {
+      console.log('Applying language:', lang);
+      
       // Hide all language-specific elements
-      document.querySelectorAll('[data-lang]').forEach(el => {
+      const langElements = document.querySelectorAll('[data-lang]');
+      console.log('Found', langElements.length, 'elements with data-lang attribute');
+      langElements.forEach(el => {
         el.style.display = 'none';
       });
       
       // Show elements for current language
-      document.querySelectorAll(`[data-lang="${lang}"]`).forEach(el => {
+      const currentLangElements = document.querySelectorAll(`[data-lang="${lang}"]`);
+      console.log('Found', currentLangElements.length, 'elements for language', lang);
+      currentLangElements.forEach(el => {
         el.style.display = 'block';
       });
       
       // Update text content for elements with language keys
-      document.querySelectorAll('[data-translate]').forEach(el => {
+      const translateElements = document.querySelectorAll('[data-translate]');
+      console.log('Found', translateElements.length, 'elements to translate');
+      translateElements.forEach(el => {
         const key = el.getAttribute('data-translate');
         const translation = this.getTranslation(key, lang);
         if (translation) {
+          console.log('Translating', key, 'to:', translation);
           el.textContent = translation;
+        } else {
+          console.log('No translation found for key:', key);
         }
       });
       
       // Update placeholders
-      document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
+      const placeholderElements = document.querySelectorAll('[data-translate-placeholder]');
+      console.log('Found', placeholderElements.length, 'placeholder elements to translate');
+      placeholderElements.forEach(el => {
         const key = el.getAttribute('data-translate-placeholder');
         const translation = this.getTranslation(key, lang);
         if (translation) {
+          console.log('Translating placeholder', key, 'to:', translation);
           el.placeholder = translation;
         }
       });
       
       // Update document language attribute
       document.documentElement.lang = lang === 'en' ? 'en' : lang === 'de' ? 'de' : 'ru';
+      console.log('Set document language to:', document.documentElement.lang);
     },
     
     // Get translation for a key
@@ -199,8 +223,21 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
     }
   };
   
-  // Initialize when DOM is loaded
-  document.addEventListener('DOMContentLoaded', () => {
-    window.LanguageManager.init();
-  });
+  // Make LanguageManager available globally immediately
+  console.log('LanguageManager script loaded, making globally available');
+  
+  // Initialize immediately and also when DOM is loaded
+  console.log('LanguageManager script loaded');
+  
+  // Try to initialize immediately if DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('DOM loaded, initializing LanguageManager');
+      window.LanguageManager.init();
+    });
+  } else {
+    // DOM is already ready
+    console.log('DOM already ready, initializing LanguageManager immediately');
+    setTimeout(() => window.LanguageManager.init(), 100);
+  }
 </script>

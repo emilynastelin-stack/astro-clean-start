@@ -241,13 +241,24 @@ document.addEventListener('DOMContentLoaded', () => {
   menu?.querySelectorAll('div').forEach(item => {
     item.addEventListener('click', () => {
       const selectedLang = item.dataset.lang.toLowerCase();
+      console.log('Language menu item clicked:', selectedLang);
       
-      // Use LanguageManager if available
+      // Wait for LanguageManager if it's not ready yet
+      const switchLanguage = () => {
+        if (window.LanguageManager) {
+          console.log('Using LanguageManager to switch to:', selectedLang);
+          window.LanguageManager.switchLanguage(selectedLang);
+        } else {
+          console.log('LanguageManager not available, using fallback');
+          toggleButton.textContent = item.dataset.lang;
+        }
+      };
+      
+      // Try immediately, or wait a bit if LanguageManager isn't ready
       if (window.LanguageManager) {
-        window.LanguageManager.switchLanguage(selectedLang);
+        switchLanguage();
       } else {
-        // Fallback for immediate UI update
-        toggleButton.textContent = item.dataset.lang;
+        setTimeout(switchLanguage, 200);
       }
       
       menu.classList.remove('show-menu');
