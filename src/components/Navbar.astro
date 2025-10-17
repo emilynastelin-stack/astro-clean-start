@@ -122,21 +122,34 @@ nav {
   background: white;
   border: 1px solid #ccc;
   border-radius: 6px;
-  min-width: 120px;
+  min-width: 140px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   flex-direction: column;
   z-index: 1000;
   overflow: visible;
 }
+.language-menu.show-menu {
+  display: flex;
+}
 .language-menu div {
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
   cursor: pointer;
+  border-bottom: 1px solid #eee;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  transition: background-color 0.2s ease;
+}
+.language-menu div:first-child {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+.language-menu div:last-child {
+  border-bottom: none;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
 }
 .language-menu div:hover {
-  background-color: #f0f0f0;
-}
-.show-menu {
-  display: flex;
+  background-color: #f8f9fa;
 }
 
 /* Mobile styling */
@@ -238,7 +251,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Language dropdown
   toggleButton?.addEventListener('click', (e) => {
     e.stopPropagation();
+    console.log('Toggle button clicked, current menu classes:', menu.className);
     menu.classList.toggle('show-menu');
+    console.log('After toggle, menu classes:', menu.className);
   });
 
   menu?.querySelectorAll('div').forEach(item => {
