@@ -1,0 +1,206 @@
+---
+// Language switcher component for managing language state
+const currentLang = Astro.url.searchParams.get('lang') || 'en';
+---
+
+<script>
+  // Language management functions
+  window.LanguageManager = {
+    currentLang: 'en',
+    
+    // Initialize language from localStorage or URL param
+    init() {
+      const urlLang = new URLSearchParams(window.location.search).get('lang');
+      const storedLang = localStorage.getItem('selectedLanguage');
+      this.currentLang = urlLang || storedLang || 'en';
+      
+      // Update UI based on current language
+      this.applyLanguage(this.currentLang);
+      
+      // Update language toggle button
+      const toggleButton = document.getElementById('toggleButton');
+      if (toggleButton) {
+        toggleButton.textContent = this.currentLang.toUpperCase();
+      }
+      
+      console.log('Language initialized:', this.currentLang);
+    },
+    
+    // Switch to a new language
+    switchLanguage(newLang) {
+      this.currentLang = newLang;
+      localStorage.setItem('selectedLanguage', newLang);
+      
+      // Update URL without reload
+      const url = new URL(window.location);
+      url.searchParams.set('lang', newLang);
+      window.history.replaceState({}, '', url);
+      
+      // Apply the new language
+      this.applyLanguage(newLang);
+      
+      // Update toggle button
+      const toggleButton = document.getElementById('toggleButton');
+      if (toggleButton) {
+        toggleButton.textContent = newLang.toUpperCase();
+      }
+      
+      console.log('Language switched to:', newLang);
+    },
+    
+    // Apply language to all elements with data-lang attributes
+    applyLanguage(lang) {
+      // Hide all language-specific elements
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.style.display = 'none';
+      });
+      
+      // Show elements for current language
+      document.querySelectorAll(`[data-lang="${lang}"]`).forEach(el => {
+        el.style.display = 'block';
+      });
+      
+      // Update text content for elements with language keys
+      document.querySelectorAll('[data-translate]').forEach(el => {
+        const key = el.getAttribute('data-translate');
+        const translation = this.getTranslation(key, lang);
+        if (translation) {
+          el.textContent = translation;
+        }
+      });
+      
+      // Update placeholders
+      document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-translate-placeholder');
+        const translation = this.getTranslation(key, lang);
+        if (translation) {
+          el.placeholder = translation;
+        }
+      });
+      
+      // Update document language attribute
+      document.documentElement.lang = lang === 'en' ? 'en' : lang === 'de' ? 'de' : 'ru';
+    },
+    
+    // Get translation for a key
+    getTranslation(key, lang = this.currentLang) {
+      const translations = {
+        en: {
+          'search.placeholder': 'Search for a composer...',
+          'search.button': 'Search',
+          'search.showAll': 'Show All',
+          'nav.home': 'Home',
+          'nav.about': 'About', 
+          'nav.sources': 'Sources',
+          'nav.submit': 'Submit',
+          'filter.title': 'Filters',
+          'filter.country': 'Country',
+          'filter.republic': 'Soviet Republic',
+          'filter.gender': 'Gender',
+          'filter.type': 'Type',
+          'results.title': 'Results',
+          'results.noResults': 'No music found for selected filters.',
+          'results.helpExpand': 'You can help by expanding it',
+          'composer.details': 'Additional Info',
+          'composer.select': 'Select a piece or composer to see more details here.',
+          'footer.archive': 'Archive of Soviet Trumpet Music',
+          'footer.copyright': '© 2025 Archive of Soviet Trumpet Music',
+          'about.title': 'About the Archive of Soviet Trumpet Music',
+          'about.upcoming': 'Upcoming Features',
+          'about.contributions': 'Contributions',
+          'about.technical': 'Technical Information',
+          'sources.title': 'Sources & References',
+          'sources.thanks': 'Special Thanks',
+          'sources.bibliography': 'Bibliography',
+          'submit.title': 'Contribute to the Archive',
+          'submit.materials': 'Submit Materials',
+          'submit.name': 'Your Name',
+          'submit.email': 'Email Address',
+          'submit.type': 'Type of Material',
+          'submit.description': 'Description & Details',
+          'submit.file': 'Upload File (optional)',
+          'submit.button': 'Submit Contribution'
+        },
+        de: {
+          'search.placeholder': 'Nach einem Komponisten suchen...',
+          'search.button': 'Suchen',
+          'search.showAll': 'Alle anzeigen',
+          'nav.home': 'Startseite',
+          'nav.about': 'Über uns',
+          'nav.sources': 'Quellen',
+          'nav.submit': 'Beitragen',
+          'filter.title': 'Filter',
+          'filter.country': 'Land',
+          'filter.republic': 'Sowjetrepublik',
+          'filter.gender': 'Geschlecht',
+          'filter.type': 'Typ',
+          'results.title': 'Ergebnisse',
+          'results.noResults': 'Keine Musik für die ausgewählten Filter gefunden.',
+          'results.helpExpand': 'Sie können helfen, indem Sie es erweitern',
+          'composer.details': 'Zusätzliche Informationen',
+          'composer.select': 'Wählen Sie ein Stück oder einen Komponisten aus, um weitere Details zu sehen.',
+          'footer.archive': 'Archiv der sowjetischen Trompetenmusik',
+          'footer.copyright': '© 2025 Archiv der sowjetischen Trompetenmusik',
+          'about.title': 'Über das Archiv der sowjetischen Trompetenmusik',
+          'about.upcoming': 'Kommende Funktionen',
+          'about.contributions': 'Beiträge',
+          'about.technical': 'Technische Informationen',
+          'sources.title': 'Quellen & Referenzen',
+          'sources.thanks': 'Besonderer Dank',
+          'sources.bibliography': 'Bibliographie',
+          'submit.title': 'Zum Archiv beitragen',
+          'submit.materials': 'Materialien einreichen',
+          'submit.name': 'Ihr Name',
+          'submit.email': 'E-Mail-Adresse',
+          'submit.type': 'Art des Materials',
+          'submit.description': 'Beschreibung & Details',
+          'submit.file': 'Datei hochladen (optional)',
+          'submit.button': 'Beitrag einreichen'
+        },
+        ru: {
+          'search.placeholder': 'Поиск композитора...',
+          'search.button': 'Поиск',
+          'search.showAll': 'Показать все',
+          'nav.home': 'Главная',
+          'nav.about': 'О проекте',
+          'nav.sources': 'Источники', 
+          'nav.submit': 'Добавить',
+          'filter.title': 'Фильтры',
+          'filter.country': 'Страна',
+          'filter.republic': 'Советская республика',
+          'filter.gender': 'Пол',
+          'filter.type': 'Тип',
+          'results.title': 'Результаты',
+          'results.noResults': 'Музыка для выбранных фильтров не найдена.',
+          'results.helpExpand': 'Вы можете помочь, расширив его',
+          'composer.details': 'Дополнительная информация',
+          'composer.select': 'Выберите произведение или композитора, чтобы увидеть подробности.',
+          'footer.archive': 'Архив советской трубной музыки',
+          'footer.copyright': '© 2025 Архив советской трубной музыки',
+          'about.title': 'Об Архиве советской трубной музыки',
+          'about.upcoming': 'Предстоящие функции',
+          'about.contributions': 'Вклады',
+          'about.technical': 'Техническая информация',
+          'sources.title': 'Источники и ссылки',
+          'sources.thanks': 'Особая благодарность',
+          'sources.bibliography': 'Библиография',
+          'submit.title': 'Внести вклад в архив',
+          'submit.materials': 'Отправить материалы',
+          'submit.name': 'Ваше имя',
+          'submit.email': 'Адрес электронной почты',
+          'submit.type': 'Тип материала',
+          'submit.description': 'Описание и детали',
+          'submit.file': 'Загрузить файл (необязательно)',
+          'submit.button': 'Отправить вклад'
+        }
+      };
+      
+      return translations[lang] && translations[lang][key] || translations.en[key] || key;
+    }
+  };
+  
+  // Initialize when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    window.LanguageManager.init();
+  });
+</script>

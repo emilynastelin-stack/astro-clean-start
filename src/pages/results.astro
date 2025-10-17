@@ -12,14 +12,16 @@ console.log('Server-side searchQuery:', searchQuery);
   <div style="background-color: rgba(128,128,128,0.75); width:100%; box-shadow:0 2px 6px rgba(0,0,0,0.1);">
     <div style="display:flex; justify-content:center; align-items:center; height:60px; padding:0 1rem;">
       <form style="display:flex; gap:0.5rem; max-width:600px; width:100%;" action="/results" method="get">
-        <input type="text" name="q" placeholder="Search for a composer..." value={searchQuery}
+        <input type="text" name="q" data-translate-placeholder="search.placeholder" placeholder="Search for a composer..." value={searchQuery}
                style="flex:1; padding:0.5rem 1rem; border-radius:8px; border:1px solid #ccc; font-size:1rem;" />
         <button type="submit"
-                style="padding:0.5rem 1rem; border-radius:8px; border:none; background-color:#800000; color:white; font-size:1rem; cursor:pointer;">
+                style="padding:0.5rem 1rem; border-radius:8px; border:none; background-color:#800000; color:white; font-size:1rem; cursor:pointer;"
+                data-translate="search.button">
           Search
         </button>
         <a href="/results" id="show-all-btn"
-           style="padding:0.5rem 1rem; border-radius:8px; border:none; background-color:#800000; color:white; text-decoration:none; font-size:1rem; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;">
+           style="padding:0.5rem 1rem; border-radius:8px; border:none; background-color:#800000; color:white; text-decoration:none; font-size:1rem; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;"
+           data-translate="search.showAll">
           Show All
         </a>
       </form>
@@ -32,28 +34,28 @@ console.log('Server-side searchQuery:', searchQuery);
     <!-- Left Panel: Filters -->
     <div class="left-panel" style="flex:0 0 400px; display:flex;">
       <div class="filter-panel" style="flex:1;">
-        <h2>Filters</h2>
+        <h2 data-translate="filter.title">Filters</h2>
         
         <fieldset>
-          <legend>Country</legend>
+          <legend data-translate="filter.country">Country</legend>
           {["Armenia","Russia","Ukraine","Georgia","Azerbaijan","Uzbekistan","Latvia","Estonia","Lithuania","Belarus","Moldova","Kyrgyzstan","Tajikistan","Turkmenistan","Kazakhstan"].map(c => (
             <label><input type="checkbox" name="Country" value={c} /> {c}</label>
           ))}
         </fieldset>
         <fieldset>
-          <legend>Soviet Republic</legend>
+          <legend data-translate="filter.republic">Soviet Republic</legend>
           {["Armenian SSR","Azerbaijan SSR","Byelorussian SSR","Estonian SSR","Georgian SSR","Kazakh SSR","Kirghiz SSR","Latvian SSR","Lithuanian SSR","Moldavian SSR","Russian SFSR","Tajik SSR","Turkmen SSR","Ukrainian SSR","Uzbek SSR"].map(r => (
             <label><input type="checkbox" name="Soviet Republic" value={r} /> {r}</label>
           ))}
         </fieldset>
         <fieldset>
-          <legend>Gender</legend>
+          <legend data-translate="filter.gender">Gender</legend>
           {["Male","Female"].map(g => (
             <label><input type="checkbox" name="Gender" value={g} /> {g}</label>
           ))}
         </fieldset>
         <fieldset>
-          <legend>Type</legend>
+          <legend data-translate="filter.type">Type</legend>
           {["Scherzo","Cornet solo","Sonata/Sonatina","Concerto/Concertino","Poem","Concert Piece","Fantasy/variations"].map(t => (
             <label><input type="checkbox" name="Type" value={t} /> {t}</label>
           ))}
@@ -65,7 +67,7 @@ console.log('Server-side searchQuery:', searchQuery);
     <!-- Center Panel: Results -->
     <div class="center-panel" style="flex:1; margin:0 1rem; display:flex;">
       <div style="background:white; border-radius:12px; padding:1.5rem; box-shadow:0 2px 6px rgba(0,0,0,0.1); flex:1;">
-        <h3 style="margin-top:0; margin-bottom:1rem; color:#800000;">Results</h3>
+        <h3 style="margin-top:0; margin-bottom:1rem; color:#800000;" data-translate="results.title">Results</h3>
         <div id="results-list" style="display:flex; flex-direction:column; gap:1rem;">
           <p>Select filters to see composers.</p>
         </div>
@@ -75,9 +77,9 @@ console.log('Server-side searchQuery:', searchQuery);
     <!-- Right Panel: Composer Details -->
     <div class="right-panel" style="flex:0 0 400px; display:flex;">
       <div class="composer-details" style="flex:1;">
-        <div class="composer-details-header">Additional Info</div>
+        <div class="composer-details-header" data-translate="composer.details">Additional Info</div>
         <div id="composer-details-content">
-          <p>Select a piece or composer to see more details here.</p>
+          <p data-translate="composer.select">Select a piece or composer to see more details here.</p>
         </div>
       </div>
     </div>
@@ -317,7 +319,8 @@ console.log('Server-side searchQuery:', searchQuery);
         console.log('clearComposerDetails called');
         if (composerDetailsPanel) {
           console.log('Clearing composer details panel');
-          composerDetailsPanel.innerHTML = '<p>Select a piece or composer to see more details here.</p>';
+          const selectText = window.LanguageManager ? window.LanguageManager.getTranslation('composer.select') : 'Select a piece or composer to see more details here.';
+          composerDetailsPanel.innerHTML = `<p>${selectText}</p>`;
         } else {
           console.log('composerDetailsPanel not found');
         }
@@ -427,7 +430,9 @@ console.log('Server-side searchQuery:', searchQuery);
         // Slight delay to show the updating state
         setTimeout(() => {
           if(filtered.length===0){
-            centerPanel.innerHTML='<p>No music found for selected filters.</p><p><a href="/submit" style="color: #800000; text-decoration: underline; cursor: pointer;">You can help by expanding it</a></p>';
+            const noResultsText = window.LanguageManager ? window.LanguageManager.getTranslation('results.noResults') : 'No music found for selected filters.';
+            const helpText = window.LanguageManager ? window.LanguageManager.getTranslation('results.helpExpand') : 'You can help by expanding it';
+            centerPanel.innerHTML=`<p>${noResultsText}</p><p><a href="/submit" style="color: #800000; text-decoration: underline; cursor: pointer;">${helpText}</a></p>`;
           } else {
             renderPage();
           }

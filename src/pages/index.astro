@@ -67,6 +67,7 @@ import MainLayout from '../layouts/MainLayout.astro';
         <input
           type="text"
           name="q"
+          data-translate-placeholder="search.placeholder"
           placeholder="Search for a composer..."
           style="flex: 1; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem;"
           required
@@ -75,6 +76,7 @@ import MainLayout from '../layouts/MainLayout.astro';
           <button
             type="submit"
             style="padding: 0.5rem 1rem; border-radius: 8px; border: none; background-color: #800000; color: white; font-size: 1rem; cursor: pointer;"
+            data-translate="search.button"
           >
             Search
           </button>
@@ -83,6 +85,7 @@ import MainLayout from '../layouts/MainLayout.astro';
           <a
             href="/results"
             style="padding: 0.5rem 1rem; border-radius: 8px; background-color: #555; color: white; text-decoration: none; font-size: 1rem; display: inline-flex; align-items: center; justify-content: center; cursor: pointer;"
+            data-translate="search.showAll"
           >
             Show All
           </a>
