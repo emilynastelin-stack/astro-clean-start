@@ -40,6 +40,42 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
       }
       
       console.log('Language initialized:', this.currentLang);
+      
+      // Set up mutation observer to handle dynamically added content
+      this.setupMutationObserver();
+    },
+    
+    // Set up observer to translate newly added elements
+    setupMutationObserver() {
+      const observer = new MutationObserver((mutations) => {
+        let shouldRetranslate = false;
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+            // Check if any added nodes contain translatable elements
+            mutation.addedNodes.forEach((node) => {
+              if (node.nodeType === Node.ELEMENT_NODE) {
+                const hasTranslateElements = node.querySelector && (
+                  node.querySelector('[data-translate]') || 
+                  node.matches && node.matches('[data-translate]')
+                );
+                if (hasTranslateElements) {
+                  shouldRetranslate = true;
+                }
+              }
+            });
+          }
+        });
+        
+        if (shouldRetranslate) {
+          console.log('New translatable content detected, retranslating...');
+          this.applyLanguage(this.currentLang);
+        }
+      });
+      
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
     },
     
     // Switch to a new language
@@ -119,6 +155,58 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
       
       // Dispatch language change event for other components
       document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
+      
+      // Force retranslation of composer details if they exist
+      this.translateComposerDetails(lang);
+    },
+    
+    // Translate composer detail panel specifically
+    translateComposerDetails(lang) {
+      // Translate country values
+      const countryElements = document.querySelectorAll('.country-value');
+      countryElements.forEach(el => {
+        const country = el.getAttribute('data-country');
+        if (country) {
+          const countryKey = `country.${country.toLowerCase().replace(/\s+/g, '')}`;
+          const translation = this.getTranslation(countryKey, lang);
+          if (translation && translation !== countryKey) {
+            el.textContent = translation;
+          }
+        }
+      });
+      
+      // Translate republic values
+      const republicElements = document.querySelectorAll('.republic-value');
+      republicElements.forEach(el => {
+        const republic = el.getAttribute('data-republic');
+        if (republic) {
+          const republicMap = {
+            'Armenian SSR': 'republic.armenian',
+            'Azerbaijan SSR': 'republic.azerbaijan',
+            'Byelorussian SSR': 'republic.byelorussian',
+            'Estonian SSR': 'republic.estonian',
+            'Georgian SSR': 'republic.georgian',
+            'Kazakh SSR': 'republic.kazakh',
+            'Kirghiz SSR': 'republic.kirghiz',
+            'Latvian SSR': 'republic.latvian',
+            'Lithuanian SSR': 'republic.lithuanian',
+            'Moldavian SSR': 'republic.moldavian',
+            'Russian SFSR': 'republic.russian',
+            'Tajik SSR': 'republic.tajik',
+            'Turkmen SSR': 'republic.turkmen',
+            'Ukrainian SSR': 'republic.ukrainian',
+            'Uzbek SSR': 'republic.uzbek'
+          };
+          
+          const republicKey = republicMap[republic];
+          if (republicKey) {
+            const translation = this.getTranslation(republicKey, lang);
+            if (translation && translation !== republicKey) {
+              el.textContent = translation;
+            }
+          }
+        }
+      });
     },
     
     // Get translation for a key
