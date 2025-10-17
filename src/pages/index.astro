@@ -63,12 +63,13 @@ import MainLayout from '../layouts/MainLayout.astro';
       <!-- Search Panel -->
       <div class="search-panel" style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
         <!-- Search Bar Inline with Buttons -->
-        <form class="search-form" style="display: flex; gap: 0.5rem; flex-wrap: wrap;" action="/results" method="get">
+        <form class="search-form" style="display: flex; gap: 0.5rem; flex-wrap: wrap;" action="/results" method="get" onsubmit="console.log('Form submitted with query:', this.q.value);">
         <input
           type="text"
           name="q"
           placeholder="Search for a composer..."
           style="flex: 1; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem;"
+          required
         />
         <div class="search-buttons">
           <button

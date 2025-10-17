@@ -1,6 +1,10 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 import SongCard from '../components/SongCard.astro';
+
+// Get search query from URL parameters
+const searchQuery = Astro.url.searchParams.get('q') || '';
+console.log('Server-side searchQuery:', searchQuery);
 ---
 
 <MainLayout>
@@ -8,7 +12,7 @@ import SongCard from '../components/SongCard.astro';
   <div style="background-color: rgba(128,128,128,0.75); width:100%; box-shadow:0 2px 6px rgba(0,0,0,0.1);">
     <div style="display:flex; justify-content:center; align-items:center; height:60px; padding:0 1rem;">
       <form style="display:flex; gap:0.5rem; max-width:600px; width:100%;" action="/results" method="get">
-        <input type="text" name="q" placeholder="Search for a composer..."
+        <input type="text" name="q" placeholder="Search for a composer..." value={searchQuery}
                style="flex:1; padding:0.5rem 1rem; border-radius:8px; border:1px solid #ccc; font-size:1rem;" />
         <button type="submit"
                 style="padding:0.5rem 1rem; border-radius:8px; border:none; background-color:#800000; color:white; font-size:1rem; cursor:pointer;">
@@ -182,7 +186,33 @@ import SongCard from '../components/SongCard.astro';
         composers = data.rows; 
         console.log('Composers array:', composers);
         console.log('Number of composers:', composers.length);
-        renderResults(composers); // show all initially
+        
+        // Check if there's a search query from URL and apply it
+        let urlQuery = searchInput ? searchInput.value.trim() : '';
+        console.log('URL search query detected:', urlQuery);
+        console.log('Search input element:', searchInput);
+        console.log('Search input value:', searchInput ? searchInput.value : 'NO INPUT ELEMENT');
+        console.log('Current URL:', window.location.href);
+        console.log('URL search params:', window.location.search);
+        
+        // Fallback: if the input value is empty, try to get it from URL params directly
+        if (!urlQuery) {
+          const urlParams = new URLSearchParams(window.location.search);
+          const queryParam = urlParams.get('q');
+          if (queryParam && searchInput) {
+            console.log('Setting search input value from URL params:', queryParam);
+            searchInput.value = queryParam;
+            urlQuery = queryParam;
+          }
+        }
+        
+        if (urlQuery) {
+          console.log('Applying initial search query:', urlQuery);
+          updateResults(); // This will apply the search filter
+        } else {
+          console.log('No search query, showing all results');
+          renderResults(composers); // show all initially if no search query
+        }
       })
         .catch(err => console.error('Failed to fetch composers:', err));
 
@@ -191,10 +221,35 @@ import SongCard from '../components/SongCard.astro';
 
       filters.forEach(key => {
         checkboxMap[key] = document.querySelectorAll(`input[name="${key}"]`);
-        checkboxMap[key].forEach(cb => cb.addEventListener('change', updateResults));
+        console.log(`Found ${checkboxMap[key].length} checkboxes for ${key}`);
+        checkboxMap[key].forEach((cb, index) => {
+          cb.addEventListener('change', () => {
+            console.log(`Filter checkbox changed: ${key} - ${cb.value} - ${cb.checked}`);
+            
+            // Clear the search input when a filter is changed
+            if (searchInput) {
+              searchInput.value = '';
+              console.log('Search input cleared due to filter change');
+            }
+            
+            clearComposerDetails(); // Clear composer details when filter changes
+            updateResults(); // Then update the results
+          });
+        });
       });
 
       searchInput.addEventListener('input', updateResults);
+
+      // Function to clear composer details panel
+      function clearComposerDetails() {
+        console.log('clearComposerDetails called');
+        if (composerDetailsPanel) {
+          console.log('Clearing composer details panel');
+          composerDetailsPanel.innerHTML = '<p>Select a piece or composer to see more details here.</p>';
+        } else {
+          console.log('composerDetailsPanel not found');
+        }
+      }
 
       function showComposerDetails(composer) {
         console.log('UPDATED - Showing details for:', composer);
@@ -283,9 +338,12 @@ import SongCard from '../components/SongCard.astro';
         });
 
         // Filter by search text
-        const query = searchInput.value.trim().toLowerCase();
+        const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+        console.log('Search query being applied:', query);
         if(query){
+          const beforeSearch = filtered.length;
           filtered = filtered.filter(c => c.Composer.toLowerCase().includes(query));
+          console.log(`Search filter: ${beforeSearch} -> ${filtered.length} results for query "${query}"`);
         }
 
         renderResults(filtered);
@@ -305,7 +363,7 @@ import SongCard from '../components/SongCard.astro';
         // Slight delay to show the updating state
         setTimeout(() => {
           if(filtered.length===0){
-            centerPanel.innerHTML='<p>No music found for selected filters.</p><p><a href="/submission" style="color: #800000; text-decoration: underline; cursor: pointer;">You can help by expanding it</a></p>';
+            centerPanel.innerHTML='<p>No music found for selected filters.</p><p><a href="/submit" style="color: #800000; text-decoration: underline; cursor: pointer;">You can help by expanding it</a></p>';
           } else {
             renderPage();
           }
