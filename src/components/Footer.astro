@@ -57,12 +57,19 @@ footer {
   right: 15px;
 }
 
+/* Hide footer on desktop */
+@media (min-width: 769px) {
+  footer {
+    display: none;
+  }
+}
+
 /* Mobile adjustments */
 @media (max-width: 768px) {
   footer {
     flex-direction: column;
     text-align: center;
-    height: 80px; /* slightly taller */
+    height: 60px; /* slightly smaller than navbar height */
     font-size: 1.1rem; /* slightly bigger text */
     justify-content: center;
   }

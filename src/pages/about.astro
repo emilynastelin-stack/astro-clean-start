@@ -2,6 +2,19 @@
 import MainLayout from "../layouts/MainLayout.astro";
 ---
 
+<style>
+  /* Adjust viewport calculations for mobile footer */
+  @media (max-width: 768px) {
+    .main-content {
+      min-height: calc(100vh - 260px) !important; /* Account for navbar + mobile footer */
+    }
+    
+    .main-content > div {
+      max-height: calc(100vh - 310px) !important; /* Account for navbar + mobile footer + padding */
+    }
+  }
+</style>
+
 <MainLayout>
   <!-- Full-width mast image -->
   <div style="width:100vw; height:200px; overflow:hidden; position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw;">
@@ -12,7 +25,7 @@ import MainLayout from "../layouts/MainLayout.astro";
     />
   </div>
 
-  <main style="display:flex; justify-content:center; align-items:flex-start; padding:2rem 1rem; min-height:calc(100vh - 250px); overflow-y:auto;">
+  <main style="display:flex; justify-content:center; align-items:flex-start; padding:2rem 1rem; min-height:calc(100vh - 200px); overflow-y:auto;" class="main-content">
     <div
       style="
         background:white;
@@ -28,7 +41,7 @@ import MainLayout from "../layouts/MainLayout.astro";
         line-height:1.6;
         color:#333;
         font-family:'Georgia', serif;
-        max-height:calc(100vh - 300px);
+        max-height:calc(100vh - 250px);
         overflow-y:auto;
       "
     >
