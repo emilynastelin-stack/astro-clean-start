@@ -1,55 +1,77 @@
 ---
+import MainLayout from "../layouts/MainLayout.astro";
 ---
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>About — Archive of Soviet Trumpet Music</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-      :root{--accent:#8b0000;--muted:#6b7280;--bg:#f7f9fc}
-      body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial;margin:0;background:var(--bg);color:#0f172a}
-      .container{max-width:900px;margin:36px auto;padding:20px}
-      header{background:#fff;border-bottom:1px solid #e6e9ef}
-      .logo{padding:12px 20px;font-weight:700;color:var(--accent)}
-      main{background:#fff;padding:24px;border-radius:10px;box-shadow:0 6px 18px rgba(16,24,40,0.06)}
-      h1{margin-top:0}
-      .muted{color:var(--muted)}
-      .links{margin-top:18px}
-      footer{margin-top:28px;padding:18px 0;color:#fff;background:var(--accent);text-align:center}
-      a{color:var(--accent)}
-    </style>
-  </head>
-  <body>
-    <header>
-      <div class="logo">Archive of Soviet Trumpet Music</div>
-    </header>
-    <div class="container">
-      <main>
-        <h1>About this project</h1>
-        <p class="muted"> Archive of Soviet Trumpet Music is intended to index music from former Soviet-Republics. This website is in development and more features/info will become available soon</p>
 
-        <h2>Upcoming</h2>
-        <ul>
-          <li>Composers (names, nationalities, dates)</li>
-          <li>Composition titles and basic information about them</li>
-          <li>Expanded information about sources</li>
-          <li>Links to public domain scores and library holdings when available</li>
-          <li>Language options for Russian</li>
-        </ul>
+<MainLayout>
+  <!-- Full-width mast image -->
+  <div style="width:100vw; height:200px; overflow:hidden; position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw;">
+    <img 
+      src="https://i.imgur.com/MXH9C0r.png" 
+      alt="Mast image" 
+      style="width:100%; height:100%; object-fit:cover; display:block;" 
+    />
+  </div>
 
-        <h2>Contributing</h2>
-        <p>If you have materials, corrections, or references to add, please use the "Make additions to the archive" link on the main page. Contributions should include a source or reference where possible. If you prefer, open an issue on the project's repository or email the maintainers with details.</p>
+  <main style="display:flex; justify-content:center; padding:4rem 1rem;">
+    <div
+      style="
+        background:white;
+        border-radius:12px;
+        box-shadow:0 4px 12px rgba(0,0,0,0.1);
+        padding:2.5rem;
+        max-width:800px;
+        width:100%;
+        text-align:left;
+        margin-top:-3rem;
+        position:relative;
+        z-index:2;
+        line-height:1.7;
+        color:#333;
+        font-family:'Georgia', serif;
+      "
+    >
+      <h2 style="margin-bottom:1rem; color:#222; font-size:1.75rem; border-bottom:2px solid #800000; padding-bottom:0.3rem;">
+        About the Archive of Soviet Trumpet Music
+      </h2>
+      <p>
+        The <strong>Archive of Soviet Trumpet Music</strong> is intended to index and document music from the former Soviet republics. 
+        This website is currently in development, and additional features and information will become available soon.
+      </p>
 
-        <h2>Technical notes</h2>
-        <p>This site is built with <strong>Astro</strong>. The composers page fetches rows from a spreadsheet-backed server API; the client UI groups rows into composer cards and provides search filters.</p>
+      <h2 style="margin:2rem 0 1rem; color:#222; font-size:1.5rem; border-bottom:1px solid #ccc; padding-bottom:0.3rem;">
+        Upcoming Features
+      </h2>
+      <ul style="padding-left:1.2rem; margin:0;">
+        <li>Composer information — names, nationalities, and dates</li>
+        <li>Composition titles and basic catalog details</li>
+        <li>Expanded information about sources and archives</li>
+        <li>Links to public-domain scores and library holdings (when available)</li>
+        <li>Language options, including Russian</li>
+      </ul>
 
-        <div class="links">
-          <a href="/composers">Back to composers</a>
-        </div>
-      </main>
-      <footer>2025 Archive of Soviet Trumpet Music: Emily Nastelin</footer>
+      <h2 style="margin:2rem 0 1rem; color:#222; font-size:1.5rem; border-bottom:1px solid #ccc; padding-bottom:0.3rem;">
+        Contributions
+      </h2>
+      <p>
+        In the future, users will be able to submit new sources and compositions to the archive. 
+        If you have materials you'd like to contribute, please check back soon or reach out to <strong>Emily Nastelin</strong> directly.
+      </p>
+
+      <h2 style="margin:2rem 0 1rem; color:#222; font-size:1.5rem; border-bottom:1px solid #ccc; padding-bottom:0.3rem;">
+        Technical Information
+      </h2>
+      <p>
+        This archive is built using modern web technologies, ensuring a responsive and user-friendly experience. 
+        Accessibility and clarity are priorities, and we aim to make the content available to a diverse audience. 
+        All graphics and web layouts are original creations of <strong>Emily Nastelin</strong>.
+      </p>
+
+      <p style="margin-top:2rem; font-style:italic; color:#666; text-align:right;">
+        — Emily Nastelin
+      </p>
     </div>
-  </body>
-</html>
+  </main>
+</MainLayout>
+---
+
+<

@@ -1,0 +1,63 @@
+---
+const { composer } = Astro.props;
+---
+
+<div class="composer-details">
+  <div class="composer-details-header">Additional Info</div>
+
+  {composer ? (
+    <div class="composer-details-content">
+      <h3>{composer.Composer}</h3>
+      <p class="lifespan"><em>{composer.Lifespan || "—"}</em></p>
+
+      <p><b>Russian:</b> {composer["Композитор"] || "—"}</p>
+      <p><b>{composer.Language}:</b> {composer.Native || "—"}</p>
+
+      <p><b>Country:</b> {composer.Country || "—"}</p>
+      <p><b>Soviet Republic:</b> {composer["Soviet republic"] || "—"}</p>
+
+      <p><b>Gender:</b> {composer.Gender || "—"}</p>
+
+      {composer.Notes && <p><b>Notes:</b> {composer.Notes}</p>}
+    </div>
+  ) : (
+    <p>Select a piece or composer to see details here.</p>
+  )}
+</div>
+
+<style>
+.composer-details {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-height: 200px;
+}
+
+.composer-details-header {
+  color: #800000;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+}
+
+.composer-details-content h3 {
+  color: #800000;
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.composer-details-content .lifespan {
+  color: gray;
+  font-size: 0.9rem;
+  margin-top: 0.2rem;
+  margin-bottom: 1rem;
+}
+
+.composer-details-content p {
+  margin: 0.3rem 0;
+  color: #333;
+  font-size: 0.95rem;
+}
+</style>

@@ -1,0 +1,101 @@
+---
+---
+<style>
+footer {
+  background-color: #800000; /* maroon */
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* center links */
+  font-family: sans-serif;
+  font-size: 1rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  flex-wrap: wrap;
+  z-index: 100;
+}
+
+/* Left two-line text */
+.left {
+  position: absolute;
+  left: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.two-lines {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.2;
+}
+
+/* Center navigation links */
+.center {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex: 1;
+}
+
+.center a {
+  color: white;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.center a:hover {
+  color: #ffcccc;
+}
+
+/* Right copyright / @ */
+.right {
+  position: absolute;
+  right: 15px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  footer {
+    flex-direction: column;
+    text-align: center;
+    height: 80px; /* slightly taller */
+    font-size: 1.1rem; /* slightly bigger text */
+    justify-content: center;
+  }
+
+  /* Hide desktop content */
+  .left, .center, .right {
+    display: none;
+  }
+
+  /* Show Russian title */
+  footer::before {
+    content: "Архив советской трубной музыки";
+    color: white;
+  }
+}
+</style>
+
+<footer>
+  <!-- Left two-line text: English + Russian -->
+  <div class="left">
+    <div class="two-lines">
+      <div>Archive of Soviet Trumpet Music</div>
+      <div>Архив советской трубной музыки</div>
+    </div>
+  </div>
+
+  <!-- Center navigation -->
+  <div class="center">
+    <a href="/about">About</a>
+    <a href="/sources">Sources</a>
+    <a href="/submit">Submit</a>
+  </div>
+
+  <!-- Right copyright / @ -->
+  <div class="right">&copy; 2025 Archive of Soviet Trumpet Music</div>
+</footer>

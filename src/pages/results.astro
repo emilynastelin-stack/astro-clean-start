@@ -1,0 +1,994 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import SongCard from '../components/SongCard.astro';
+---
+
+<MainLayout>
+  <!-- Top Search Bar -->
+  <div style="background-color: rgba(128,128,128,0.75); width:100%; box-shadow:0 2px 6px rgba(0,0,0,0.1);">
+    <div style="display:flex; justify-content:center; align-items:center; height:60px; padding:0 1rem;">
+      <form style="display:flex; gap:0.5rem; max-width:600px; width:100%;" action="/results" method="get">
+        <input type="text" name="q" placeholder="Search for a composer..."
+               style="flex:1; padding:0.5rem 1rem; border-radius:8px; border:1px solid #ccc; font-size:1rem;" />
+        <button type="submit"
+                style="padding:0.5rem 1rem; border-radius:8px; border:none; background-color:#800000; color:white; font-size:1rem; cursor:pointer;">
+          Search
+        </button>
+        <a href="/results" id="show-all-btn"
+           style="padding:0.5rem 1rem; border-radius:8px; border:none; background-color:#800000; color:white; text-decoration:none; font-size:1rem; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;">
+          Show All
+        </a>
+      </form>
+    </div>
+  </div>
+
+  <!-- Panels -->
+  <main style="display:flex; gap:1rem; padding:2rem; align-items:stretch;">
+
+    <!-- Left Panel: Filters -->
+    <div class="left-panel" style="flex:0 0 400px; display:flex;">
+      <div class="filter-panel" style="flex:1;">
+        <h2>Filters</h2>
+        
+        <fieldset>
+          <legend>Country</legend>
+          {["Armenia","Russia","Ukraine","Georgia","Azerbaijan","Uzbekistan","Latvia","Estonia","Lithuania","Belarus","Moldova","Kyrgyzstan","Tajikistan","Turkmenistan","Kazakhstan"].map(c => (
+            <label><input type="checkbox" name="Country" value={c} /> {c}</label>
+          ))}
+        </fieldset>
+        <fieldset>
+          <legend>Soviet Republic</legend>
+          {["Armenian SSR","Azerbaijan SSR","Byelorussian SSR","Estonian SSR","Georgian SSR","Kazakh SSR","Kirghiz SSR","Latvian SSR","Lithuanian SSR","Moldavian SSR","Russian SFSR","Tajik SSR","Turkmen SSR","Ukrainian SSR","Uzbek SSR"].map(r => (
+            <label><input type="checkbox" name="Soviet Republic" value={r} /> {r}</label>
+          ))}
+        </fieldset>
+        <fieldset>
+          <legend>Gender</legend>
+          {["Male","Female"].map(g => (
+            <label><input type="checkbox" name="Gender" value={g} /> {g}</label>
+          ))}
+        </fieldset>
+        <fieldset>
+          <legend>Type</legend>
+          {["Scherzo","Cornet solo","Sonata/Sonatina","Concerto/Concertino","Poem","Concert Piece","Fantasy/variations"].map(t => (
+            <label><input type="checkbox" name="Type" value={t} /> {t}</label>
+          ))}
+        </fieldset>
+        <fieldset>
+          <legend>Instrumentation</legend>
+          {["Unaccompanied","Trumpet and piano","Trumpet and orchestra","Trumpet duet","Mixed ensemble","Not yet specified"].map(i => (
+            <label><input type="checkbox" name="L" value={i} /> {i}</label>
+          ))}
+        </fieldset>
+      </div>
+    </div>
+
+    <!-- Center Panel: Results -->
+    <div class="center-panel" style="flex:1; margin:0 1rem; display:flex;">
+      <div style="background:white; border-radius:12px; padding:1.5rem; box-shadow:0 2px 6px rgba(0,0,0,0.1); flex:1;">
+        <h3 style="margin-top:0; margin-bottom:1rem; color:#800000;">Results</h3>
+        <div id="results-list" style="display:flex; flex-direction:column; gap:1rem;">
+          <p>Select filters to see composers.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Panel: Composer Details -->
+    <div class="right-panel" style="flex:0 0 400px; display:flex;">
+      <div class="composer-details" style="flex:1;">
+        <div class="composer-details-header">Additional Info</div>
+        <div id="composer-details-content">
+          <p>Select a piece or composer to see more details here.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Mobile Composer Details Overlay -->
+  <div id="mobile-overlay" class="mobile-overlay">
+    <div class="mobile-overlay-content">
+      <div class="mobile-overlay-header">
+        <h3>Composer Details</h3>
+        <button id="close-overlay" class="close-overlay">&times;</button>
+      </div>
+      <div id="mobile-composer-details" class="mobile-composer-details">
+        <p>Select a composer to see details.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Toolbar -->
+  <div id="mobile-toolbar" class="mobile-toolbar">
+    <button id="mobile-filter-btn" class="mobile-toolbar-btn">
+      Filter
+    </button>
+  </div>
+
+  <!-- Mobile Filter Panel -->
+  <div id="mobile-filter-panel" class="mobile-filter-panel">
+    <div class="mobile-filter-content">
+      <div class="mobile-filter-header">
+        <h3>Filters</h3>
+        <button id="close-filter-panel" class="close-filter-panel">&times;</button>
+      </div>
+      <div class="mobile-filter-body">
+        <fieldset>
+          <legend>Country</legend>
+          {["Armenia","Russia","Ukraine","Georgia","Azerbaijan","Uzbekistan","Latvia","Estonia","Lithuania","Belarus","Moldova","Kyrgyzstan","Tajikistan","Turkmenistan","Kazakhstan"].map(c => (
+            <label><input type="checkbox" name="Country" value={c} class="mobile-filter-checkbox" /> {c}</label>
+          ))}
+        </fieldset>
+        <fieldset>
+          <legend>Soviet Republic</legend>
+          {["Armenian SSR","Azerbaijan SSR","Byelorussian SSR","Estonian SSR","Georgian SSR","Kazakh SSR","Kirghiz SSR","Latvian SSR","Lithuanian SSR","Moldavian SSR","Russian SFSR","Tajik SSR","Turkmen SSR","Ukrainian SSR","Uzbek SSR"].map(r => (
+            <label><input type="checkbox" name="Soviet Republic" value={r} class="mobile-filter-checkbox" /> {r}</label>
+          ))}
+        </fieldset>
+        <fieldset>
+          <legend>Gender</legend>
+          {["Male","Female"].map(g => (
+            <label><input type="checkbox" name="Gender" value={g} class="mobile-filter-checkbox" /> {g}</label>
+          ))}
+        </fieldset>
+        <fieldset>
+          <legend>Type</legend>
+          {["Scherzo","Cornet solo","Sonata/Sonatina","Concerto/Concertino","Poem","Concert Piece","Fantasy/variations"].map(t => (
+            <label><input type="checkbox" name="Type" value={t} class="mobile-filter-checkbox" /> {t}</label>
+          ))}
+        </fieldset>
+        <fieldset>
+          <legend>Instrumentation</legend>
+          {["Unaccompanied","Trumpet and piano","Trumpet and orchestra","Trumpet duet","Mixed ensemble","Not yet specified"].map(i => (
+            <label><input type="checkbox" name="L" value={i} class="mobile-filter-checkbox" /> {i}</label>
+          ))}
+        </fieldset>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    console.log('Script tag loaded');
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM Content Loaded - Script is running!');
+      
+      const centerPanel = document.getElementById('results-list');
+      const searchInput = document.querySelector('input[name="q"]');
+      const showAllBtn = document.getElementById('show-all-btn');
+      const composerDetailsPanel = document.getElementById('composer-details-content');
+      
+      console.log('centerPanel element:', centerPanel);
+      console.log('searchInput element:', searchInput);
+      console.log('showAllBtn element:', showAllBtn);
+      console.log('composerDetailsPanel element:', composerDetailsPanel);
+      
+      if (!centerPanel) {
+        console.error('Could not find results-list element!');
+        return;
+      }
+      
+      // Script is working, no need for test content anymore
+
+      let composers = [];
+      let currentPage = 1;
+      const resultsPerPage = 15;
+      let filteredResults = [];
+    fetch('/api/sheets')
+      .then(res => res.json())
+      .then(data => { 
+        console.log('Fetched data:', data);
+        composers = data.rows; 
+        console.log('Composers array:', composers);
+        console.log('Number of composers:', composers.length);
+        renderResults(composers); // show all initially
+      })
+        .catch(err => console.error('Failed to fetch composers:', err));
+
+      const filters = ['Country','Soviet Republic','Gender','Type','L'];
+      const checkboxMap = {};
+
+      filters.forEach(key => {
+        checkboxMap[key] = document.querySelectorAll(`input[name="${key}"]`);
+        checkboxMap[key].forEach(cb => cb.addEventListener('change', updateResults));
+      });
+
+      searchInput.addEventListener('input', updateResults);
+
+      function showComposerDetails(composer) {
+        console.log('UPDATED - Showing details for:', composer);
+        console.log('Available fields:', Object.keys(composer));
+        console.log('Soviet Republic value:', `"${composer["Soviet Republic"]}"`);
+        console.log('Gender value:', `"${composer.Gender}"`);
+        console.log('Type value:', `"${composer.Type}"`);
+        console.log('Instrumentation value:', `"${composer.Instrumentation}"`);
+        console.log('Column L value:', `"${composer.L}"`);
+        console.log('All field names:');
+        Object.keys(composer).forEach(key => console.log(`"${key}": "${composer[key]}"`));
+        
+        if (!composer) {
+          composerDetailsPanel.innerHTML = '<p>Select a piece or composer to see details here.</p>';
+          return;
+        }
+        
+        // Create composer details content using actual field mappings
+        const detailsHTML = `
+          <div class="composer-details-content">
+            <h3>${composer.Composer}</h3>
+            <p class="lifespan"><em>1923-1986</em></p>
+            <br>
+            <p><b>Russian:</b> ${composer["Композитор"] || "—"}</p>
+            <p><b>${composer.Native || "Language"}:</b> ${composer.X || "—"}</p>
+            ${composer.D && composer.E ? `<p><b>${composer.D}:</b> ${composer.E}</p>` : ''}
+            <br>
+            <p><b>Country:</b> ${composer.Country || "—"}</p>
+            <p><b>Soviet Republic:</b> ${composer["Soviet Republic"] || "—"}</p>
+            <br>
+            <p><b>Gender:</b> ${composer.Gender || "—"}</p>
+            ${composer.Notes && composer.Notes.trim() ? `<p><b>Notes:</b> ${composer.Notes}</p>` : ''}
+          </div>
+        `;
+        
+        // Show in desktop panel or mobile overlay depending on screen size
+        if (window.innerWidth <= 768) {
+          // Mobile: Show in overlay
+          const mobileOverlay = document.getElementById('mobile-overlay');
+          const mobileDetailsContent = document.getElementById('mobile-composer-details');
+          
+          if (mobileOverlay && mobileDetailsContent) {
+            mobileDetailsContent.innerHTML = detailsHTML;
+            mobileOverlay.classList.add('show');
+          }
+        } else {
+          // Desktop: Show in right panel
+          composerDetailsPanel.innerHTML = detailsHTML;
+        }
+      }
+
+      function updateResults() {
+        console.log('updateResults called');
+        let filtered = composers;
+
+        // Filter by checkboxes
+        filters.forEach(key => {
+          const selected = Array.from(checkboxMap[key])
+                                .filter(c => c.checked)
+                                .map(c => c.value);
+          if(selected.length>0){
+            console.log(`Filtering by ${key}:`, selected);
+            console.log(`Sample data values for ${key}:`, composers.slice(0,10).map(c => `"${c[key]}"`));
+            const beforeFilter = filtered.length;
+            
+            // Special handling for L column (Instrumentation) with blank values
+            if(key === 'L') {
+              filtered = filtered.filter(c => {
+                const value = c[key];
+                const isEmpty = !value || value.trim() === '';
+                
+                return selected.some(selectedValue => {
+                  if(selectedValue === 'Not yet specified') {
+                    return isEmpty;
+                  } else {
+                    return value === selectedValue;
+                  }
+                });
+              });
+            } else {
+              filtered = filtered.filter(c => selected.includes(c[key]));
+            }
+            
+            console.log(`${key} filter: ${beforeFilter} -> ${filtered.length} results`);
+          }
+        });
+
+        // Filter by search text
+        const query = searchInput.value.trim().toLowerCase();
+        if(query){
+          filtered = filtered.filter(c => c.Composer.toLowerCase().includes(query));
+        }
+
+        renderResults(filtered);
+      }
+
+      function renderResults(filtered) {
+        console.log('renderResults called with:', filtered.length, 'items');
+        filteredResults = filtered;
+        currentPage = 1; // Reset to first page when new results come in
+        
+        // Add updating animation
+        const resultsContainer = centerPanel.parentElement;
+        if (resultsContainer) {
+          resultsContainer.classList.add('results-updating');
+        }
+        
+        // Slight delay to show the updating state
+        setTimeout(() => {
+          if(filtered.length===0){
+            centerPanel.innerHTML='<p>No music found for selected filters.</p><p><a href="/submission" style="color: #800000; text-decoration: underline; cursor: pointer;">You can help by expanding it</a></p>';
+          } else {
+            renderPage();
+          }
+          
+          // Show results updated animation
+          if (resultsContainer) {
+            resultsContainer.classList.remove('results-updating');
+            resultsContainer.classList.add('results-updated');
+            
+            // Remove the animation class after it completes
+            setTimeout(() => {
+              resultsContainer.classList.remove('results-updated');
+            }, 600);
+          }
+        }, 150);
+      }
+
+      function renderPage() {
+        const startIndex = (currentPage - 1) * resultsPerPage;
+        const endIndex = startIndex + resultsPerPage;
+        const pageResults = filteredResults.slice(startIndex, endIndex);
+        const totalPages = Math.ceil(filteredResults.length / resultsPerPage);
+
+        // Render current page of results
+        const htmlContent = pageResults.map(c=>`
+          <div class="song-card">
+            <div class="song-title">${c.Title || 'Untitled'}</div>
+            <div class="song-composer">${c.Composer}</div>
+            ${c.Year ? `<div class="song-year">${c.Year}</div>` : ''}
+          </div>
+        `).join('');
+        
+        // Add pagination controls
+        const paginationHTML = `
+          <div class="pagination-controls" style="display: flex; justify-content: flex-end; align-items: center; gap: 0.5rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+            <span style="font-size: 0.9rem; color: #666;">Page ${currentPage} of ${totalPages} (${filteredResults.length} total)</span>
+            <button id="prev-btn" ${currentPage === 1 ? 'disabled' : ''} style="padding: 0.25rem 0.5rem; border: 1px solid #800000; background: ${currentPage === 1 ? '#f0f0f0' : 'white'}; color: ${currentPage === 1 ? '#999' : '#800000'}; border-radius: 4px; cursor: ${currentPage === 1 ? 'not-allowed' : 'pointer'};">Previous</button>
+            <button id="next-btn" ${currentPage === totalPages ? 'disabled' : ''} style="padding: 0.25rem 0.5rem; border: 1px solid #800000; background: ${currentPage === totalPages ? '#f0f0f0' : 'white'}; color: ${currentPage === totalPages ? '#999' : '#800000'}; border-radius: 4px; cursor: ${currentPage === totalPages ? 'not-allowed' : 'pointer'};">Next</button>
+          </div>
+        `;
+        
+        centerPanel.innerHTML = htmlContent + paginationHTML;
+        
+        // Add click handlers to song cards for composer details
+        const songCards = centerPanel.querySelectorAll('.song-card');
+        songCards.forEach((card, index) => {
+          const originalIndex = startIndex + index;
+          card.addEventListener('click', () => showComposerDetails(filteredResults[originalIndex]));
+        });
+
+        // Add pagination event listeners
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        
+        if (prevBtn && !prevBtn.disabled) {
+          prevBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+              currentPage--;
+              renderPage();
+            }
+          });
+        }
+        
+        if (nextBtn && !nextBtn.disabled) {
+          nextBtn.addEventListener('click', () => {
+            if (currentPage < totalPages) {
+              currentPage++;
+              renderPage();
+            }
+          });
+        }
+      }
+
+    // Show All button clears filters and search
+      showAllBtn.addEventListener('click', e=>{
+        e.preventDefault();
+        filters.forEach(key => checkboxMap[key].forEach(cb => cb.checked=false));
+        searchInput.value='';
+        renderResults(composers);
+      });
+
+      // Mobile functionality
+      function setupMobileFeatures() {
+        if (window.innerWidth <= 768) {
+          const filterPanel = document.querySelector('.filter-panel');
+          const composerDetails = document.querySelector('.composer-details');
+          
+          // Mobile filter panel toggle
+          if (filterPanel) {
+            filterPanel.classList.add('collapsed'); // Start collapsed on mobile
+            
+            const filterHeader = filterPanel.querySelector('h2');
+            if (filterHeader) {
+              // Remove existing listener if any
+              filterHeader.removeEventListener('click', toggleFilterPanel);
+              filterHeader.addEventListener('click', toggleFilterPanel);
+            }
+          }
+          
+          // Mobile composer details panel toggle
+          if (composerDetails) {
+            composerDetails.classList.add('collapsed'); // Start collapsed on mobile
+            
+            const detailsHeader = composerDetails.querySelector('.composer-details-header');
+            if (detailsHeader) {
+              // Remove existing listener if any
+              detailsHeader.removeEventListener('click', toggleDetailsPanel);
+              detailsHeader.addEventListener('click', toggleDetailsPanel);
+            }
+          }
+        } else {
+          // Remove mobile classes on desktop
+          const filterPanel = document.querySelector('.filter-panel');
+          const composerDetails = document.querySelector('.composer-details');
+          
+          if (filterPanel) {
+            filterPanel.classList.remove('collapsed');
+          }
+          if (composerDetails) {
+            composerDetails.classList.remove('collapsed');
+          }
+        }
+      }
+
+      function toggleFilterPanel() {
+        const filterPanel = document.querySelector('.filter-panel');
+        if (filterPanel) {
+          filterPanel.classList.toggle('collapsed');
+        }
+      }
+
+      function toggleDetailsPanel() {
+        const composerDetails = document.querySelector('.composer-details');
+        if (composerDetails) {
+          composerDetails.classList.toggle('collapsed');
+        }
+      }
+
+      // Setup mobile features
+      setupMobileFeatures();
+      
+      // Re-setup on window resize
+      window.addEventListener('resize', setupMobileFeatures);
+
+      // Mobile overlay functionality
+      const mobileOverlay = document.getElementById('mobile-overlay');
+      const closeOverlayBtn = document.getElementById('close-overlay');
+
+      // Close overlay when clicking close button
+      if (closeOverlayBtn && mobileOverlay) {
+        closeOverlayBtn.addEventListener('click', () => {
+          mobileOverlay.classList.remove('show');
+        });
+      }
+
+      // Close overlay when clicking outside content
+      if (mobileOverlay) {
+        mobileOverlay.addEventListener('click', (e) => {
+          if (e.target === mobileOverlay) {
+            mobileOverlay.classList.remove('show');
+          }
+        });
+      }
+
+      // Close overlay on escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileOverlay && mobileOverlay.classList.contains('show')) {
+          mobileOverlay.classList.remove('show');
+        }
+        if (e.key === 'Escape' && mobileFilterPanel && mobileFilterPanel.classList.contains('show')) {
+          mobileFilterPanel.classList.remove('show');
+        }
+      });
+
+      // Mobile filter panel functionality
+      const mobileFilterBtn = document.getElementById('mobile-filter-btn');
+      const mobileFilterPanel = document.getElementById('mobile-filter-panel');
+      const closeFilterPanelBtn = document.getElementById('close-filter-panel');
+
+      // Open filter panel when clicking filter button
+      if (mobileFilterBtn && mobileFilterPanel) {
+        mobileFilterBtn.addEventListener('click', () => {
+          mobileFilterPanel.classList.add('show');
+        });
+      }
+
+      // Close filter panel when clicking close button
+      if (closeFilterPanelBtn && mobileFilterPanel) {
+        closeFilterPanelBtn.addEventListener('click', () => {
+          mobileFilterPanel.classList.remove('show');
+        });
+      }
+
+      // Close filter panel when clicking outside content
+      if (mobileFilterPanel) {
+        mobileFilterPanel.addEventListener('click', (e) => {
+          if (e.target === mobileFilterPanel) {
+            mobileFilterPanel.classList.remove('show');
+          }
+        });
+      }
+
+      // Connect mobile filter checkboxes to main filter system
+      const mobileFilterCheckboxes = document.querySelectorAll('.mobile-filter-checkbox');
+      mobileFilterCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateResults);
+      });
+      
+    }); // Close DOMContentLoaded
+  </script>
+
+  <style>
+    /* Background Images */
+    body {
+      background-image: url('https://i.imgur.com/ZENogwV.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+    }
+
+    /* Mobile background override */
+    @media (max-width: 768px) {
+      body {
+        background-image: url('https://i.imgur.com/vfMSV3G.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+      }
+    }
+
+    /* Global styles matching SongCard component */
+    :global(.song-card) {
+      background: white;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+      margin-bottom: 1rem;
+    }
+    
+    :global(.song-card:hover) {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+    }
+    
+    :global(.song-title) {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #800000;
+      margin-bottom: 0.25rem;
+    }
+    
+    :global(.song-composer) {
+      font-size: 1rem;
+      color: #333;
+      margin-bottom: 0.25rem;
+    }
+    
+    :global(.song-year) {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    /* Composer Details styles matching ComposerDetails component */
+    .composer-details {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      height: 100%;
+    }
+    
+    .composer-details-header {
+      color: #800000;
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+    
+    :global(.composer-details-content h3) {
+      color: #800000;
+      margin: 0;
+      font-size: 1.2rem;
+    }
+    
+    :global(.composer-details-content .lifespan) {
+      color: gray;
+      font-size: 0.9rem;
+      margin-top: 0.2rem;
+      margin-bottom: 1rem;
+    }
+    
+    :global(.composer-details-content p) {
+      margin: 0.3rem 0;
+      color: #333;
+      font-size: 0.95rem;
+    }
+    
+    /* Filter panel styling */
+    .filter-panel {
+      background-color: #fafafa;
+      border-radius: 12px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      height: 100%;
+    }
+    
+    .filter-panel h2 { 
+      margin: 0 0 0.5rem 0; 
+      color: #800000; 
+      font-size: 1.2rem; 
+    }
+    
+    .filter-panel fieldset {
+      border: none;
+      padding: 0;
+      margin: 0.5rem 0;
+    }
+    
+    .filter-panel legend {
+      color: #800000;
+      font-size: 1rem;
+      font-weight: bold;
+      margin-bottom: 0.25rem;
+    }
+    
+    .filter-panel label { 
+      display: flex; 
+      align-items: center; 
+      gap: 0.5rem; 
+      cursor: pointer; 
+      font-size: 0.95rem; 
+      margin: 0.2rem 0;
+    }
+
+    /* Mobile responsive styles */
+@media (max-width: 768px) {
+  /* Hide left and right panels on mobile */
+  .left-panel,
+  .right-panel {
+    display: none !important;
+  }
+
+  main {
+    padding: 1rem !important;
+    gap: 0 !important;
+  }
+
+  .center-panel {
+    margin: 0 !important;
+  }
+
+  /* Search bar container */
+  div[style*="background-color: rgba(128,128,128,0.75)"] {
+    width: 100% !important;
+    box-sizing: border-box;
+    height: auto !important;
+    padding: 1rem 15px !important;
+    display: flex !important;
+    justify-content: center;
+  }
+
+  /* Make search form flexible */
+  div[style*="background-color: rgba(128,128,128,0.75)"] form {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: space-between;
+    width: 100% !important;
+    max-width: 600px;
+    gap: 0.5rem !important;
+    box-sizing: border-box;
+  }
+
+  /* Input should take most width */
+  div[style*="background-color: rgba(128,128,128,0.75)"] input[type="text"] {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  /* Search button smaller and tidy */
+  div[style*="background-color: rgba(128,128,128,0.75)"] button {
+    flex: 0 0 auto;
+    width: auto;
+    padding: 0.5rem 0.75rem; /* tighter padding */
+    font-size: 0.9rem;
+    border-radius: 6px;
+    white-space: nowrap; /* prevent wrapping */
+  }
+
+  #show-all-btn {
+    display: none !important;
+  }
+}
+
+   /* ============================
+   Mobile Overlay Styles
+============================ */
+/* Mobile Overlay Container */
+.mobile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+  display: flex;
+  justify-content: flex-end; /* slide panel from right */
+  opacity: 0;                /* initially invisible */
+  pointer-events: none;      /* non-interactive when hidden */
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+
+/* Show overlay */
+.mobile-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Sliding Panel Content */
+.mobile-overlay-content {
+  background: white;
+  width: 85%;
+  max-width: 400px;
+  height: 100%;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+
+  /* Start off-screen */
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow-y: auto;
+}
+
+/* Slide in when overlay is active */
+.mobile-overlay.show .mobile-overlay-content {
+  transform: translateX(0);
+}
+
+/* Header + Close Button */
+.mobile-overlay-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #eee;
+  background: #f8f8f8;
+  flex-shrink: 0;
+}
+
+.mobile-overlay-header h3 {
+  margin: 0;
+  color: #800000;
+  font-size: 1.2rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.close-overlay {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #800000;
+  cursor: pointer;
+  padding: 0.5rem;
+  line-height: 1;
+}
+
+.close-overlay:hover {
+  background: rgba(128, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+/* Content area inside panel */
+.mobile-composer-details {
+  padding: 2rem 1rem 2rem 1rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.mobile-composer-details .composer-details-content h3 {
+  margin-bottom: 1rem;
+}
+
+.mobile-composer-details .composer-details-content p {
+  margin: 0.5rem 0;
+  line-height: 1.5;
+}
+
+/* Hide mobile overlay on desktop */
+@media (min-width: 769px) {
+  .mobile-overlay {
+    display: none !important;
+  }
+}
+
+/* Mobile Toolbar Styles */
+.mobile-toolbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #800000;
+  padding: 1rem 15px;
+  display: none;
+  justify-content: flex-start;
+  z-index: 999;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-toolbar-btn {
+  background: white;
+  color: #800000;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.mobile-toolbar-btn:hover {
+  background: #f0f0f0;
+}
+
+.mobile-toolbar-btn:active {
+  transform: scale(0.98);
+}
+
+/* Show toolbar only on mobile */
+@media (max-width: 768px) {
+  .mobile-toolbar {
+    display: flex;
+  }
+}
+
+/* Mobile Filter Panel Styles */
+.mobile-filter-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0);
+  z-index: 1001;
+  display: block;
+  visibility: hidden;
+  transition: background-color 0.4s ease, visibility 0.4s ease;
+}
+
+.mobile-filter-panel.show {
+  background: rgba(0, 0, 0, 0.5);
+  visibility: visible;
+}
+
+.mobile-filter-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 85%;
+  height: 100vh;
+  background: white;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.mobile-filter-panel.show .mobile-filter-content {
+  transform: translateX(0);
+}
+
+.mobile-filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 10px 1rem 1.5rem;
+  border-bottom: 1px solid #eee;
+  background: #f8f8f8;
+  flex-shrink: 0;
+}
+
+.mobile-filter-header h3 {
+  margin: 0;
+  color: #800000;
+  font-size: 1.2rem;
+}
+
+.close-filter-panel {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #800000;
+  cursor: pointer;
+  padding: 0.5rem;
+  line-height: 1;
+}
+
+.close-filter-panel:hover {
+  background: rgba(128, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.mobile-filter-body {
+  padding: 1rem 10px 1rem 1rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.mobile-filter-body fieldset {
+  border: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.mobile-filter-body legend {
+  color: #800000;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.mobile-filter-body label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  margin: 0.3rem 0;
+  padding: 0.2rem 0;
+}
+
+.mobile-filter-checkbox {
+  min-width: 18px;
+  height: 18px;
+}
+
+    /* Hide filter panel on desktop */
+    @media (min-width: 769px) {
+      .mobile-filter-panel {
+        display: none !important;
+      }
+    }
+
+    /* Results update animation - mobile only */
+    @media (max-width: 768px) {
+      .results-updating {
+        opacity: 0.6;
+        transform: scale(0.98);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .results-updated {
+        animation: resultsFlash 0.6s ease-out;
+      }
+
+      @keyframes resultsFlash {
+        0% {
+          opacity: 0.6;
+          transform: scale(0.98);
+          background-color: white;
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.01);
+          background-color: rgba(128, 128, 128, 0.1);
+          box-shadow: 0 4px 20px rgba(128, 128, 128, 0.3);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+          background-color: white;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+      }
+    }

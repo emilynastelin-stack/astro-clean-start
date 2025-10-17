@@ -1,0 +1,15 @@
+{
+  "files.associations": {
+    "*.astro": "astro"
+  },
+  "typescript.preferences.includePackageJsonAutoImports": "off",
+  "typescript.validate.enable": false,
+  "astro.typescript.enabled": true,
+  "astro.typescript.allowArbitraryAttributes": true,
+  "emmet.includeLanguages": {
+    "astro": "html"
+  },
+  "prettier.documentSelectors": [
+    "**/*.astro"
+  ]
+}

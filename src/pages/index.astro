@@ -1,13 +1,93 @@
-﻿<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta http-equiv="refresh" content="0;url=/composers/" />
-    <link rel="canonical" href="/composers/" />
-    <title>Redirecting…</title>
-  </head>
-  <body>
-    <p>Redirecting to <a href="/composers/">Composers</a>… If you are not redirected automatically, click the link.</p>
-  </body>
-</html>
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<style>
+  /* Background Images */
+  body {
+    background-image: url('https://i.imgur.com/SD9aUMF.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+  }
+
+  /* Mobile background override */
+  @media (max-width: 768px) {
+    body {
+      background-image: url('https://i.imgur.com/vfMSV3G.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+    }
+    
+    /* Raise mast image on mobile */
+    .mast-container {
+      margin-top: -120px !important;
+    }
+    
+    /* Mobile search panel adjustments */
+    .search-panel {
+      background: rgba(255, 255, 255, 0.75) !important;
+    }
+    
+    .search-form {
+      flex-direction: column !important;
+      align-items: center !important;
+    }
+    
+    .search-buttons {
+      display: flex !important;
+      justify-content: center !important;
+      gap: 0.5rem !important;
+      width: 100% !important;
+    }
+  }
+
+  .search-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+</style>
+
+<MainLayout>
+  <main style="display: flex; justify-content: center; align-items: center; height: 80vh; text-align: center;">
+    <div style="padding: 2rem 3rem; width: 100%; max-width: 600px;">
+      <!-- Mast Image -->
+      <div class="mast-container" style="margin: -100px 0 1.5rem 0; display: flex; justify-content: center;">
+        <img src="https://i.imgur.com/DmF8epu.png" alt="Mast" style="max-width: 100%; height: auto; max-height: 350px;" />
+      </div>
+
+      <!-- Search Panel -->
+      <div class="search-panel" style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+        <!-- Search Bar Inline with Buttons -->
+        <form class="search-form" style="display: flex; gap: 0.5rem; flex-wrap: wrap;" action="/results" method="get">
+        <input
+          type="text"
+          name="q"
+          placeholder="Search for a composer..."
+          style="flex: 1; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem;"
+        />
+        <div class="search-buttons">
+          <button
+            type="submit"
+            style="padding: 0.5rem 1rem; border-radius: 8px; border: none; background-color: #800000; color: white; font-size: 1rem; cursor: pointer;"
+          >
+            Search
+          </button>
+
+          <!-- Show All Button -->
+          <a
+            href="/results"
+            style="padding: 0.5rem 1rem; border-radius: 8px; background-color: #555; color: white; text-decoration: none; font-size: 1rem; display: inline-flex; align-items: center; justify-content: center; cursor: pointer;"
+          >
+            Show All
+          </a>
+        </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</MainLayout>

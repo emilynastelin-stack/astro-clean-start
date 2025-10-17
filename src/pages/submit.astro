@@ -1,0 +1,217 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+---
+
+<style>
+  .form-container {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    padding: 3rem;
+    max-width: 800px;
+    width: 100%;
+    text-align: left;
+    line-height: 1.6;
+    font-family: 'Georgia', serif;
+  }
+
+  .intro-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    padding: 2.5rem;
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 3rem;
+    line-height: 1.7;
+    color: #333;
+    font-family: 'Georgia', serif;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #444;
+    font-size: 0.95rem;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-family: inherit;
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: #800000;
+    box-shadow: 0 0 0 3px rgba(128, 0, 0, 0.1);
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .submit-button {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #800000 0%, #a00000 100%);
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+  }
+
+  .submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(128, 0, 0, 0.3);
+  }
+
+  .page-title {
+    margin-bottom: 1.5rem;
+    color: #222;
+    font-size: 2rem;
+    border-bottom: 3px solid #800000;
+    padding-bottom: 0.5rem;
+    text-align: center;
+  }
+
+  .section-title {
+    margin-bottom: 1.5rem;
+    color: #222;
+    font-size: 1.75rem;
+    border-bottom: 2px solid #800000;
+    padding-bottom: 0.3rem;
+  }
+
+  @media (max-width: 768px) {
+    .form-container, .intro-section {
+      padding: 2rem;
+      margin: 0 1rem;
+    }
+    
+    .page-title {
+      font-size: 1.75rem;
+    }
+    
+    .section-title {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+
+<MainLayout>
+  <!-- Full-width mast image -->
+  <div style="width:100vw; height:250px; overflow:hidden; position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw;">
+    <img 
+      src="https://i.imgur.com/MXH9C0r.png" 
+      alt="Mast image" 
+      style="width:100%; height:100%; object-fit:cover; display:block;" 
+    />
+  </div>
+
+  <main style="display:flex; flex-direction:column; align-items:center; padding:4rem 1rem; margin-top:-2rem;">
+    
+    <!-- Intro / contribute section -->
+    <div class="intro-section">
+      <h1 class="page-title">Contribute to the Archive</h1>
+      <p style="font-size: 1.1rem; color: #555; max-width: 600px; margin: 0 auto;">
+        Help us preserve and expand the Archive of Soviet Trumpet Music. Whether you have scores, recordings, 
+        research materials, or corrections to suggest, your contributions help make this resource more complete and valuable.
+      </p>
+    </div>
+
+    <!-- Submission form -->
+    <div class="form-container">
+      <h2 class="section-title">Submit Materials</h2>
+      
+      <form action="#" method="POST" style="margin-top: 2rem;">
+        <div class="form-group">
+          <label for="name" class="form-label">Your Name *</label>
+          <input 
+            type="text" 
+            id="name" 
+            name="name" 
+            placeholder="Enter your full name" 
+            required
+            class="form-input"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="form-label">Email Address *</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            placeholder="your.email@example.com" 
+            required
+            class="form-input"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="material-type" class="form-label">Type of Material *</label>
+          <select 
+            id="material-type" 
+            name="material-type" 
+            required
+            class="form-input"
+          >
+            <option value="">Please select a type</option>
+            <option value="score">Music Score</option>
+            <option value="recording">Recording</option>
+            <option value="research">Research / Academic Article</option>
+            <option value="correction">Correction / Update</option>
+            <option value="biographical">Biographical Information</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="description" class="form-label">Description & Details *</label>
+          <textarea 
+            id="description" 
+            name="description" 
+            rows="5" 
+            placeholder="Please provide details about the material you're submitting. Include composer names, piece titles, dates, sources, and any other relevant information..."
+            required
+            class="form-input form-textarea"
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="file" class="form-label">Upload File (optional)</label>
+          <input 
+            type="file" 
+            id="file" 
+            name="file"
+            class="form-input"
+            accept=".pdf,.jpg,.jpeg,.png,.mp3,.wav,.doc,.docx,.txt"
+          />
+          <small style="color: #666; font-size: 0.85rem; margin-top: 0.25rem; display: block;">
+            Accepted formats: PDF, images, audio files, documents (max 10MB)
+          </small>
+        </div>
+
+        <button type="submit" class="submit-button">
+          Submit Contribution
+        </button>
+      </form>
+    </div>
+  </main>
+</MainLayout>

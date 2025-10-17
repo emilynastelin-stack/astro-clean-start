@@ -1,0 +1,43 @@
+---
+const { composer, title, year } = Astro.props;
+---
+
+<div class="song-card">
+  <div class="song-title">{title}</div>
+  <div class="song-composer">{composer}</div>
+  {year && <div class="song-year">{year}</div>}
+</div>
+
+<style>
+.song-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.song-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.song-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #800000;
+  margin-bottom: 0.25rem;
+}
+
+.song-composer {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 0.25rem;
+}
+
+.song-year {
+  font-size: 0.9rem;
+  color: #666;
+}
+</style>

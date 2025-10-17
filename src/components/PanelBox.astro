@@ -1,0 +1,25 @@
+---
+const { title, children, id } = Astro.props;
+---
+
+<div class="panel-box" {...(id ? { id } : {})}>
+  {title && <strong>{title}</strong>}
+  {children}
+</div>
+
+<style>
+.panel-box {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Top margin before text inside the box */
+.panel-box > *:first-child {
+  margin-top: 10px;
+}
+</style>

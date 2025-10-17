@@ -1,20 +1,203 @@
 ---
-layout: "../layouts/Base.astro"
-title: "Sources"
+import MainLayout from "../layouts/MainLayout.astro";
+
+const bibliography = [
+  { title: "A Bibliography of Trumpet Concertos from the Former Soviet Union", author: "Amy Gilreath", link: "" },
+  { title: "An Interpretative Approach to Works for Trumpet and Piano", author: "Dumitru Hanganu", link: "" },
+  { title: "Aspects of the Treatment...", author: "Dumitru Hanganu and Svetlana Badrajan", link: "https://doi.org/10.52603/9789975351379.05" },
+  { title: "Bibliographic Catalog of Trumpet Music", author: "The Academic Music College Library", link: "" },
+  { title: "Der Trompeter von Sankt Petersburg", author: "Christian Neef", link: "" },
+  { title: "East Meets West: The Russian Trumpet Tradition from the Time of Peter the Great to the October Revolution", author: "Edward H. Tarr", link: "" },
+  { title: "Estonian Music Information Centre", author: "Estonian Music Information Centre", link: "https://www.emic.ee/?lang=eng" },
+  { title: "Gufo.me — словари и энциклопедии", author: "", link: "https://gufo.me/" },
+  { title: "Latvian Organ Music: A Performer’s Guide and Bibliography", author: "Andrei Streliaev", link: "" },
+  { title: "Moldovenii.md", author: "Encyclopedia of Moldova", link: "https://www.moldovenii.md/en" },
+  { title: "Music Information Centre Lithuania", author: "Music Lithuania", link: "https://www.mic.lt/en/" },
+  { title: "National Library of Georgia", author: "National Library of Georgia", link: "https://www.nplg.gov.ge/eng/home" },
+  { title: "National Library of the Republic of Karelia", author: "", link: "https://eng.library.karelia.ru/" },
+  { title: "Russian State Library: Digital Library", author: "Russian State Library", link: "https://search.rsl.ru/ru/search#q=&f=0" },
+  { title: "Russian, Soviet & Post-Soviet Concertos", author: "Michael Herman and Stephen Ellis", link: "https://musicwebinternational.com/national-discographies/russian-concertos/" },
+  { title: "Secrets of Armenia", author: "Mikael Ayrapetyan", link: "https://en.secretsofarmenia.com/" },
+  { title: "Trumpet Products", author: "Eduard Timershin", link: "https://edtimershin.com/product-category/trumpet/" },
+  { title: "TRUMPETclub — Российский клуб трубачей", author: "Alexander Kartashev", link: "http://trumpetclub.ru/" },
+  { title: "Twentieth-Century Music for Trumpet and Orchestra", author: "Norbert Carnovale and Paul Doerksen", link: "" },
+  { title: "Union of Composers and Bastakors of Uzbekistan", author: "", link: "https://www.commus.uz/index.php/en/" },
+  { title: "Union of Composers of the Sverdlovsk Region", author: "", link: "https://sokomso.ru/" },
+  { title: "Кино‑Театр.РУ — интервью, статьи, премьеры...", author: "", link: "https://www.kino-teatr.ru/" },
+  { title: "Произведения Для Трубы в Белорусской Музыке XX–XXI Веков", author: "Makshim Shkulepa", link: "" }
+];
 ---
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Sources — Archive of Soviet Trumpet Music</title>
-</head>
+<style>
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 1rem;
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
 
-<main style="max-width:900px;margin:40px auto;padding:20px;">
-  <h1 style="color:var(--accent)">Sources</h1>
-  <p style="color:#6b7280">This page is a placeholder for information about the sources used to assemble the archive. Add notes, citations, and links here.</p>
+/* Page title */
+.page-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-family: 'Georgia', serif;
+  color: #222;
+  margin-bottom: 2rem;
+  border-bottom: 3px solid #800000;
+  padding-bottom: 0.5rem;
+}
 
-  <section style="margin-top:20px;background:#fff;padding:16px;border-radius:8px;box-shadow:0 10px 30px rgba(16,24,40,0.06);">
-    <h2 style="margin-top:0">How to edit</h2>
-    <p>Add your source notes below this section in markdown or HTML. If you'd like, I can scaffold references or a bibliography component.</p>
-  </section>
-</main>
+/* Special Thanks Box */
+.special-thanks {
+  padding: 1.25rem 2rem;
+  text-align: center;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 2rem;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.special-thanks:hover {
+  background: #f9f9f9;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.special-thanks h2 {
+  margin-bottom: 0.75rem;
+  font-size: 1.4rem;
+  font-family: 'Georgia', serif;
+  color: #222;
+}
+
+.special-thanks p {
+  margin: 0.4rem 0;
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1.5;
+}
+
+.special-thanks em {
+  font-style: italic;
+  color: #555;
+}
+
+/* Bibliography grid and items */
+.bibliography-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.bibliography-item {
+  background: white;
+  padding: 1.75rem;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.bibliography-item.clickable {
+  cursor: pointer;
+}
+
+.bibliography-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  border-color: rgba(128, 0, 0, 0.2);
+}
+
+.bibliography-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.bibliography-author {
+  margin: 0;
+  color: #666;
+  font-style: italic;
+  font-size: 0.95rem;
+}
+
+.click-indicator {
+  margin-top: 0.5rem;
+  color: #800000;
+  font-size: 0.85rem;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page-container {
+    padding: 2rem 1rem;
+    gap: 2rem;
+  }
+  .page-title {
+    font-size: 2rem;
+  }
+  .special-thanks {
+    padding: 1rem 1.5rem;
+  }
+  .bibliography-item {
+    padding: 1.5rem;
+  }
+}
+</style>
+
+<MainLayout>
+
+  <!-- Mast Image -->
+  <div style="width:100vw; height:250px; overflow:hidden; position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw;">
+    <img 
+      src="https://i.imgur.com/MXH9C0r.png" 
+      alt="Mast image" 
+      style="width:100%; height:100%; object-fit:cover; display:block;" 
+    />
+  </div>
+
+  <main class="page-container">
+    
+    <h1 class="page-title">Sources & References</h1>
+
+    <!-- Special Thanks Box -->
+    <div class="special-thanks">
+      <h2>Special Thanks</h2>
+      <p>
+        Thank you to <strong>Alex Dzord</strong> for double-checking the Russian and Belarusian transliterations in this archive, ensuring accuracy and authenticity in representing these works.
+      </p>
+      <p>
+        <em>Vielen Dank an Herrn Neef für die Fotos der Manuskripte von Oskar Böhmes Trompetenduett „Maiglöckchen", damit ich sie sehen und in dieses Archiv aufnehmen konnte.</em>
+      </p>
+      <p>
+        The following sources were used to locate and verify the music cited in this archive.
+      </p>
+    </div>
+
+    <!-- Bibliography Section -->
+    <div class="sources-section">
+      <h2 class="section-title">Bibliography</h2>
+      <div class="bibliography-grid">
+        {bibliography.map(item => (
+          <div
+            class={`bibliography-item ${item.link ? 'clickable' : ''}`}
+            onClick={() => item.link && window.open(item.link, "_blank")}
+          >
+            <h3 class="bibliography-title">{item.title}</h3>
+            {item.author && <p class="bibliography-author">{item.author}</p>}
+            {item.link && <p class="click-indicator">Click to visit source</p>}
+          </div>
+        ))}
+      </div>
+    </div>
+
+  </main>
+</MainLayout>
+

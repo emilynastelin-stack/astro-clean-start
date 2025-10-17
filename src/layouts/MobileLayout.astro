@@ -1,0 +1,221 @@
+---
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import FilterPanel from '../components/FilterPanel.astro';
+import ComposerDetails from '../components/ComposerDetails.astro';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archive of Soviet Trumpet Music</title>
+</head>
+<body>
+  <Navbar />
+  
+  <main>
+    <div id="mobile-results">
+      <h2>Results</h2>
+      <div id="results-container">
+        <p>Select filters to see composers.</p>
+      </div>
+    </div>
+
+    <aside id="mobile-filter" class="side-panel">
+      <div class="panel-header">
+        <h3>Filters</h3>
+        <button id="close-filter">&times;</button>
+      </div>
+      <FilterPanel title="" />
+    </aside>
+
+    <aside id="mobile-details" class="side-panel">
+      <div class="panel-header">
+        <h3>Details</h3>
+        <button id="close-details">&times;</button>
+      </div>
+      <ComposerDetails />
+    </aside>
+
+    <nav class="bottom-toolbar">
+      <button id="filter-btn">Filters</button>
+      <button id="details-btn">Details</button>
+      <button id="showall-btn">Show All</button>
+    </nav>
+  </main>
+  
+  <Footer />
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    main {
+      padding: 1rem;
+      padding-bottom: 80px; /* Space for bottom toolbar */
+    }
+
+    #mobile-results {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      min-height: 300px;
+    }
+
+    #mobile-results h2 {
+      margin-top: 0;
+      color: #800000;
+    }
+
+    .side-panel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: white;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .side-panel.active {
+      transform: translateX(0);
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      border-bottom: 1px solid #eee;
+      background: #f8f8f8;
+    }
+
+    .panel-header h3 {
+      margin: 0;
+      color: #800000;
+    }
+
+    .panel-header button {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #800000;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .bottom-toolbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #800000;
+      padding: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      justify-content: space-around;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+    }
+
+    .bottom-toolbar button {
+      flex: 1;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      background: white;
+      color: #800000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .bottom-toolbar button:hover {
+      background: #f0f0f0;
+    }
+
+    .bottom-toolbar button:active {
+      background: #e0e0e0;
+    }
+
+    /* Make sure panels content is scrollable */
+    .side-panel > :not(.panel-header) {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+    }
+
+    /* Overlay background when panel is open */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      display: none;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+  </style>
+
+  <script>
+    const filterPanel = document.getElementById('mobile-filter');
+    const detailsPanel = document.getElementById('mobile-details');
+    const filterBtn = document.getElementById('filter-btn');
+    const detailsBtn = document.getElementById('details-btn');
+    const closeFilterBtn = document.getElementById('close-filter');
+    const closeDetailsBtn = document.getElementById('close-details');
+
+    // Toggle filter panel
+    filterBtn?.addEventListener('click', () => {
+      filterPanel?.classList.toggle('active');
+      detailsPanel?.classList.remove('active'); // Close other panel
+    });
+
+    // Toggle details panel
+    detailsBtn?.addEventListener('click', () => {
+      detailsPanel?.classList.toggle('active');
+      filterPanel?.classList.remove('active'); // Close other panel
+    });
+
+    // Close panels
+    closeFilterBtn?.addEventListener('click', () => {
+      filterPanel?.classList.remove('active');
+    });
+
+    closeDetailsBtn?.addEventListener('click', () => {
+      detailsPanel?.classList.remove('active');
+    });
+
+    // Close panels when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target?.closest('.side-panel') && !e.target?.closest('.bottom-toolbar')) {
+        filterPanel?.classList.remove('active');
+        detailsPanel?.classList.remove('active');
+      }
+    });
+
+    // Show details when clicking on a song card
+    document.addEventListener('click', (e) => {
+      if (e.target?.closest('.song-card')) {
+        detailsPanel?.classList.add('active');
+        filterPanel?.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>

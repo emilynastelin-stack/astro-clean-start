@@ -1,0 +1,147 @@
+---
+const { title, children } = Astro.props;
+---
+
+<style>
+.filter-panel {
+  background-color: #fafafa;
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  /* Removed max-height and overflow-y to allow full page scroll */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.filter-panel h2 { margin:0 0 0.5rem 0; color:#800000; font-size:1.2rem; }
+.filter-panel h3 { margin:1rem 0 0.25rem 0; color:#800000; font-size:1rem; }
+.filter-panel label { display:flex; align-items:center; gap:0.5rem; cursor:pointer; font-size:0.95rem; }
+
+</style>
+
+<div class="filter-panel">
+  {title && <h2>{title}</h2>}
+
+
+  <h3>Country</h3>
+  <label><input type="checkbox" name="Country" value="Armenia" /> Armenia</label>
+  <label><input type="checkbox" name="Country" value="Russia" /> Russia</label>
+  <label><input type="checkbox" name="Country" value="Ukraine" /> Ukraine</label>
+  <label><input type="checkbox" name="Country" value="Georgia" /> Georgia</label>
+  <label><input type="checkbox" name="Country" value="Azerbaijan" /> Azerbaijan</label>
+  <label><input type="checkbox" name="Country" value="Uzbekistan" /> Uzbekistan</label>
+  <label><input type="checkbox" name="Country" value="Lithuania" /> Lithuania</label>
+  <label><input type="checkbox" name="Country" value="Estonia" /> Estonia</label>
+  <label><input type="checkbox" name="Country" value="Germany/Russia" /> Germany/Russia</label>
+  <label><input type="checkbox" name="Country" value="Kazakhstan" /> Kazakhstan</label>
+  <label><input type="checkbox" name="Country" value="Belarus" /> Belarus</label>
+  <label><input type="checkbox" name="Country" value="Moldova" /> Moldova</label>
+  <label><input type="checkbox" name="Country" value="Latvia" /> Latvia</label>
+  <label><input type="checkbox" name="Country" value="Turkmenistan" /> Turkmenistan</label>
+  <label><input type="checkbox" name="Country" value="Israel/Russia" /> Israel/Russia</label>
+  <label><input type="checkbox" name="Country" value="Bulgaria" /> Bulgaria</label>
+  <label><input type="checkbox" name="Country" value="Poland/Russia" /> Poland/Russia</label>
+
+  <h3>Soviet Republic</h3>
+  <label><input type="checkbox" name="SovietRepublic" value="Armenian SSR" /> Armenian SSR</label>
+  <label><input type="checkbox" name="SovietRepublic" value="Azerbaijan SSR" /> Azerbaijan SSR</label>
+  <label><input type="checkbox" name="SovietRepublic" value="Byelorussian SSR" /> Byelorussian SSR</label>
+  <label><input type="checkbox" name="SovietRepublic" value="Chuvash ASSR" /> Chuvash ASSR</label>
+  <label><input type="checkbox" name="SovietRepublic" value="Estonian SSR" /> Estonian SSR</label>
+  <label><input type="checkbox" name="SovietRepublic" value="Georgian SSR" /> Georgian SSR</label>
+  <label><input type="checkbox" name="SovietRepublic" value="Karelian ASSR" /> Karelian ASSR</label>
+  <label><input type="checkbox" name="SovietRepublic" value="Kazakh SSR" /> Kazakh SSR</label>
+  <label><input type="checkbox" name="SovietRepublic" value="Latvian SSR" /> Latvian SSR</label>
+  <label><input type="checkbox" name="SovietRepublic" value="Lithuanian SSR" /> Lithuanian SSR</label>
+  <label><input type="checkbox" name="SovietRepublic" value="Mari ASSR" /> Mari ASSR</label>
+  <label><input type="checkbox" name="SovietRepublic" value="Moldavian SSR" /> Moldavian SSR</label>
+  <label><input type="checkbox" name="SovietRepublic" value="North Ossetian ASSR" /> North Ossetian ASSR</label>
+  <label><input type="checkbox" name="SovietRepublic" value="People's Republic of Bulgaria" /> People's Republic of Bulgaria</label>
+  <label><input type="checkbox" name="SovietRepublic" value="Russian SFSR" /> Russian SFSR</label>
+  <label><input type="checkbox" name="SovietRepublic" value="Tartar ASSR" /> Tartar ASSR</label>
+  <label><input type="checkbox" name="SovietRepublic" value="Turkmen SSR" /> Turkmen SSR</label>
+  <label><input type="checkbox" name="SovietRepublic" value="Tuvan ASSR" /> Tuvan ASSR</label>
+  <label><input type="checkbox" name="SovietRepublic" value="Ukrainian SSR" /> Ukrainian SSR</label>
+  <label><input type="checkbox" name="SovietRepublic" value="Uzbek SSR" /> Uzbek SSR</label>
+
+  <h3>Decade</h3>
+  <label><input type="checkbox" name="Decade" value="1890s" /> 1890s</label>
+  <label><input type="checkbox" name="Decade" value="1900s" /> 1900s</label>
+  <label><input type="checkbox" name="Decade" value="1910s" /> 1910s</label>
+  <label><input type="checkbox" name="Decade" value="1920s" /> 1920s</label>
+  <label><input type="checkbox" name="Decade" value="1930s" /> 1930s</label>
+  <label><input type="checkbox" name="Decade" value="1940s" /> 1940s</label>
+  <label><input type="checkbox" name="Decade" value="1950s" /> 1950s</label>
+  <label><input type="checkbox" name="Decade" value="1960s" /> 1960s</label>
+  <label><input type="checkbox" name="Decade" value="1970s" /> 1970s</label>
+  <label><input type="checkbox" name="Decade" value="1980s" /> 1980s</label>
+  <label><input type="checkbox" name="Decade" value="1990s" /> 1990s</label>
+
+  <h3>Type of Piece</h3>
+  <label><input type="checkbox" name="Type" value="Scherzo" /> Scherzo</label>
+  <label><input type="checkbox" name="Type" value="Cornet solo" /> Cornet solo</label>
+  <label><input type="checkbox" name="Type" value="Sonata/Sonatina" /> Sonata/Sonatina</label>
+  <label><input type="checkbox" name="Type" value="Concerto/Concertino" /> Concerto/Concertino</label>
+  <label><input type="checkbox" name="Type" value="Poem" /> Poem</label>
+  <label><input type="checkbox" name="Type" value="Concert Piece" /> Concert Piece</label>
+  <label><input type="checkbox" name="Type" value="Fantasy/variations" /> Fantasy/variations</label>
+
+  <h3>Gender</h3>
+  <label><input type="checkbox" name="Gender" value="Male" /> Male</label>
+  <label><input type="checkbox" name="Gender" value="Female" /> Female</label>
+
+  <h3>Instrumentation</h3>
+  <label><input type="checkbox" name="Instrumentation" value="Unaccompanied" /> Unaccompanied</label>
+  <label><input type="checkbox" name="Instrumentation" value="Trumpet and piano" /> Trumpet and piano</label>
+  <label><input type="checkbox" name="Instrumentation" value="Trumpet and orchestra" /> Trumpet and orchestra</label>
+  <label><input type="checkbox" name="Instrumentation" value="Trumpet duet" /> Trumpet duet</label>
+  <label><input type="checkbox" name="Instrumentation" value="Mixed ensemble" /> Mixed ensemble</label>
+
+  {children}
+</div>
+<script>
+const filterPanel = document.querySelector('.filter-panel');
+const centerPanel = document.querySelector('#center-panel');
+
+const checkboxes = filterPanel.querySelectorAll('input[type="checkbox"]');
+
+// Helper: Get all selected filters as a dictionary
+function getSelectedFilters() {
+  const filters = {};
+  checkboxes.forEach(cb => {
+    if (cb.checked) {
+      const key = cb.name;
+      if (!filters[key]) filters[key] = [];
+      filters[key].push(cb.value);
+    }
+  });
+  return filters;
+}
+
+// Filter function
+function applyFilters(composers, filters) {
+  return composers.filter(c => {
+    for (const key in filters) {
+      if (!filters[key].includes(c[key])) return false;
+    }
+    return true;
+  });
+}
+
+// Event listener for all checkboxes
+checkboxes.forEach(cb => {
+  cb.addEventListener('change', async () => {
+    const filters = getSelectedFilters();
+
+    const allComposers = await fetch('/api/sheets.json').then(r => r.json());
+    const filtered = applyFilters(allComposers, filters);
+
+    const composerNames = filtered.map(c => c['ComposerName']);
+
+    centerPanel.innerHTML = composerNames.length
+      ? composerNames.map(name => `<p>${name}</p>`).join('')
+      : '<p>No results</p>';
+  });
+});
+</script>
