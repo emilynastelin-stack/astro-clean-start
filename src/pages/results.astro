@@ -55,9 +55,13 @@ console.log('Server-side searchQuery:', searchQuery);
         </fieldset>
         <fieldset>
           <legend data-translate="filter.type">Type</legend>
-          {["Scherzo","Cornet solo","Sonata/Sonatina","Concerto/Concertino","Poem","Concert Piece","Fantasy/variations"].map(t => (
-            <label><input type="checkbox" name="Type" value={t} /> {t}</label>
-          ))}
+          <label><input type="checkbox" name="Type" value="Scherzo" /> <span data-translate="filter.scherzo">Scherzo</span></label>
+          <label><input type="checkbox" name="Type" value="Cornet solo" /> <span data-translate="filter.cornetSolo">Cornet solo</span></label>
+          <label><input type="checkbox" name="Type" value="Sonata/Sonatina" /> <span data-translate="filter.sonata">Sonata/Sonatina</span></label>
+          <label><input type="checkbox" name="Type" value="Concerto/Concertino" /> <span data-translate="filter.concerto">Concerto/Concertino</span></label>
+          <label><input type="checkbox" name="Type" value="Poem" /> <span data-translate="filter.poem">Poem</span></label>
+          <label><input type="checkbox" name="Type" value="Concert Piece" /> <span data-translate="filter.concertPiece">Concert Piece</span></label>
+          <label><input type="checkbox" name="Type" value="Fantasy/variations" /> <span data-translate="filter.fantasy">Fantasy/variations</span></label>
         </fieldset>
 
       </div>
@@ -131,10 +135,14 @@ console.log('Server-side searchQuery:', searchQuery);
           <label><input type="checkbox" name="Gender" value="Female" class="mobile-filter-checkbox" /> <span data-translate="filter.female">Female</span></label>
         </fieldset>
         <fieldset>
-          <legend>Type</legend>
-          {["Scherzo","Cornet solo","Sonata/Sonatina","Concerto/Concertino","Poem","Concert Piece","Fantasy/variations"].map(t => (
-            <label><input type="checkbox" name="Type" value={t} class="mobile-filter-checkbox" /> {t}</label>
-          ))}
+          <legend data-translate="filter.type">Type</legend>
+          <label><input type="checkbox" name="Type" value="Scherzo" class="mobile-filter-checkbox" /> <span data-translate="filter.scherzo">Scherzo</span></label>
+          <label><input type="checkbox" name="Type" value="Cornet solo" class="mobile-filter-checkbox" /> <span data-translate="filter.cornetSolo">Cornet solo</span></label>
+          <label><input type="checkbox" name="Type" value="Sonata/Sonatina" class="mobile-filter-checkbox" /> <span data-translate="filter.sonata">Sonata/Sonatina</span></label>
+          <label><input type="checkbox" name="Type" value="Concerto/Concertino" class="mobile-filter-checkbox" /> <span data-translate="filter.concerto">Concerto/Concertino</span></label>
+          <label><input type="checkbox" name="Type" value="Poem" class="mobile-filter-checkbox" /> <span data-translate="filter.poem">Poem</span></label>
+          <label><input type="checkbox" name="Type" value="Concert Piece" class="mobile-filter-checkbox" /> <span data-translate="filter.concertPiece">Concert Piece</span></label>
+          <label><input type="checkbox" name="Type" value="Fantasy/variations" class="mobile-filter-checkbox" /> <span data-translate="filter.fantasy">Fantasy/variations</span></label>
         </fieldset>
 
       </div>
