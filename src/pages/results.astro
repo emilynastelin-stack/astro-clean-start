@@ -38,15 +38,39 @@ console.log('Server-side searchQuery:', searchQuery);
         
         <fieldset>
           <legend data-translate="filter.country">Country</legend>
-          {["Armenia","Russia","Ukraine","Georgia","Azerbaijan","Uzbekistan","Latvia","Estonia","Lithuania","Belarus","Moldova","Kyrgyzstan","Tajikistan","Turkmenistan","Kazakhstan"].map(c => (
-            <label><input type="checkbox" name="Country" value={c} /> {c}</label>
-          ))}
+          <label><input type="checkbox" name="Country" value="Armenia" /> <span data-translate="country.armenia">Armenia</span></label>
+          <label><input type="checkbox" name="Country" value="Russia" /> <span data-translate="country.russia">Russia</span></label>
+          <label><input type="checkbox" name="Country" value="Ukraine" /> <span data-translate="country.ukraine">Ukraine</span></label>
+          <label><input type="checkbox" name="Country" value="Georgia" /> <span data-translate="country.georgia">Georgia</span></label>
+          <label><input type="checkbox" name="Country" value="Azerbaijan" /> <span data-translate="country.azerbaijan">Azerbaijan</span></label>
+          <label><input type="checkbox" name="Country" value="Uzbekistan" /> <span data-translate="country.uzbekistan">Uzbekistan</span></label>
+          <label><input type="checkbox" name="Country" value="Latvia" /> <span data-translate="country.latvia">Latvia</span></label>
+          <label><input type="checkbox" name="Country" value="Estonia" /> <span data-translate="country.estonia">Estonia</span></label>
+          <label><input type="checkbox" name="Country" value="Lithuania" /> <span data-translate="country.lithuania">Lithuania</span></label>
+          <label><input type="checkbox" name="Country" value="Belarus" /> <span data-translate="country.belarus">Belarus</span></label>
+          <label><input type="checkbox" name="Country" value="Moldova" /> <span data-translate="country.moldova">Moldova</span></label>
+          <label><input type="checkbox" name="Country" value="Kyrgyzstan" /> <span data-translate="country.kyrgyzstan">Kyrgyzstan</span></label>
+          <label><input type="checkbox" name="Country" value="Tajikistan" /> <span data-translate="country.tajikistan">Tajikistan</span></label>
+          <label><input type="checkbox" name="Country" value="Turkmenistan" /> <span data-translate="country.turkmenistan">Turkmenistan</span></label>
+          <label><input type="checkbox" name="Country" value="Kazakhstan" /> <span data-translate="country.kazakhstan">Kazakhstan</span></label>
         </fieldset>
         <fieldset>
           <legend data-translate="filter.republic">Soviet Republic</legend>
-          {["Armenian SSR","Azerbaijan SSR","Byelorussian SSR","Estonian SSR","Georgian SSR","Kazakh SSR","Kirghiz SSR","Latvian SSR","Lithuanian SSR","Moldavian SSR","Russian SFSR","Tajik SSR","Turkmen SSR","Ukrainian SSR","Uzbek SSR"].map(r => (
-            <label><input type="checkbox" name="Soviet Republic" value={r} /> {r}</label>
-          ))}
+          <label><input type="checkbox" name="Soviet Republic" value="Armenian SSR" /> <span data-translate="republic.armenian">Armenian SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Azerbaijan SSR" /> <span data-translate="republic.azerbaijan">Azerbaijan SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Byelorussian SSR" /> <span data-translate="republic.byelorussian">Byelorussian SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Estonian SSR" /> <span data-translate="republic.estonian">Estonian SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Georgian SSR" /> <span data-translate="republic.georgian">Georgian SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Kazakh SSR" /> <span data-translate="republic.kazakh">Kazakh SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Kirghiz SSR" /> <span data-translate="republic.kirghiz">Kirghiz SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Latvian SSR" /> <span data-translate="republic.latvian">Latvian SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Lithuanian SSR" /> <span data-translate="republic.lithuanian">Lithuanian SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Moldavian SSR" /> <span data-translate="republic.moldavian">Moldavian SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Russian SFSR" /> <span data-translate="republic.russian">Russian SFSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Tajik SSR" /> <span data-translate="republic.tajik">Tajik SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Turkmen SSR" /> <span data-translate="republic.turkmen">Turkmen SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Ukrainian SSR" /> <span data-translate="republic.ukrainian">Ukrainian SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Uzbek SSR" /> <span data-translate="republic.uzbek">Uzbek SSR</span></label>
         </fieldset>
         <fieldset>
           <legend data-translate="filter.gender">Gender</legend>
@@ -118,16 +142,40 @@ console.log('Server-side searchQuery:', searchQuery);
       </div>
       <div class="mobile-filter-body">
         <fieldset>
-          <legend>Country</legend>
-          {["Armenia","Russia","Ukraine","Georgia","Azerbaijan","Uzbekistan","Latvia","Estonia","Lithuania","Belarus","Moldova","Kyrgyzstan","Tajikistan","Turkmenistan","Kazakhstan"].map(c => (
-            <label><input type="checkbox" name="Country" value={c} class="mobile-filter-checkbox" /> {c}</label>
-          ))}
+          <legend data-translate="filter.country">Country</legend>
+          <label><input type="checkbox" name="Country" value="Armenia" class="mobile-filter-checkbox" /> <span data-translate="country.armenia">Armenia</span></label>
+          <label><input type="checkbox" name="Country" value="Russia" class="mobile-filter-checkbox" /> <span data-translate="country.russia">Russia</span></label>
+          <label><input type="checkbox" name="Country" value="Ukraine" class="mobile-filter-checkbox" /> <span data-translate="country.ukraine">Ukraine</span></label>
+          <label><input type="checkbox" name="Country" value="Georgia" class="mobile-filter-checkbox" /> <span data-translate="country.georgia">Georgia</span></label>
+          <label><input type="checkbox" name="Country" value="Azerbaijan" class="mobile-filter-checkbox" /> <span data-translate="country.azerbaijan">Azerbaijan</span></label>
+          <label><input type="checkbox" name="Country" value="Uzbekistan" class="mobile-filter-checkbox" /> <span data-translate="country.uzbekistan">Uzbekistan</span></label>
+          <label><input type="checkbox" name="Country" value="Latvia" class="mobile-filter-checkbox" /> <span data-translate="country.latvia">Latvia</span></label>
+          <label><input type="checkbox" name="Country" value="Estonia" class="mobile-filter-checkbox" /> <span data-translate="country.estonia">Estonia</span></label>
+          <label><input type="checkbox" name="Country" value="Lithuania" class="mobile-filter-checkbox" /> <span data-translate="country.lithuania">Lithuania</span></label>
+          <label><input type="checkbox" name="Country" value="Belarus" class="mobile-filter-checkbox" /> <span data-translate="country.belarus">Belarus</span></label>
+          <label><input type="checkbox" name="Country" value="Moldova" class="mobile-filter-checkbox" /> <span data-translate="country.moldova">Moldova</span></label>
+          <label><input type="checkbox" name="Country" value="Kyrgyzstan" class="mobile-filter-checkbox" /> <span data-translate="country.kyrgyzstan">Kyrgyzstan</span></label>
+          <label><input type="checkbox" name="Country" value="Tajikistan" class="mobile-filter-checkbox" /> <span data-translate="country.tajikistan">Tajikistan</span></label>
+          <label><input type="checkbox" name="Country" value="Turkmenistan" class="mobile-filter-checkbox" /> <span data-translate="country.turkmenistan">Turkmenistan</span></label>
+          <label><input type="checkbox" name="Country" value="Kazakhstan" class="mobile-filter-checkbox" /> <span data-translate="country.kazakhstan">Kazakhstan</span></label>
         </fieldset>
         <fieldset>
-          <legend>Soviet Republic</legend>
-          {["Armenian SSR","Azerbaijan SSR","Byelorussian SSR","Estonian SSR","Georgian SSR","Kazakh SSR","Kirghiz SSR","Latvian SSR","Lithuanian SSR","Moldavian SSR","Russian SFSR","Tajik SSR","Turkmen SSR","Ukrainian SSR","Uzbek SSR"].map(r => (
-            <label><input type="checkbox" name="Soviet Republic" value={r} class="mobile-filter-checkbox" /> {r}</label>
-          ))}
+          <legend data-translate="filter.republic">Soviet Republic</legend>
+          <label><input type="checkbox" name="Soviet Republic" value="Armenian SSR" class="mobile-filter-checkbox" /> <span data-translate="republic.armenian">Armenian SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Azerbaijan SSR" class="mobile-filter-checkbox" /> <span data-translate="republic.azerbaijan">Azerbaijan SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Byelorussian SSR" class="mobile-filter-checkbox" /> <span data-translate="republic.byelorussian">Byelorussian SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Estonian SSR" class="mobile-filter-checkbox" /> <span data-translate="republic.estonian">Estonian SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Georgian SSR" class="mobile-filter-checkbox" /> <span data-translate="republic.georgian">Georgian SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Kazakh SSR" class="mobile-filter-checkbox" /> <span data-translate="republic.kazakh">Kazakh SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Kirghiz SSR" class="mobile-filter-checkbox" /> <span data-translate="republic.kirghiz">Kirghiz SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Latvian SSR" class="mobile-filter-checkbox" /> <span data-translate="republic.latvian">Latvian SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Lithuanian SSR" class="mobile-filter-checkbox" /> <span data-translate="republic.lithuanian">Lithuanian SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Moldavian SSR" class="mobile-filter-checkbox" /> <span data-translate="republic.moldavian">Moldavian SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Russian SFSR" class="mobile-filter-checkbox" /> <span data-translate="republic.russian">Russian SFSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Tajik SSR" class="mobile-filter-checkbox" /> <span data-translate="republic.tajik">Tajik SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Turkmen SSR" class="mobile-filter-checkbox" /> <span data-translate="republic.turkmen">Turkmen SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Ukrainian SSR" class="mobile-filter-checkbox" /> <span data-translate="republic.ukrainian">Ukrainian SSR</span></label>
+          <label><input type="checkbox" name="Soviet Republic" value="Uzbek SSR" class="mobile-filter-checkbox" /> <span data-translate="republic.uzbek">Uzbek SSR</span></label>
         </fieldset>
         <fieldset>
           <legend data-translate="filter.gender">Gender</legend>
