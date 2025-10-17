@@ -105,6 +105,7 @@ nav {
   display: flex;
   align-items: center;
   position: relative;
+  overflow: visible;
 }
 .toggle-button {
   background-color: white;
@@ -116,16 +117,14 @@ nav {
 }
 .language-menu {
   display: none;
-  position: absolute;
-  right: 0;
-  top: 110%;
+  position: fixed;
   background: white;
   border: 1px solid #ccc;
   border-radius: 6px;
   min-width: 140px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   flex-direction: column;
-  z-index: 1000;
+  z-index: 9999;
   overflow: visible;
 }
 .language-menu.show-menu {
@@ -252,8 +251,19 @@ document.addEventListener('DOMContentLoaded', () => {
   toggleButton?.addEventListener('click', (e) => {
     e.stopPropagation();
     console.log('Toggle button clicked, current menu classes:', menu.className);
+    
+    // Position the dropdown relative to the toggle button
+    const rect = toggleButton.getBoundingClientRect();
+    menu.style.top = (rect.bottom + 8) + 'px';
+    menu.style.right = (window.innerWidth - rect.right) + 'px';
+    
+    console.log('Toggle button position:', rect);
     menu.classList.toggle('show-menu');
     console.log('After toggle, menu classes:', menu.className);
+    if (menu.classList.contains('show-menu')) {
+      console.log('Menu positioned at top:', menu.style.top, 'right:', menu.style.right);
+      console.log('Menu z-index:', getComputedStyle(menu).zIndex);
+    }
   });
 
   menu?.querySelectorAll('div').forEach(item => {
