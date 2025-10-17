@@ -13,20 +13,19 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
       const urlLang = new URLSearchParams(window.location.search).get('lang');
       const storedLang = localStorage.getItem('selectedLanguage');
       
-      // Force English as default - clear any stored Russian preference
-      if (!urlLang && (!storedLang || storedLang === 'ru')) {
-        localStorage.removeItem('selectedLanguage');
-        this.currentLang = 'en';
-      } else {
-        this.currentLang = urlLang || storedLang || 'en';
-      }
+      // Priority: URL parameter > stored language > English default
+      this.currentLang = urlLang || storedLang || 'en';
       
       // Ensure we always have a valid language (en, de, or ru)
       if (!['en', 'de', 'ru'].includes(this.currentLang)) {
         this.currentLang = 'en';
       }
       
+      // Store the current language in localStorage for persistence
+      localStorage.setItem('selectedLanguage', this.currentLang);
+      
       console.log('LanguageManager initializing with:', this.currentLang);
+      console.log('Language stored in localStorage:', localStorage.getItem('selectedLanguage'));
       
       // Update UI based on current language
       this.applyLanguage(this.currentLang);
@@ -48,6 +47,7 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
       console.log('Switching language from', this.currentLang, 'to', newLang);
       this.currentLang = newLang;
       localStorage.setItem('selectedLanguage', newLang);
+      console.log('Language saved to localStorage:', newLang);
       
       // Update URL without reload
       const url = new URL(window.location);
