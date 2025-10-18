@@ -166,11 +166,31 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
       const countryElements = document.querySelectorAll('.country-value');
       countryElements.forEach(el => {
         const country = el.getAttribute('data-country');
-        if (country) {
-          const countryKey = `country.${country.toLowerCase().replace(/\s+/g, '')}`;
-          const translation = this.getTranslation(countryKey, lang);
-          if (translation && translation !== countryKey) {
-            el.textContent = translation;
+        if (country && country !== "—" && country !== "") {
+          const countryMap = {
+            'Russia': 'country.russia',
+            'Ukraine': 'country.ukraine', 
+            'Armenia': 'country.armenia',
+            'Georgia': 'country.georgia',
+            'Azerbaijan': 'country.azerbaijan',
+            'Uzbekistan': 'country.uzbekistan',
+            'Latvia': 'country.latvia',
+            'Estonia': 'country.estonia',
+            'Lithuania': 'country.lithuania',
+            'Belarus': 'country.belarus',
+            'Moldova': 'country.moldova',
+            'Kyrgyzstan': 'country.kyrgyzstan',
+            'Tajikistan': 'country.tajikistan',
+            'Turkmenistan': 'country.turkmenistan',
+            'Kazakhstan': 'country.kazakhstan'
+          };
+          
+          const countryKey = countryMap[country];
+          if (countryKey) {
+            const translation = this.getTranslation(countryKey, lang);
+            if (translation && translation !== countryKey) {
+              el.textContent = translation;
+            }
           }
         }
       });
@@ -202,6 +222,26 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
           if (republicKey) {
             const translation = this.getTranslation(republicKey, lang);
             if (translation && translation !== republicKey) {
+              el.textContent = translation;
+            }
+          }
+        }
+      });
+      
+      // Translate gender values
+      const genderElements = document.querySelectorAll('.gender-value');
+      genderElements.forEach(el => {
+        const gender = el.getAttribute('data-gender');
+        if (gender && gender !== "—" && gender !== "") {
+          const genderMap = {
+            'Male': 'filter.male',
+            'Female': 'filter.female'
+          };
+          
+          const genderKey = genderMap[gender];
+          if (genderKey) {
+            const translation = this.getTranslation(genderKey, lang);
+            if (translation && translation !== genderKey) {
               el.textContent = translation;
             }
           }
@@ -274,6 +314,7 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
           'republic.uzbek': 'Uzbek SSR',
           'composer.additionalInfo': 'Additional Info',
           'composer.russian': 'Russian',
+          'composer.native': 'Native Language',
           'composer.country': 'Country',
           'composer.republic': 'Soviet Republic', 
           'composer.gender': 'Gender',
@@ -364,6 +405,7 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
           'republic.uzbek': 'Usbekische SSR',
           'composer.additionalInfo': 'Zusätzliche Informationen',
           'composer.russian': 'Russisch',
+          'composer.native': 'Muttersprache',
           'composer.country': 'Land',
           'composer.republic': 'Sowjetrepublik',
           'composer.gender': 'Geschlecht',
@@ -454,6 +496,7 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
           'republic.uzbek': 'Узбекская ССР',
           'composer.additionalInfo': 'Дополнительная информация',
           'composer.russian': 'Русский',
+          'composer.native': 'Родной язык',
           'composer.country': 'Страна',
           'composer.republic': 'Советская республика',
           'composer.gender': 'Пол',

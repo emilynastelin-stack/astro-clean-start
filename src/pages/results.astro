@@ -400,15 +400,15 @@ console.log('Server-side searchQuery:', searchQuery);
             <h3>${composer.Composer}</h3>
             <p class="lifespan"><em>1923-1986</em></p>
             <br>
-            <p><b>Russian:</b> ${composer["Композитор"] || "—"}</p>
-            <p><b>${composer.Native || "Language"}:</b> ${composer.X || "—"}</p>
+            <p><b><span data-translate="composer.russian">Russian</span>:</b> ${composer["Композитор"] || "—"}</p>
+            <p><b><span data-translate="composer.native">${composer.Native || "Language"}</span>:</b> ${composer.X || "—"}</p>
             ${composer.D && composer.E ? `<p><b>${composer.D}:</b> ${composer.E}</p>` : ''}
             <br>
-            <p><b>Country:</b> ${composer.Country || "—"}</p>
-            <p><b>Soviet Republic:</b> ${composer["Soviet Republic"] || "—"}</p>
+            <p><b><span data-translate="composer.country">Country</span>:</b> <span class="country-value" data-country="${composer.Country || ""}">${composer.Country || "—"}</span></p>
+            <p><b><span data-translate="composer.republic">Soviet Republic</span>:</b> <span class="republic-value" data-republic="${composer["Soviet Republic"] || ""}">${composer["Soviet Republic"] || "—"}</span></p>
             <br>
-            <p><b>Gender:</b> ${composer.Gender || "—"}</p>
-            ${composer.Notes && composer.Notes.trim() ? `<p><b>Notes:</b> ${composer.Notes}</p>` : ''}
+            <p><b><span data-translate="composer.gender">Gender</span>:</b> <span class="gender-value" data-gender="${composer.Gender || ""}">${composer.Gender || "—"}</span></p>
+            ${composer.Notes && composer.Notes.trim() ? `<p><b><span data-translate="composer.notes">Notes</span>:</b> ${composer.Notes}</p>` : ''}
           </div>
         `;
         
@@ -421,10 +421,20 @@ console.log('Server-side searchQuery:', searchQuery);
           if (mobileOverlay && mobileDetailsContent) {
             mobileDetailsContent.innerHTML = detailsHTML;
             mobileOverlay.classList.add('show');
+            
+            // Translate the newly added content
+            if (window.LanguageManager) {
+              window.LanguageManager.translateComposerDetails(window.LanguageManager.currentLang);
+            }
           }
         } else {
           // Desktop: Show in right panel
           composerDetailsPanel.innerHTML = detailsHTML;
+          
+          // Translate the newly added content
+          if (window.LanguageManager) {
+            window.LanguageManager.translateComposerDetails(window.LanguageManager.currentLang);
+          }
         }
       }
 
