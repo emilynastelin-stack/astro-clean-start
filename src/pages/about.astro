@@ -3,15 +3,9 @@ import MainLayout from "../layouts/MainLayout.astro";
 ---
 
 <style>
-  /* Adjust viewport calculations for mobile (no footer) */
-  @media (max-width: 768px) {
-    .main-content {
-      min-height: calc(100vh - 120px) !important; /* Account for navbar only, no footer */
-    }
-    
-    .main-content > div {
-      max-height: calc(100vh - 170px) !important; /* Account for navbar + padding, no footer */
-    }
+  /* Remove height constraints to allow natural scrolling */
+  .main-content {
+    padding-bottom: 2rem; /* Add some bottom padding for spacing */
   }
 </style>
 
@@ -25,7 +19,7 @@ import MainLayout from "../layouts/MainLayout.astro";
     />
   </div>
 
-  <main style="display:flex; justify-content:center; align-items:flex-start; padding:2rem 1rem; min-height:calc(100vh - 250px); overflow-y:auto;" class="main-content">
+  <main style="display:flex; justify-content:center; align-items:flex-start; padding:2rem 1rem;" class="main-content">
     <div
       style="
         background:white;
@@ -41,8 +35,6 @@ import MainLayout from "../layouts/MainLayout.astro";
         line-height:1.6;
         color:#333;
         font-family:'Georgia', serif;
-        max-height:calc(100vh - 250px);
-        overflow-y:auto;
       "
     >
       <h2 style="margin-bottom:1rem; color:#222; font-size:1.75rem; border-bottom:2px solid #800000; padding-bottom:0.3rem;">
