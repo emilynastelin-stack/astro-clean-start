@@ -401,7 +401,8 @@ console.log('Server-side searchQuery:', searchQuery);
             <p class="lifespan"><em>1923-1986</em></p>
             <br>
             <p><b><span data-translate="composer.russian">Russian</span>:</b> ${composer["Композитор"] || "—"}</p>
-            <p><b><span data-translate="composer.native">${composer.Native || "Language"}</span>:</b> ${composer.X || "—"}</p>
+            ${composer.Y ? `<p><b><span data-translate="composer.native">Native Language</span>:</b> ${composer.Y}</p>` : ''}
+            ${composer.X ? `<p><b>${composer.Y || "Native"}:</b> ${composer.X}</p>` : ''}
             ${composer.D && composer.E ? `<p><b>${composer.D}:</b> ${composer.E}</p>` : ''}
             <br>
             <p><b><span data-translate="composer.country">Country</span>:</b> <span class="country-value" data-country="${composer.Country || ""}">${composer.Country || "—"}</span></p>
