@@ -476,11 +476,13 @@ console.log('Server-side searchQuery:', searchQuery);
           
           filtered = filtered.filter(c => {
             const normalizedComposer = normalizeText(c.Composer);
+            const normalizedComposerRU = normalizeText(c['Композитор'] || '');
             const normalizedTitle = normalizeText(c.Title || '');
             const normalizedTitelDE = normalizeText(c.Titel || '');
             const normalizedTitleRU = normalizeText(c['Заголовок'] || '');
             
             return normalizedComposer.includes(normalizedQuery) || 
+                   normalizedComposerRU.includes(normalizedQuery) ||
                    normalizedTitle.includes(normalizedQuery) ||
                    normalizedTitelDE.includes(normalizedQuery) ||
                    normalizedTitleRU.includes(normalizedQuery);
@@ -545,10 +547,18 @@ console.log('Server-side searchQuery:', searchQuery);
             displayTitle = c.Title || 'Untitled'; // English fallback
           }
           
+          // Get composer name based on current language
+          let displayComposer = '';
+          if (currentLang === 'ru' && c['Композитор']) {
+            displayComposer = c['Композитор']; // Russian composer name
+          } else {
+            displayComposer = c.Composer; // English/German use English name
+          }
+          
           return `
             <div class="song-card">
               <div class="song-title">${displayTitle}</div>
-              <div class="song-composer">${c.Composer}</div>
+              <div class="song-composer">${displayComposer}</div>
               ${c.Year ? `<div class="song-year">${c.Year}</div>` : ''}
             </div>
           `;
