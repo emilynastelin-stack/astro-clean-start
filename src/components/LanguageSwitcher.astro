@@ -250,20 +250,28 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
       
       // Update native language labels from columns D/S/T
       const nativeLanguageElements = document.querySelectorAll('.native-language-label');
+      console.log('Found native language elements:', nativeLanguageElements.length);
       nativeLanguageElements.forEach(el => {
-        const composerData = el.dataset.composer ? JSON.parse(el.dataset.composer) : null;
-        if (composerData) {
-          let languageName = '';
-          if (lang === 'de' && composerData.S) {
-            languageName = composerData.S; // German from column S
-          } else if (lang === 'ru' && composerData.T) {
-            languageName = composerData.T; // Russian from column T  
-          } else if (composerData.D) {
-            languageName = composerData.D; // English fallback from column D
-          }
-          if (languageName) {
-            el.textContent = languageName;
-          }
+        const dValue = el.dataset.d || '';
+        const sValue = el.dataset.s || '';
+        const tValue = el.dataset.t || '';
+        console.log('Native language data - D:', dValue, 'S:', sValue, 'T:', tValue);
+        
+        let languageName = '';
+        if (lang === 'de' && sValue) {
+          languageName = sValue; // German from column S
+          console.log('Using German language name:', languageName);
+        } else if (lang === 'ru' && tValue) {
+          languageName = tValue; // Russian from column T
+          console.log('Using Russian language name:', languageName);
+        } else if (dValue) {
+          languageName = dValue; // English fallback from column D
+          console.log('Using English language name:', languageName);
+        }
+        
+        if (languageName) {
+          console.log('Setting native language label to:', languageName);
+          el.textContent = languageName;
         }
       });
     },
