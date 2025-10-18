@@ -248,15 +248,27 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
         }
       });
       
-      // Update native language labels (currently just using Language field)
+      // Update native language labels using German/Russian columns
       const nativeLanguageElements = document.querySelectorAll('.native-language-label');
       console.log('Found native language elements:', nativeLanguageElements.length);
       nativeLanguageElements.forEach(el => {
-        const languageName = el.dataset.language || '';
-        console.log('Native language data:', languageName);
+        const englishName = el.dataset.language || '';
+        const germanName = el.dataset.sprache || '';
+        const russianName = el.dataset.yazyk || '';
+        console.log('Native language data - EN:', englishName, 'DE:', germanName, 'RU:', russianName);
         
-        // For now, just use the existing language name
-        // TODO: Add German/Russian translations when columns are available
+        let languageName = '';
+        if (lang === 'de' && germanName) {
+          languageName = germanName; // German from Sprache column
+          console.log('Using German language name:', languageName);
+        } else if (lang === 'ru' && russianName) {
+          languageName = russianName; // Russian from язык column
+          console.log('Using Russian language name:', languageName);
+        } else if (englishName) {
+          languageName = englishName; // English fallback from Language column
+          console.log('Using English language name:', languageName);
+        }
+        
         if (languageName) {
           console.log('Setting native language label to:', languageName);
           el.textContent = languageName;
