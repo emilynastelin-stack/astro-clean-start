@@ -247,6 +247,25 @@ const currentLang = Astro.url.searchParams.get('lang') || 'en';
           }
         }
       });
+      
+      // Update native language labels from columns D/S/T
+      const nativeLanguageElements = document.querySelectorAll('.native-language-label');
+      nativeLanguageElements.forEach(el => {
+        const composerData = el.dataset.composer ? JSON.parse(el.dataset.composer) : null;
+        if (composerData) {
+          let languageName = '';
+          if (lang === 'de' && composerData.S) {
+            languageName = composerData.S; // German from column S
+          } else if (lang === 'ru' && composerData.T) {
+            languageName = composerData.T; // Russian from column T  
+          } else if (composerData.D) {
+            languageName = composerData.D; // English fallback from column D
+          }
+          if (languageName) {
+            el.textContent = languageName;
+          }
+        }
+      });
     },
     
     // Get translation for a key
