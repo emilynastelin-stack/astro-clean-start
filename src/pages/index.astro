@@ -57,7 +57,10 @@ import MainLayout from '../layouts/MainLayout.astro';
     <div style="padding: 2rem 3rem; width: 100%; max-width: 600px;">
       <!-- Mast Image -->
       <div class="mast-container" style="margin: -100px 0 1.5rem 0; display: flex; justify-content: center;">
-        <img src="https://i.imgur.com/DmF8epu.png" alt="Mast" style="max-width: 100%; height: auto; max-height: 350px;" />
+        <img id="mastImage" src="https://i.imgur.com/DmF8epu.png" alt="Mast" style="max-width: 100%; height: auto; max-height: 350px;" 
+             data-lang-en="https://i.imgur.com/DmF8epu.png"
+             data-lang-de="https://i.imgur.com/8flVrfJ.png" 
+             data-lang-ru="https://i.imgur.com/gfiCPHw.png" />
       </div>
 
       <!-- Search Panel -->
@@ -95,3 +98,42 @@ import MainLayout from '../layouts/MainLayout.astro';
     </div>
   </main>
 </MainLayout>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const mastImage = document.getElementById('mastImage');
+  
+  // Function to update mast image based on language
+  const updateMastImage = (lang) => {
+    if (mastImage) {
+      const imageUrl = mastImage.getAttribute(`data-lang-${lang}`);
+      if (imageUrl) {
+        mastImage.src = imageUrl;
+        console.log(`Updated mast image for language ${lang}:`, imageUrl);
+      }
+    }
+  };
+  
+  // Listen for language changes
+  document.addEventListener('languageChanged', (event) => {
+    const lang = event.detail.lang;
+    console.log('Language changed to:', lang);
+    updateMastImage(lang);
+  });
+  
+  // Initialize with current language if LanguageManager is ready
+  const initializeImage = () => {
+    if (window.LanguageManager) {
+      const currentLang = window.LanguageManager.currentLang;
+      console.log('Initializing mast image with language:', currentLang);
+      updateMastImage(currentLang);
+    } else {
+      // Wait for LanguageManager if not ready yet
+      setTimeout(initializeImage, 100);
+    }
+  };
+  
+  // Start initialization
+  initializeImage();
+});
+</script>

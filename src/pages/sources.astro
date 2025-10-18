@@ -37,17 +37,10 @@ const bibliography = [
   gap: 1.5rem;
   max-width: 1000px;
   margin: 0 auto;
-  min-height: calc(100vh - 250px);
-  max-height: calc(100vh - 250px);
-  overflow-y: auto;
 }
 
-/* Adjust viewport calculations for mobile (no footer) */
+/* Responsive */
 @media (max-width: 768px) {
-  .page-container {
-    min-height: calc(100vh - 120px) !important; /* Account for navbar only, no footer */
-    max-height: calc(100vh - 120px) !important;
-  }
 }
 
 /* Page title */
@@ -165,8 +158,8 @@ const bibliography = [
 
 <MainLayout>
 
-  <!-- Mast Image -->
-  <div style="width:100vw; height:250px; overflow:hidden; position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw;">
+  <!-- Header image -->
+  <div style="width:100%; height:200px; overflow:hidden;">
     <img 
       src="https://i.imgur.com/MXH9C0r.png" 
       alt="Mast image" 
@@ -176,25 +169,25 @@ const bibliography = [
 
   <main class="page-container">
     
-    <h1 class="page-title">Sources & References</h1>
+    <h1 class="page-title" data-translate="sources.title">Sources & References</h1>
 
     <!-- Special Thanks Box -->
     <div class="special-thanks">
-      <h2>Special Thanks</h2>
-      <p>
+      <h2 data-translate="sources.thanks">Special Thanks</h2>
+      <p data-translate="sources.thanks.alex">
         Thank you to <strong>Alex Dzord</strong> for double-checking the Russian and Belarusian transliterations in this archive, ensuring accuracy and authenticity in representing these works.
       </p>
-      <p>
+      <p data-translate="sources.thanks.neef">
         <em>Vielen Dank an Herrn Neef für die Fotos der Manuskripte von Oskar Böhmes Trompetenduett „Maiglöckchen", damit ich sie sehen und in dieses Archiv aufnehmen konnte.</em>
       </p>
-      <p>
+      <p data-translate="sources.thanks.sources">
         The following sources were used to locate and verify the music cited in this archive.
       </p>
     </div>
 
     <!-- Bibliography Section -->
     <div class="sources-section">
-      <h2 class="section-title">Bibliography</h2>
+      <h2 class="section-title" data-translate="sources.bibliography">Bibliography</h2>
       <div class="bibliography-grid">
         {bibliography.map(item => (
           <div
@@ -203,7 +196,7 @@ const bibliography = [
           >
             <h3 class="bibliography-title">{item.title}</h3>
             {item.author && <p class="bibliography-author">{item.author}</p>}
-            {item.link && <p class="click-indicator">Click to visit source</p>}
+            {item.link && <p class="click-indicator" data-translate="sources.click">Click to visit source</p>}
           </div>
         ))}
       </div>

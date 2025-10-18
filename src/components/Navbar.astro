@@ -33,14 +33,14 @@ nav {
   opacity: 0.7;
 }
 
-.brand-ru {
+.brand-secondary {
   color: #4d4d4d;
   font-weight: 600;
 }
 
-/* Hide Russian on mobile */
+/* Hide secondary text on mobile */
 @media (max-width: 768px) {
-  .brand-ru,
+  .brand-secondary,
   .brand-separator {
     display: none;
   }
@@ -197,11 +197,11 @@ nav {
     <div></div>
   </div>
 
-  <!-- Brand bilingual -->
+  <!-- Brand multilingual -->
   <a href="/" class="brand">
-    <span class="brand-en">Archive of Soviet Trumpet Music</span>
+    <span class="brand-primary" data-translate="nav.brand.primary">Archive of Soviet Trumpet Music</span>
     <span class="brand-separator">|</span>
-    <span class="brand-ru">Архив советской трубной музыки</span>
+    <span class="brand-secondary" data-translate="nav.brand.secondary">Архив советской трубной музыки</span>
   </a>
 
   <!-- Language toggle -->

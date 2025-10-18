@@ -98,12 +98,8 @@ import MainLayout from "../layouts/MainLayout.astro";
     padding-bottom: 0.3rem;
   }
 
-  /* Adjust viewport calculations for mobile (no footer) */
+  /* Mobile styles */
   @media (max-width: 768px) {
-    .main-content {
-      min-height: calc(100vh - 120px) !important; /* Account for navbar only, no footer */
-      max-height: calc(100vh - 120px) !important;
-    }
     
     .form-container, .intro-section {
       padding: 2rem;
@@ -121,8 +117,8 @@ import MainLayout from "../layouts/MainLayout.astro";
 </style>
 
 <MainLayout>
-  <!-- Full-width mast image -->
-  <div style="width:100vw; height:250px; overflow:hidden; position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw;">
+  <!-- Header image -->
+  <div style="width:100%; height:200px; overflow:hidden;">
     <img 
       src="https://i.imgur.com/MXH9C0r.png" 
       alt="Mast image" 
@@ -130,12 +126,12 @@ import MainLayout from "../layouts/MainLayout.astro";
     />
   </div>
 
-  <main style="display:flex; flex-direction:column; align-items:center; padding:2rem 1rem; margin-top:-1.5rem; min-height:calc(100vh - 250px); max-height:calc(100vh - 250px); overflow-y:auto;" class="main-content">
+  <main style="display:flex; flex-direction:column; align-items:center; padding:2rem 1rem; margin-top:-1.5rem;" class="main-content">
     
     <!-- Intro / contribute section -->
     <div class="intro-section">
-      <h1 class="page-title">Contribute to the Archive</h1>
-      <p style="font-size: 1.1rem; color: #555; max-width: 600px; margin: 0 auto;">
+      <h1 class="page-title" data-translate="submit.title">Contribute to the Archive</h1>
+      <p style="font-size: 1.1rem; color: #555; max-width: 600px; margin: 0 auto;" data-translate="submit.description">
         Help us preserve and expand the Archive of Soviet Trumpet Music. Whether you have scores, recordings, 
         research materials, or corrections to suggest, your contributions help make this resource more complete and valuable.
       </p>
@@ -143,15 +139,16 @@ import MainLayout from "../layouts/MainLayout.astro";
 
     <!-- Submission form -->
     <div class="form-container">
-      <h2 class="section-title">Submit Materials</h2>
+      <h2 class="section-title" data-translate="submit.materials">Submit Materials</h2>
       
       <form action="#" method="POST" style="margin-top: 2rem;">
         <div class="form-group">
-          <label for="name" class="form-label">Your Name *</label>
+          <label for="name" class="form-label" data-translate="submit.name">Your Name *</label>
           <input 
             type="text" 
             id="name" 
             name="name" 
+            data-translate-placeholder="submit.placeholder.name"
             placeholder="Enter your full name" 
             required
             class="form-input"
@@ -159,11 +156,12 @@ import MainLayout from "../layouts/MainLayout.astro";
         </div>
 
         <div class="form-group">
-          <label for="email" class="form-label">Email Address *</label>
+          <label for="email" class="form-label" data-translate="submit.email">Email Address *</label>
           <input 
             type="email" 
             id="email" 
             name="email" 
+            data-translate-placeholder="submit.placeholder.email"
             placeholder="your.email@example.com" 
             required
             class="form-input"
@@ -171,29 +169,30 @@ import MainLayout from "../layouts/MainLayout.astro";
         </div>
 
         <div class="form-group">
-          <label for="material-type" class="form-label">Type of Material *</label>
+          <label for="material-type" class="form-label" data-translate="submit.type">Type of Material *</label>
           <select 
             id="material-type" 
             name="material-type" 
             required
             class="form-input"
           >
-            <option value="">Please select a type</option>
-            <option value="score">Music Score</option>
-            <option value="recording">Recording</option>
-            <option value="research">Research / Academic Article</option>
-            <option value="correction">Correction / Update</option>
-            <option value="biographical">Biographical Information</option>
-            <option value="other">Other</option>
+            <option value="" data-translate="submit.type.select">Please select a type</option>
+            <option value="score" data-translate="submit.type.score">Music Score</option>
+            <option value="recording" data-translate="submit.type.recording">Recording</option>
+            <option value="research" data-translate="submit.type.research">Research / Academic Article</option>
+            <option value="correction" data-translate="submit.type.correction">Correction / Update</option>
+            <option value="biographical" data-translate="submit.type.biographical">Biographical Information</option>
+            <option value="other" data-translate="submit.type.other">Other</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label for="description" class="form-label">Description & Details *</label>
+          <label for="description" class="form-label" data-translate="submit.description">Description & Details *</label>
           <textarea 
             id="description" 
             name="description" 
             rows="5" 
+            data-translate-placeholder="submit.placeholder.description"
             placeholder="Please provide details about the material you're submitting. Include composer names, piece titles, dates, sources, and any other relevant information..."
             required
             class="form-input form-textarea"
@@ -201,7 +200,7 @@ import MainLayout from "../layouts/MainLayout.astro";
         </div>
 
         <div class="form-group">
-          <label for="file" class="form-label">Upload File (optional)</label>
+          <label for="file" class="form-label" data-translate="submit.file">Upload File (optional)</label>
           <input 
             type="file" 
             id="file" 
@@ -209,12 +208,12 @@ import MainLayout from "../layouts/MainLayout.astro";
             class="form-input"
             accept=".pdf,.jpg,.jpeg,.png,.mp3,.wav,.doc,.docx,.txt"
           />
-          <small style="color: #666; font-size: 0.85rem; margin-top: 0.25rem; display: block;">
+          <small style="color: #666; font-size: 0.85rem; margin-top: 0.25rem; display: block;" data-translate="submit.file.formats">
             Accepted formats: PDF, images, audio files, documents (max 10MB)
           </small>
         </div>
 
-        <button type="submit" class="submit-button">
+        <button type="submit" class="submit-button" data-translate="submit.button">
           Submit Contribution
         </button>
       </form>

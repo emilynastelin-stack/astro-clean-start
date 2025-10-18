@@ -10,8 +10,8 @@ import MainLayout from "../layouts/MainLayout.astro";
 </style>
 
 <MainLayout>
-  <!-- Full-width mast image -->
-  <div style="width:100vw; height:200px; overflow:hidden; position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw;">
+  <!-- Header image -->
+  <div style="width:100%; height:200px; overflow:hidden;">
     <img 
       src="https://i.imgur.com/MXH9C0r.png" 
       alt="Mast image" 
@@ -37,43 +37,43 @@ import MainLayout from "../layouts/MainLayout.astro";
         font-family:'Georgia', serif;
       "
     >
-      <h2 style="margin-bottom:1rem; color:#222; font-size:1.75rem; border-bottom:2px solid #800000; padding-bottom:0.3rem;">
+      <h2 style="margin-bottom:1rem; color:#222; font-size:1.75rem; border-bottom:2px solid #800000; padding-bottom:0.3rem;" data-translate="about.title">
         About the Archive of Soviet Trumpet Music
       </h2>
-      <p>
+      <p data-translate="about.description">
         The <strong>Archive of Soviet Trumpet Music</strong> is intended to index and document music from the former Soviet republics. 
         This website is currently in development, and additional features and information will become available soon.
       </p>
 
-      <h2 style="margin:2rem 0 1rem; color:#222; font-size:1.5rem; border-bottom:1px solid #ccc; padding-bottom:0.3rem;">
+      <h2 style="margin:2rem 0 1rem; color:#222; font-size:1.5rem; border-bottom:1px solid #ccc; padding-bottom:0.3rem;" data-translate="about.upcoming">
         Upcoming Features
       </h2>
       <ul style="padding-left:1.2rem; margin:0;">
-        <li>Composer information — names, nationalities, and dates</li>
-        <li>Composition titles and basic catalog details</li>
-        <li>Expanded information about sources and archives</li>
-        <li>Links to public-domain scores and library holdings (when available)</li>
-        <li>Language options, including Russian</li>
+        <li data-translate="about.upcoming.composers">Composer information — names, nationalities, and dates</li>
+        <li data-translate="about.upcoming.compositions">Composition titles and basic catalog details</li>
+        <li data-translate="about.upcoming.sources">Expanded information about sources and archives</li>
+        <li data-translate="about.upcoming.links">Links to public-domain scores and library holdings (when available)</li>
+        <li data-translate="about.upcoming.languages">Language options, including Russian</li>
       </ul>
 
-      <h2 style="margin:2rem 0 1rem; color:#222; font-size:1.5rem; border-bottom:1px solid #ccc; padding-bottom:0.3rem;">
+      <h2 style="margin:2rem 0 1rem; color:#222; font-size:1.5rem; border-bottom:1px solid #ccc; padding-bottom:0.3rem;" data-translate="about.contributions">
         Contributions
       </h2>
-      <p>
+      <p data-translate="about.contributions.description">
         In the future, users will be able to submit new sources and compositions to the archive. 
         If you have materials you'd like to contribute, please check back soon or reach out to <strong>Emily Nastelin</strong> directly.
       </p>
 
-      <h2 style="margin:2rem 0 1rem; color:#222; font-size:1.5rem; border-bottom:1px solid #ccc; padding-bottom:0.3rem;">
+      <h2 style="margin:2rem 0 1rem; color:#222; font-size:1.5rem; border-bottom:1px solid #ccc; padding-bottom:0.3rem;" data-translate="about.technical">
         Technical Information
       </h2>
-      <p>
+      <p data-translate="about.technical.description">
         This archive is built using modern web technologies, ensuring a responsive and user-friendly experience. 
         Accessibility and clarity are priorities, and we aim to make the content available to a diverse audience. 
         All graphics and web layouts are original creations of <strong>Emily Nastelin</strong>.
       </p>
 
-      <p style="margin-top:2rem; font-style:italic; color:#666; text-align:right;">
+      <p style="margin-top:2rem; font-style:italic; color:#666; text-align:right;" data-translate="about.signature">
         — Emily Nastelin
       </p>
     </div>
