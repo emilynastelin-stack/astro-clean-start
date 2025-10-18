@@ -120,7 +120,6 @@ nav {
   position: fixed;
   background: white;
   color: black;
-  border: 2px solid red;
   padding: 1rem;
   z-index: 99999;
   border-radius: 6px;
@@ -154,6 +153,21 @@ nav {
 }
 .language-menu div:hover {
   background-color: #f8f9fa;
+}
+
+/* Flag icon styling */
+.flag-icon {
+  width: 20px;
+  height: 13px;
+  margin-right: 8px;
+  vertical-align: middle;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.language-menu div {
+  display: flex;
+  align-items: center;
 }
 
 /* Mobile styling */
@@ -208,9 +222,32 @@ nav {
   <div class="language-toggle" id="langToggle">
     <button class="toggle-button" id="toggleButton" data-lang-toggle>EN</button>
     <div class="language-menu" id="langMenu">
-      <div data-lang="EN">🇬🇧 English</div>
-      <div data-lang="RU">🇷🇺 Русский</div>
-      <div data-lang="DE">🇩🇪 Deutsch</div>
+      <div data-lang="EN">
+        <svg class="flag-icon" viewBox="0 0 24 16" xmlns="http://www.w3.org/2000/svg">
+          <rect width="24" height="16" fill="#012169"/>
+          <path d="m0 0 24 16M24 0 0 16" stroke="#fff" stroke-width="2.67"/>
+          <path d="m0 0 24 16M24 0 0 16" stroke="#C8102E" stroke-width="1.6"/>
+          <path d="M12 0v16M0 8h24" stroke="#fff" stroke-width="4.27"/>
+          <path d="M12 0v16M0 8h24" stroke="#C8102E" stroke-width="2.67"/>
+        </svg>
+        English
+      </div>
+      <div data-lang="RU">
+        <svg class="flag-icon" viewBox="0 0 24 16" xmlns="http://www.w3.org/2000/svg">
+          <rect width="24" height="16" fill="#0033A0"/>
+          <rect width="24" height="10.67" fill="#fff"/>
+          <rect width="24" height="5.33" fill="#DA020E"/>
+        </svg>
+        Русский
+      </div>
+      <div data-lang="DE">
+        <svg class="flag-icon" viewBox="0 0 24 16" xmlns="http://www.w3.org/2000/svg">
+          <rect width="24" height="16" fill="#000"/>
+          <rect width="24" height="10.67" fill="#DD0000"/>
+          <rect width="24" height="5.33" fill="#FFCE00"/>
+        </svg>
+        Deutsch
+      </div>
     </div>
   </div>
 
