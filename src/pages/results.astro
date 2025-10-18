@@ -78,6 +78,14 @@ console.log('Server-side searchQuery:', searchQuery);
           <label><input type="checkbox" name="Gender" value="Female" /> <span data-translate="filter.female">Female</span></label>
         </fieldset>
         <fieldset>
+          <legend data-translate="filter.instrumentation">Instrumentation</legend>
+          <label><input type="checkbox" name="Instrumentation" value="Unaccompanied" /> <span data-translate="filter.unaccompanied">Unaccompanied</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Trumpet and piano" /> <span data-translate="filter.trumpetPiano">Trumpet and piano</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Trumpet and orchestra" /> <span data-translate="filter.trumpetOrchestra">Trumpet and orchestra</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Trumpet duet" /> <span data-translate="filter.trumpetDuet">Trumpet duet</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Mixed ensemble" /> <span data-translate="filter.mixedEnsemble">Mixed ensemble</span></label>
+        </fieldset>
+        <fieldset>
           <legend data-translate="filter.type">Type</legend>
           <label><input type="checkbox" name="Type" value="Scherzo" /> <span data-translate="filter.scherzo">Scherzo</span></label>
           <label><input type="checkbox" name="Type" value="Cornet solo" /> <span data-translate="filter.cornetSolo">Cornet solo</span></label>
@@ -181,6 +189,14 @@ console.log('Server-side searchQuery:', searchQuery);
           <legend data-translate="filter.gender">Gender</legend>
           <label><input type="checkbox" name="Gender" value="Male" class="mobile-filter-checkbox" /> <span data-translate="filter.male">Male</span></label>
           <label><input type="checkbox" name="Gender" value="Female" class="mobile-filter-checkbox" /> <span data-translate="filter.female">Female</span></label>
+        </fieldset>
+        <fieldset>
+          <legend data-translate="filter.instrumentation">Instrumentation</legend>
+          <label><input type="checkbox" name="Instrumentation" value="Unaccompanied" class="mobile-filter-checkbox" /> <span data-translate="filter.unaccompanied">Unaccompanied</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Trumpet and piano" class="mobile-filter-checkbox" /> <span data-translate="filter.trumpetPiano">Trumpet and piano</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Trumpet and orchestra" class="mobile-filter-checkbox" /> <span data-translate="filter.trumpetOrchestra">Trumpet and orchestra</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Trumpet duet" class="mobile-filter-checkbox" /> <span data-translate="filter.trumpetDuet">Trumpet duet</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Mixed ensemble" class="mobile-filter-checkbox" /> <span data-translate="filter.mixedEnsemble">Mixed ensemble</span></label>
         </fieldset>
         <fieldset>
           <legend data-translate="filter.type">Type</legend>
@@ -352,7 +368,7 @@ console.log('Server-side searchQuery:', searchQuery);
       })
         .catch(err => console.error('Failed to fetch composers:', err));
 
-      const filters = ['Country','Soviet Republic','Gender','Type'];
+      const filters = ['Country','Soviet Republic','Gender','Instrumentation','Type'];
       const checkboxMap = {};
 
       filters.forEach(key => {
@@ -433,6 +449,7 @@ console.log('Server-side searchQuery:', searchQuery);
             <p><b><span data-translate="composer.republic">Soviet Republic</span>:</b> <span class="republic-value" data-republic="${composer["Soviet Republic"] || ""}">${composer["Soviet Republic"] || "—"}</span></p>
             <br>
             <p><b><span data-translate="composer.gender">Gender</span>:</b> <span class="gender-value" data-gender="${composer.Gender || ""}">${composer.Gender || "—"}</span></p>
+            <p><b><span data-translate="filter.instrumentation">Instrumentation</span>:</b> <span class="instrumentation-value" data-instrumentation="${composer.Instrumentation || ""}">${composer.Instrumentation || "—"}</span></p>
             ${composer.Notes && composer.Notes.trim() ? `<p><b><span data-translate="composer.notes">Notes</span>:</b> ${composer.Notes}</p>` : ''}
           </div>
         `;
