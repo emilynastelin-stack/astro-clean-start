@@ -8,12 +8,12 @@ const bibliography = [
   { title: "Bibliographic Catalog of Trumpet Music", author: "The Academic Music College Library", link: "" },
   { title: "Der Trompeter von Sankt Petersburg", author: "Christian Neef", link: "" },
   { title: "East Meets West: The Russian Trumpet Tradition from the Time of Peter the Great to the October Revolution", author: "Edward H. Tarr", link: "" },
-  { title: "Estonian Music Information Centre", author: "Estonian Music Information Centre", link: "https://www.emic.ee/?lang=eng" },
+  { title: "Estonian Music Information Centre", author: "Eesti Muusika Infokeskus", link: "https://www.emic.ee/?lang=eng" },
   { title: "Gufo.me — словари и энциклопедии", author: "", link: "https://gufo.me/" },
   { title: "Latvian Organ Music: A Performer’s Guide and Bibliography", author: "Andrei Streliaev", link: "" },
   { title: "Moldovenii.md", author: "Encyclopedia of Moldova", link: "https://www.moldovenii.md/en" },
   { title: "Music Information Centre Lithuania", author: "Music Lithuania", link: "https://www.mic.lt/en/" },
-  { title: "National Library of Georgia", author: "National Library of Georgia", link: "https://www.nplg.gov.ge/eng/home" },
+  { title: "National Library of Georgia", author: "საქართველოს ეროვნული ბიბლიოთეკა", link: "https://www.nplg.gov.ge/eng/home" },
   { title: "National Library of the Republic of Karelia", author: "", link: "https://eng.library.karelia.ru/" },
   { title: "Russian State Library: Digital Library", author: "Russian State Library", link: "https://search.rsl.ru/ru/search#q=&f=0" },
   { title: "Russian, Soviet & Post-Soviet Concertos", author: "Michael Herman and Stephen Ellis", link: "https://musicwebinternational.com/national-discographies/russian-concertos/" },
@@ -94,6 +94,7 @@ const bibliography = [
   flex-direction: column;
   gap: 1.5rem;
   width: 100%;
+  padding-bottom: 4rem; /* Add padding after the last card */
 }
 
 .bibliography-item {
@@ -192,7 +193,7 @@ const bibliography = [
         {bibliography.map(item => (
           <div
             class={`bibliography-item ${item.link ? 'clickable' : ''}`}
-            onClick={() => item.link && window.open(item.link, "_blank")}
+            data-link={item.link || ''}
           >
             <h3 class="bibliography-title">{item.title}</h3>
             {item.author && <p class="bibliography-author">{item.author}</p>}
@@ -204,4 +205,32 @@ const bibliography = [
 
   </main>
 </MainLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add click handlers to bibliography items with links
+    const bibliographyItems = document.querySelectorAll('.bibliography-item.clickable');
+    
+    bibliographyItems.forEach(item => {
+      const link = item.getAttribute('data-link');
+      if (link) {
+        item.addEventListener('click', function() {
+          window.open(link, '_blank');
+        });
+        
+        // Add keyboard support for accessibility
+        item.setAttribute('tabindex', '0');
+        item.setAttribute('role', 'button');
+        item.setAttribute('aria-label', `Open ${item.querySelector('.bibliography-title').textContent} in new tab`);
+        
+        item.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            window.open(link, '_blank');
+          }
+        });
+      }
+    });
+  });
+</script>
 
