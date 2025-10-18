@@ -302,6 +302,14 @@ console.log('Server-side searchQuery:', searchQuery);
       let currentPage = 1;
       const resultsPerPage = 15;
       let filteredResults = [];
+      
+      // Listen for language changes and refresh results display
+      document.addEventListener('languageChanged', () => {
+        console.log('Language changed, refreshing results display');
+        if (filteredResults.length > 0) {
+          renderResults(filteredResults);
+        }
+      });
     fetch('/api/sheets')
       .then(res => res.json())
       .then(data => { 
@@ -469,9 +477,13 @@ console.log('Server-side searchQuery:', searchQuery);
           filtered = filtered.filter(c => {
             const normalizedComposer = normalizeText(c.Composer);
             const normalizedTitle = normalizeText(c.Title || '');
+            const normalizedTitelDE = normalizeText(c.Titel || '');
+            const normalizedTitleRU = normalizeText(c['Заголовок'] || '');
             
             return normalizedComposer.includes(normalizedQuery) || 
-                   normalizedTitle.includes(normalizedQuery);
+                   normalizedTitle.includes(normalizedQuery) ||
+                   normalizedTitelDE.includes(normalizedQuery) ||
+                   normalizedTitleRU.includes(normalizedQuery);
           });
           
           console.log(`Search filter: ${beforeSearch} -> ${filtered.length} results for query "${query}" (normalized: "${normalizedQuery}")`);
@@ -521,13 +533,26 @@ console.log('Server-side searchQuery:', searchQuery);
         const totalPages = Math.ceil(filteredResults.length / resultsPerPage);
 
         // Render current page of results
-        const htmlContent = pageResults.map(c=>`
-          <div class="song-card">
-            <div class="song-title">${c.Title || 'Untitled'}</div>
-            <div class="song-composer">${c.Composer}</div>
-            ${c.Year ? `<div class="song-year">${c.Year}</div>` : ''}
-          </div>
-        `).join('');
+        const htmlContent = pageResults.map(c=>{
+          // Get title based on current language
+          let displayTitle = '';
+          const currentLang = window.LanguageManager ? window.LanguageManager.currentLang : 'en';
+          if (currentLang === 'de' && c.Titel) {
+            displayTitle = c.Titel; // German title
+          } else if (currentLang === 'ru' && c['Заголовок']) {
+            displayTitle = c['Заголовок']; // Russian title
+          } else {
+            displayTitle = c.Title || 'Untitled'; // English fallback
+          }
+          
+          return `
+            <div class="song-card">
+              <div class="song-title">${displayTitle}</div>
+              <div class="song-composer">${c.Composer}</div>
+              ${c.Year ? `<div class="song-year">${c.Year}</div>` : ''}
+            </div>
+          `;
+        }).join('');
         
         // Add pagination controls
         const paginationHTML = `
