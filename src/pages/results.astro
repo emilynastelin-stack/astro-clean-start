@@ -403,12 +403,29 @@ console.log('Server-side searchQuery:', searchQuery);
         }
         
         // Create composer details content using actual field mappings
+        const currentLang = window.LanguageManager ? window.LanguageManager.currentLang : 'en';
+        
+        // Determine which name to show at top and which to show in language fields
+        let topName, russianFieldName, englishFieldName;
+        if (currentLang === 'ru' && composer["Композитор"]) {
+          // Russian interface: show Russian name at top, English name in "English:" field
+          topName = composer["Композитор"];
+          englishFieldName = composer.Composer;
+          russianFieldName = "—"; // Don't repeat Russian name in Russian field
+        } else {
+          // English/German interface: show English name at top, Russian name in "Russian:" field
+          topName = composer.Composer;
+          englishFieldName = "—"; // Don't show English field for non-Russian interface
+          russianFieldName = composer["Композитор"] || "—";
+        }
+        
         const detailsHTML = `
           <div class="composer-details-content">
-            <h3>${composer.Composer}</h3>
+            <h3>${topName}</h3>
             <p class="lifespan"><em>1923-1986</em></p>
             <br>
-            <p><b><span data-translate="composer.russian">Russian</span>:</b> ${composer["Композитор"] || "—"}</p>
+            ${currentLang === 'ru' && englishFieldName !== "—" ? `<p><b><span data-translate="composer.english">English</span>:</b> ${englishFieldName}</p>` : ''}
+            ${currentLang !== 'ru' && russianFieldName !== "—" ? `<p><b><span data-translate="composer.russian">Russian</span>:</b> ${russianFieldName}</p>` : ''}
             ${composer.Language && composer.Native ? `<p><b><span class="native-language-label" data-language="${composer.Language || ''}" data-sprache="${composer.Sprache || ''}" data-yazyk="${composer['язык'] || ''}">${composer.Language}</span>:</b> ${composer.Native}</p>` : ''}
             ${composer.X ? `<p><b>${composer.Y || "Native"}:</b> ${composer.X}</p>` : ''}
             <br>
