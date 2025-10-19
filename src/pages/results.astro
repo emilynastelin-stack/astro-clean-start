@@ -534,6 +534,19 @@ console.log('Server-side searchQuery:', searchQuery);
           window.LanguageManager.getTranslation(translationKey) : republic;
       }
 
+      // Function to get notes in the appropriate language
+      function getNotesForLanguage(composer, currentLang) {
+        let notes;
+        if (currentLang === 'de') {
+          notes = composer.Noten || composer.Notes || '';
+        } else if (currentLang === 'ru') {
+          notes = composer['Примечания'] || composer.Notes || '';
+        } else {
+          notes = composer.Notes || '';
+        }
+        return notes && notes.trim() ? notes : '';
+      }
+
       // Function to clear composer details panel
       function clearComposerDetails() {
         console.log('clearComposerDetails called');
@@ -650,7 +663,7 @@ console.log('Server-side searchQuery:', searchQuery);
             <p><b><span data-translate="composer.republic">Soviet Republic</span>:</b> <span class="republic-value" data-republic="${composer["Soviet republic"] || ""}">${translateRepublic(composer["Soviet republic"] || "—")}</span></p>
             <br>
             <p><b><span data-translate="composer.gender">Gender</span>:</b> <span class="gender-value" data-gender="${composer.Gender || ""}">${composer.Gender || "—"}</span></p>
-            ${composer.Notes && composer.Notes.trim() ? `<p><b><span data-translate="composer.notes">Notes</span>:</b> ${composer.Notes}</p>` : ''}
+            ${getNotesForLanguage(composer, currentLang) ? `<p><b><span data-translate="composer.notes">Notes</span>:</b> ${getNotesForLanguage(composer, currentLang)}</p>` : ''}
           </div>
         `;
         
@@ -699,7 +712,7 @@ console.log('Server-side searchQuery:', searchQuery);
               const pieceInstrumentation = translateInstrumentation(composer.Instrumentation || '—');
               const pieceSource = composer.Source || '—';
               const pieceIMSLP = composer.IMSLP || '';
-              const pieceNotes = composer.Notes && composer.Notes.trim() ? composer.Notes : '—';
+              const pieceNotes = getNotesForLanguage(composer, currentLang) || '—';
               
               let mobilePieceDetailsHTML = `
                 <h4 style="margin: 0 0 0.5rem 0; color: #800000; font-size: 1.1rem;">${pieceTitle}</h4>
@@ -815,7 +828,7 @@ console.log('Server-side searchQuery:', searchQuery);
             const pieceInstrumentation = translateInstrumentation(composer.Instrumentation || '—');
             const pieceSource = composer.Source || '—';
             const pieceIMSLP = composer.IMSLP || '';
-            const pieceNotes = composer.Notes && composer.Notes.trim() ? composer.Notes : '—';
+            const pieceNotes = getNotesForLanguage(composer, currentLang) || '—';
             
             let pieceDetailsHTML = `
               <h4 style="margin: 0 0 0.5rem 0; color: #800000; font-size: 1.1rem;">${pieceTitle}</h4>
@@ -932,7 +945,7 @@ console.log('Server-side searchQuery:', searchQuery);
           const pieceInstrumentation = translateInstrumentation(piece.Instrumentation || '—');
           const pieceSource = piece.Source || '—';
           const pieceIMSLP = piece.IMSLP || '';
-          const pieceNotes = piece.Notes && piece.Notes.trim() ? piece.Notes : '—';
+          const pieceNotes = getNotesForLanguage(piece, currentLang) || '—';
           
           let pieceDetailsHTML = `
             <h4 style="margin: 0 0 0.5rem 0; color: #800000; font-size: 1.1rem;">${pieceTitle}</h4>
