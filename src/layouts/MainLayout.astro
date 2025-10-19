@@ -36,5 +36,24 @@ import LanguageSwitcher from '../components/LanguageSwitcher.astro';
 
     <Footer />
     <LanguageSwitcher />
+    
+    <script>
+      // Update page title based on language
+      function updatePageTitle() {
+        if (window.LanguageManager) {
+          const title = window.LanguageManager.getTranslation('nav.brand.primary');
+          document.title = title;
+        }
+      }
+
+      // Update title when language changes
+      document.addEventListener('languageChanged', updatePageTitle);
+      
+      // Update title when page loads
+      document.addEventListener('DOMContentLoaded', () => {
+        // Wait a bit for LanguageManager to be available
+        setTimeout(updatePageTitle, 100);
+      });
+    </script>
   </body>
 </html>

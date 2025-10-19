@@ -34,7 +34,10 @@ console.log('Server-side searchQuery:', searchQuery);
     <!-- Left Panel: Filters -->
     <div class="left-panel" style="flex:0 0 400px; display:flex;">
       <div class="filter-panel" style="flex:1;">
-        <h2 data-translate="filter.title">Filters</h2>
+        <div class="filter-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <h2 data-translate="filter.title" style="margin: 0;">Filters</h2>
+          <button id="clear-all-filters" style="background: #800000; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer; font-size: 0.9rem;" data-translate="filter.clearAll">Clear All</button>
+        </div>
         
         <fieldset>
           <legend data-translate="filter.country">Country</legend>
@@ -222,7 +225,10 @@ console.log('Server-side searchQuery:', searchQuery);
     <div class="mobile-filter-content">
       <div class="mobile-filter-header">
         <h3 data-translate="filter.title">Filters</h3>
-        <button id="close-filter-panel" class="close-filter-panel">&times;</button>
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <button id="mobile-clear-all-filters" style="background: #800000; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer; font-size: 0.9rem;" data-translate="filter.clearAll">Clear All</button>
+          <button id="close-filter-panel" class="close-filter-panel">&times;</button>
+        </div>
       </div>
       <div class="mobile-filter-body">
         <fieldset>
@@ -473,6 +479,60 @@ console.log('Server-side searchQuery:', searchQuery);
       });
 
       searchInput.addEventListener('input', updateResults);
+
+      // Clear All button functionality
+      const clearAllButton = document.getElementById('clear-all-filters');
+      if (clearAllButton) {
+        clearAllButton.addEventListener('click', () => {
+          console.log('Clear All button clicked');
+          
+          // Uncheck all filter checkboxes
+          filters.forEach(key => {
+            checkboxMap[key].forEach(cb => {
+              if (cb.checked) {
+                cb.checked = false;
+                console.log(`Unchecked ${key}: ${cb.value}`);
+              }
+            });
+          });
+          
+          // Clear search input
+          if (searchInput) {
+            searchInput.value = '';
+            console.log('Search input cleared');
+          }
+          
+          // Update results to show all items
+          updateResults();
+        });
+      }
+
+      // Mobile Clear All button functionality
+      const mobileClearAllButton = document.getElementById('mobile-clear-all-filters');
+      if (mobileClearAllButton) {
+        mobileClearAllButton.addEventListener('click', () => {
+          console.log('Mobile Clear All button clicked');
+          
+          // Uncheck all filter checkboxes
+          filters.forEach(key => {
+            checkboxMap[key].forEach(cb => {
+              if (cb.checked) {
+                cb.checked = false;
+                console.log(`Unchecked ${key}: ${cb.value}`);
+              }
+            });
+          });
+          
+          // Clear search input
+          if (searchInput) {
+            searchInput.value = '';
+            console.log('Search input cleared');
+          }
+          
+          // Update results to show all items
+          updateResults();
+        });
+      }
 
       // Function to translate instrumentation values
       function translateInstrumentation(instrumentation) {
@@ -1470,6 +1530,22 @@ console.log('Server-side searchQuery:', searchQuery);
       cursor: pointer; 
       font-size: 0.95rem; 
       margin: 0.2rem 0;
+    }
+
+    #clear-all-filters {
+      transition: background-color 0.2s ease;
+    }
+
+    #clear-all-filters:hover {
+      background-color: #a00000 !important;
+    }
+
+    #mobile-clear-all-filters {
+      transition: background-color 0.2s ease;
+    }
+
+    #mobile-clear-all-filters:hover {
+      background-color: #a00000 !important;
     }
 
     /* Mobile responsive styles */
