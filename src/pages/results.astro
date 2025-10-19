@@ -80,10 +80,16 @@ console.log('Server-side searchQuery:', searchQuery);
         <fieldset>
           <legend data-translate="filter.instrumentation">Instrumentation</legend>
           <label><input type="checkbox" name="Instrumentation" value="Unaccompanied" /> <span data-translate="filter.unaccompanied">Unaccompanied</span></label>
-          <label><input type="checkbox" name="Instrumentation" value="Trumpet and Piano" /> <span data-translate="filter.trumpetPiano">Trumpet and piano</span></label>
-          <label><input type="checkbox" name="Instrumentation" value="Trumpet and Orchestra" /> <span data-translate="filter.trumpetOrchestra">Trumpet and orchestra</span></label>
-          <label><input type="checkbox" name="Instrumentation" value="Trumpet Duet" /> <span data-translate="filter.trumpetDuet">Trumpet duet</span></label>
-          <label><input type="checkbox" name="Instrumentation" value="Mixed Ensemble" /> <span data-translate="filter.mixedEnsemble">Mixed ensemble</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Trumpet and Piano" /> <span data-translate="filter.trumpetPiano">Trumpet and Piano</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Cornet Solo" /> <span data-translate="filter.cornetSolo">Cornet Solo</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Piccolo Trumpet" /> <span data-translate="filter.piccoloTrumpet">Piccolo Trumpet</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Trumpet Duet" /> <span data-translate="filter.trumpetDuet">Trumpet Duet</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Trumpet and Orchestra" /> <span data-translate="filter.trumpetOrchestra">Trumpet and Orchestra</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Trumpet and Wind Ensemble" /> <span data-translate="filter.trumpetWindEnsemble">Trumpet and Wind Ensemble</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Trumpet and String Orchestra" /> <span data-translate="filter.trumpetStringOrchestra">Trumpet and String Orchestra</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Trumpet and Brass Band" /> <span data-translate="filter.trumpetBrassBand">Trumpet and Brass Band</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Trumpet Ensemble" /> <span data-translate="filter.trumpetEnsemble">Trumpet Ensemble</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Mixed Ensemble" /> <span data-translate="filter.mixedEnsemble">Mixed Ensemble</span></label>
         </fieldset>
         <fieldset>
           <legend data-translate="filter.type">Type</legend>
@@ -116,6 +122,41 @@ console.log('Server-side searchQuery:', searchQuery);
         <div id="composer-details-content">
           <p data-translate="composer.select">Select a piece or composer to see more details here.</p>
         </div>
+        
+        <!-- Help text that moves based on content state -->
+        <div id="help-text" style="margin-top: 1rem; color: #800000; font-size: 0.9rem; line-height: 1.4;">
+          <a href="/submit" style="color: #800000; text-decoration: underline;" data-translate="composer.helpText">Help us improve—report any errors or share additional details</a>
+        </div>
+        
+        <!-- Additional Information Box within the panel -->
+        <div class="additional-info-box" id="composer-info-box" style="display: none;">
+          <div class="additional-info-header" data-translate="composer.additional">
+            Composer
+          </div>
+          <div id="additional-info-content">
+            <p style="margin: 0.3rem 0; color: #666; font-size: 0.95rem;">Select a piece to see details about a composer.</p>
+          </div>
+        </div>
+        
+        <!-- Second Information Box -->
+        <div class="additional-info-box" id="piece-info-box" style="display: none;">
+          <div class="additional-info-header" data-translate="composer.secondary">
+            Selected piece of music
+          </div>
+          <div id="secondary-info-content">
+            <p style="margin: 0.3rem 0; color: #666; font-size: 0.95rem;">Select a piece to see more information.</p>
+          </div>
+        </div>
+        
+        <!-- Third Information Box -->
+        <div class="additional-info-box" id="more-pieces-box" style="display: none;">
+          <div class="additional-info-header" data-translate="composer.tertiary">
+            More from this composer
+          </div>
+          <div id="tertiary-info-content">
+            <p style="margin: 0.3rem 0; color: #666; font-size: 0.95rem;">Tertiary details will appear here.</p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -130,6 +171,41 @@ console.log('Server-side searchQuery:', searchQuery);
       </div>
       <div id="mobile-composer-details" class="mobile-composer-details">
         <p>Select a composer to see details.</p>
+        
+        <!-- Mobile Composer Information Box -->
+        <div class="additional-info-box mobile-info-box" id="mobile-composer-info-box" style="display: none; margin-top: 0;">
+          <div class="additional-info-header" data-translate="composer.additional">
+            Composer
+          </div>
+          <div id="mobile-additional-info-content">
+            <p style="margin: 0.3rem 0; color: #666; font-size: 0.95rem;">Select a piece to see details about a composer.</p>
+          </div>
+        </div>
+        
+        <!-- Mobile Piece Information Box -->
+        <div class="additional-info-box mobile-info-box" id="mobile-piece-info-box" style="display: none;">
+          <div class="additional-info-header" data-translate="composer.secondary">
+            Selected piece of music
+          </div>
+          <div id="mobile-secondary-info-content">
+            <p style="margin: 0.3rem 0; color: #666; font-size: 0.95rem;">Select a piece to see more information.</p>
+          </div>
+        </div>
+        
+        <!-- Mobile More Pieces Box -->
+        <div class="additional-info-box mobile-info-box" id="mobile-more-pieces-box" style="display: none;">
+          <div class="additional-info-header" data-translate="composer.tertiary">
+            More from this composer
+          </div>
+          <div id="mobile-tertiary-info-content">
+            <p style="margin: 0.3rem 0; color: #666; font-size: 0.95rem;">Other pieces will appear here.</p>
+          </div>
+        </div>
+        
+        <!-- Mobile Help text -->
+        <div id="mobile-help-text" style="margin-top: 1rem; color: #800000; font-size: 0.9rem; line-height: 1.4; display: none;">
+          <a href="/submit" style="color: #800000; text-decoration: underline;" data-translate="composer.helpText">Help us improve—report any errors or share additional details</a>
+        </div>
       </div>
     </div>
   </div>
@@ -193,10 +269,16 @@ console.log('Server-side searchQuery:', searchQuery);
         <fieldset>
           <legend data-translate="filter.instrumentation">Instrumentation</legend>
           <label><input type="checkbox" name="Instrumentation" value="Unaccompanied" class="mobile-filter-checkbox" /> <span data-translate="filter.unaccompanied">Unaccompanied</span></label>
-          <label><input type="checkbox" name="Instrumentation" value="Trumpet and Piano" class="mobile-filter-checkbox" /> <span data-translate="filter.trumpetPiano">Trumpet and piano</span></label>
-          <label><input type="checkbox" name="Instrumentation" value="Trumpet and Orchestra" class="mobile-filter-checkbox" /> <span data-translate="filter.trumpetOrchestra">Trumpet and orchestra</span></label>
-          <label><input type="checkbox" name="Instrumentation" value="Trumpet Duet" class="mobile-filter-checkbox" /> <span data-translate="filter.trumpetDuet">Trumpet duet</span></label>
-          <label><input type="checkbox" name="Instrumentation" value="Mixed Ensemble" class="mobile-filter-checkbox" /> <span data-translate="filter.mixedEnsemble">Mixed ensemble</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Trumpet and Piano" class="mobile-filter-checkbox" /> <span data-translate="filter.trumpetPiano">Trumpet and Piano</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Cornet Solo" class="mobile-filter-checkbox" /> <span data-translate="filter.cornetSolo">Cornet Solo</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Piccolo Trumpet" class="mobile-filter-checkbox" /> <span data-translate="filter.piccoloTrumpet">Piccolo Trumpet</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Trumpet Duet" class="mobile-filter-checkbox" /> <span data-translate="filter.trumpetDuet">Trumpet Duet</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Trumpet and Orchestra" class="mobile-filter-checkbox" /> <span data-translate="filter.trumpetOrchestra">Trumpet and Orchestra</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Trumpet and Wind Ensemble" class="mobile-filter-checkbox" /> <span data-translate="filter.trumpetWindEnsemble">Trumpet and Wind Ensemble</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Trumpet and String Orchestra" class="mobile-filter-checkbox" /> <span data-translate="filter.trumpetStringOrchestra">Trumpet and String Orchestra</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Trumpet and Brass Band" class="mobile-filter-checkbox" /> <span data-translate="filter.trumpetBrassBand">Trumpet and Brass Band</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Trumpet Ensemble" class="mobile-filter-checkbox" /> <span data-translate="filter.trumpetEnsemble">Trumpet Ensemble</span></label>
+          <label><input type="checkbox" name="Instrumentation" value="Mixed Ensemble" class="mobile-filter-checkbox" /> <span data-translate="filter.mixedEnsemble">Mixed Ensemble</span></label>
         </fieldset>
         <fieldset>
           <legend data-translate="filter.type">Type</legend>
@@ -392,16 +474,108 @@ console.log('Server-side searchQuery:', searchQuery);
 
       searchInput.addEventListener('input', updateResults);
 
+      // Function to translate instrumentation values
+      function translateInstrumentation(instrumentation) {
+        if (!instrumentation || instrumentation === '—') return instrumentation;
+        
+        const instrumentationMap = {
+          'Trumpet and Piano': 'filter.trumpetPiano',
+          'Unaccompanied': 'filter.unaccompanied',
+          'Cornet Solo': 'filter.cornetSolo',
+          'Piccolo Trumpet': 'filter.piccoloTrumpet',
+          'Trumpet Duet': 'filter.trumpetDuet',
+          'Trumpet and Orchestra': 'filter.trumpetOrchestra',
+          'Trumpet and Wind Ensemble': 'filter.trumpetWindEnsemble',
+          'Trumpet and String Orchestra': 'filter.trumpetStringOrchestra',
+          'Trumpet and Brass Band': 'filter.trumpetBrassBand',
+          'Trumpet Ensemble': 'filter.trumpetEnsemble',
+          'Mixed Ensemble': 'filter.mixedEnsemble'
+        };
+        
+        // Handle multiple instrumentations separated by semicolon
+        if (instrumentation.includes(';')) {
+          return instrumentation.split(';').map(inst => {
+            const trimmed = inst.trim();
+            const translationKey = instrumentationMap[trimmed];
+            return translationKey && window.LanguageManager ? 
+              window.LanguageManager.getTranslation(translationKey) : trimmed;
+          }).join('; ');
+        }
+        
+        const translationKey = instrumentationMap[instrumentation];
+        return translationKey && window.LanguageManager ? 
+          window.LanguageManager.getTranslation(translationKey) : instrumentation;
+      }
+
       // Function to clear composer details panel
       function clearComposerDetails() {
         console.log('clearComposerDetails called');
         if (composerDetailsPanel) {
           console.log('Clearing composer details panel');
           const selectText = window.LanguageManager ? window.LanguageManager.getTranslation('composer.select') : 'Select a piece or composer to see more details here.';
-          composerDetailsPanel.innerHTML = `<p>${selectText}</p>`;
+          composerDetailsPanel.innerHTML = `<p data-translate="composer.select">${selectText}</p>`;
         } else {
           console.log('composerDetailsPanel not found');
         }
+        
+        // Reset the main header back to default text
+        const composerDetailsHeader = document.querySelector('.composer-details-header');
+        if (composerDetailsHeader) {
+          const defaultHeaderText = window.LanguageManager ? window.LanguageManager.getTranslation('composer.details') : 'Additional Info';
+          composerDetailsHeader.textContent = defaultHeaderText;
+          composerDetailsHeader.setAttribute('data-translate', 'composer.details');
+        }
+        
+        // Hide the information boxes
+        const composerInfoBox = document.getElementById('composer-info-box');
+        const pieceInfoBox = document.getElementById('piece-info-box');
+        const morePiecesBox = document.getElementById('more-pieces-box');
+        
+        if (composerInfoBox) composerInfoBox.style.display = 'none';
+        if (pieceInfoBox) pieceInfoBox.style.display = 'none';
+        if (morePiecesBox) morePiecesBox.style.display = 'none';
+        
+        // Show the default message again
+        const composerDetailsContent = document.getElementById('composer-details-content');
+        if (composerDetailsContent) {
+          composerDetailsContent.style.display = 'block';
+        }
+        
+        // Move help text back to original position (below default message)
+        const helpText = document.getElementById('help-text');
+        const composerDetails = document.querySelector('.composer-details');
+        if (helpText && composerDetails) {
+          // Remove help text from current position
+          helpText.remove();
+          // Find the composer-details-content and insert help text after it
+          const composerDetailsContent = document.getElementById('composer-details-content');
+          if (composerDetailsContent && composerDetailsContent.parentNode) {
+            composerDetailsContent.parentNode.insertBefore(helpText, composerDetailsContent.nextSibling);
+          }
+        }
+        
+        // Also clear the composer details from the top info box
+        const additionalInfoContent = document.getElementById('additional-info-content');
+        if (additionalInfoContent) {
+          const placeholderText = window.LanguageManager ? window.LanguageManager.getTranslation('composer.select') : 'Select a piece to see details about a composer.';
+          additionalInfoContent.innerHTML = `<p style="margin: 0.3rem 0; color: #666; font-size: 0.95rem;">${placeholderText}</p>`;
+        }
+        
+        // Clear the second box (piece details)
+        const secondaryInfoContent = document.getElementById('secondary-info-content');
+        if (secondaryInfoContent) {
+          secondaryInfoContent.innerHTML = '<p style="margin: 0.3rem 0; color: #666; font-size: 0.95rem;">Select a piece to see more information.</p>';
+        }
+        
+        // Clear the third box (other pieces)
+        const tertiaryInfoContent = document.getElementById('tertiary-info-content');
+        if (tertiaryInfoContent) {
+          tertiaryInfoContent.innerHTML = '<p style="margin: 0.3rem 0; color: #666; font-size: 0.95rem;">Other pieces will appear here.</p>';
+        }
+        
+        // Reset global variables
+        window.currentDisplayedPiece = null;
+        window.currentComposerPieces = null;
       }
 
       function showComposerDetails(composer) {
@@ -449,7 +623,6 @@ console.log('Server-side searchQuery:', searchQuery);
             <p><b><span data-translate="composer.republic">Soviet Republic</span>:</b> <span class="republic-value" data-republic="${composer["Soviet Republic"] || ""}">${composer["Soviet Republic"] || "—"}</span></p>
             <br>
             <p><b><span data-translate="composer.gender">Gender</span>:</b> <span class="gender-value" data-gender="${composer.Gender || ""}">${composer.Gender || "—"}</span></p>
-            <p><b><span data-translate="filter.instrumentation">Instrumentation</span>:</b> <span class="instrumentation-value" data-instrumentation="${composer.Instrumentation || ""}">${composer.Instrumentation || "—"}</span></p>
             ${composer.Notes && composer.Notes.trim() ? `<p><b><span data-translate="composer.notes">Notes</span>:</b> ${composer.Notes}</p>` : ''}
           </div>
         `;
@@ -461,7 +634,99 @@ console.log('Server-side searchQuery:', searchQuery);
           const mobileDetailsContent = document.getElementById('mobile-composer-details');
           
           if (mobileOverlay && mobileDetailsContent) {
-            mobileDetailsContent.innerHTML = detailsHTML;
+            // Hide the default message and show the boxes
+            const defaultMessage = mobileDetailsContent.querySelector('p');
+            if (defaultMessage) defaultMessage.style.display = 'none';
+            
+            // Show mobile information boxes
+            const mobileComposerBox = document.getElementById('mobile-composer-info-box');
+            const mobilePieceBox = document.getElementById('mobile-piece-info-box');
+            const mobileMorePiecesBox = document.getElementById('mobile-more-pieces-box');
+            const mobileHelpText = document.getElementById('mobile-help-text');
+            
+            if (mobileComposerBox) mobileComposerBox.style.display = 'block';
+            if (mobilePieceBox) mobilePieceBox.style.display = 'block';
+            if (mobileMorePiecesBox) mobileMorePiecesBox.style.display = 'block';
+            if (mobileHelpText) mobileHelpText.style.display = 'block';
+            
+            // Populate mobile composer box
+            const mobileAdditionalInfoContent = document.getElementById('mobile-additional-info-content');
+            if (mobileAdditionalInfoContent) {
+              mobileAdditionalInfoContent.innerHTML = detailsHTML;
+            }
+            
+            // Populate mobile piece box with piece details
+            const mobileSecondaryInfoContent = document.getElementById('mobile-secondary-info-content');
+            if (mobileSecondaryInfoContent) {
+              // Determine which title column to use based on language
+              let pieceTitle;
+              if (currentLang === 'de') {
+                pieceTitle = composer.Titel || composer.Title || composer.Piece || 'Untitled';
+              } else if (currentLang === 'ru') {
+                pieceTitle = composer["Заголовок"] || composer.Title || composer.Piece || 'Untitled';
+              } else {
+                pieceTitle = composer.Title || composer.Piece || 'Untitled';
+              }
+              
+              const pieceYear = composer.Year || '—';
+              const pieceInstrumentation = translateInstrumentation(composer.Instrumentation || '—');
+              const pieceSource = composer.Source || '—';
+              const pieceIMSLP = composer.IMSLP || '';
+              const pieceNotes = composer.Notes && composer.Notes.trim() ? composer.Notes : '—';
+              
+              let mobilePieceDetailsHTML = `
+                <h4 style="margin: 0 0 0.5rem 0; color: #800000; font-size: 1.1rem;">${pieceTitle}</h4>
+                <p style="margin: 0.2rem 0;"><b><span data-translate="composer.year">Year</span>:</b> ${pieceYear}</p>
+                <p style="margin: 0.2rem 0;"><b><span data-translate="composer.instrumentation">Instrumentation</span>:</b> ${pieceInstrumentation}</p>
+                <p style="margin: 0.2rem 0;"><b><span data-translate="composer.source">Source</span>:</b> ${pieceSource}</p>
+              `;
+              
+              if (pieceIMSLP && pieceIMSLP.trim()) {
+                // Check if IMSLP content is a URL and make it clickable
+                let imslpContent = pieceIMSLP;
+                if (pieceIMSLP.startsWith('http://') || pieceIMSLP.startsWith('https://')) {
+                  imslpContent = `<a href="${pieceIMSLP}" target="_blank" rel="noopener noreferrer" style="color: #800000; text-decoration: underline;">${window.LanguageManager.getTranslation('composer.link')}</a>`;
+                }
+                mobilePieceDetailsHTML += `<p style="margin: 0.2rem 0;"><b><span data-translate="composer.imslp">IMSLP</span>:</b> ${imslpContent}</p>`;
+              }
+              
+              mobilePieceDetailsHTML += `<p style="margin: 0.2rem 0;"><b><span data-translate="composer.notes">Notes</span>:</b> ${pieceNotes}</p>`;
+              
+              mobileSecondaryInfoContent.innerHTML = mobilePieceDetailsHTML;
+            }
+            
+            // Populate mobile third box with other pieces
+            const mobileTertiaryInfoContent = document.getElementById('mobile-tertiary-info-content');
+            if (mobileTertiaryInfoContent && composers && composers.length > 0) {
+              const otherPieces = composers.filter(piece => 
+                piece.Composer === composer.Composer && 
+                piece !== composer
+              );
+              
+              if (otherPieces.length > 0) {
+                let mobileOtherPiecesHTML = '<div style="font-size: 0.9rem;">';
+                otherPieces.forEach((piece, index) => {
+                  let pieceTitle;
+                  if (currentLang === 'de') {
+                    pieceTitle = piece.Titel || piece.Title || piece.Piece || 'Untitled';
+                  } else if (currentLang === 'ru') {
+                    pieceTitle = piece["Заголовок"] || piece.Title || piece.Piece || 'Untitled';
+                  } else {
+                    pieceTitle = piece.Title || piece.Piece || 'Untitled';
+                  }
+                  
+                  const pieceYear = piece.Year ? ` (${piece.Year})` : '';
+                  const pieceType = piece.Type ? ` - ${piece.Type}` : '';
+                  mobileOtherPiecesHTML += `<p style="margin: 0.2rem 0; padding: 0.3rem; background: #f8f8f8; border-radius: 4px; border-left: 3px solid #800000;">${pieceTitle}${pieceYear}${pieceType}</p>`;
+                });
+                mobileOtherPiecesHTML += '</div>';
+                mobileTertiaryInfoContent.innerHTML = mobileOtherPiecesHTML;
+              } else {
+                const noPiecesText = window.LanguageManager ? window.LanguageManager.getTranslation('composer.noPieces') : 'No other pieces found for this composer.';
+                mobileTertiaryInfoContent.innerHTML = `<p style="margin: 0.3rem 0; color: #666; font-size: 0.95rem;">${noPiecesText}</p>`;
+              }
+            }
+            
             mobileOverlay.classList.add('show');
             
             // Translate the newly added content
@@ -470,13 +735,254 @@ console.log('Server-side searchQuery:', searchQuery);
             }
           }
         } else {
-          // Desktop: Show in right panel
-          composerDetailsPanel.innerHTML = detailsHTML;
+          // Desktop: Show in first information box (Composer box)
+          const additionalInfoContent = document.getElementById('additional-info-content');
+          if (additionalInfoContent) {
+            additionalInfoContent.innerHTML = detailsHTML;
+          }
+          
+          // Show the information boxes
+          const composerInfoBox = document.getElementById('composer-info-box');
+          const pieceInfoBox = document.getElementById('piece-info-box');
+          const morePiecesBox = document.getElementById('more-pieces-box');
+          
+          if (composerInfoBox) composerInfoBox.style.display = 'block';
+          if (pieceInfoBox) pieceInfoBox.style.display = 'block';
+          if (morePiecesBox) morePiecesBox.style.display = 'block';
+          
+          // Hide the default message
+          const composerDetailsContent = document.getElementById('composer-details-content');
+          if (composerDetailsContent) {
+            composerDetailsContent.style.display = 'none';
+          }
+          
+          // Move help text below the third box
+          const helpText = document.getElementById('help-text');
+          if (helpText && morePiecesBox && morePiecesBox.parentNode) {
+            // Remove help text from current position
+            helpText.remove();
+            // Insert it after the third box
+            morePiecesBox.parentNode.insertBefore(helpText, morePiecesBox.nextSibling);
+          }
+          
+          // Update the main header with the composer's name
+          const composerDetailsHeader = document.querySelector('.composer-details-header');
+          if (composerDetailsHeader) {
+            composerDetailsHeader.textContent = topName;
+          }
+          
+          // Populate the second box with piece details
+          const secondaryInfoContent = document.getElementById('secondary-info-content');
+          if (secondaryInfoContent) {
+            // Determine which title column to use based on language
+            let pieceTitle;
+            if (currentLang === 'de') {
+              pieceTitle = composer.Titel || composer.Title || composer.Piece || 'Untitled'; // German title from "Titel" field
+            } else if (currentLang === 'ru') {
+              pieceTitle = composer["Заголовок"] || composer.Title || composer.Piece || 'Untitled'; // Russian title from "Заголовок" field
+            } else {
+              pieceTitle = composer.Title || composer.Piece || 'Untitled'; // English title from "Title" field
+            }
+            
+            const pieceYear = composer.Year || '—';
+            const pieceInstrumentation = translateInstrumentation(composer.Instrumentation || '—');
+            const pieceSource = composer.Source || '—';
+            const pieceIMSLP = composer.IMSLP || '';
+            const pieceNotes = composer.Notes && composer.Notes.trim() ? composer.Notes : '—';
+            
+            let pieceDetailsHTML = `
+              <h4 style="margin: 0 0 0.5rem 0; color: #800000; font-size: 1.1rem;">${pieceTitle}</h4>
+              <p style="margin: 0.2rem 0;"><b><span data-translate="composer.year">Year</span>:</b> ${pieceYear}</p>
+              <p style="margin: 0.2rem 0;"><b><span data-translate="composer.instrumentation">Instrumentation</span>:</b> ${pieceInstrumentation}</p>
+              <p style="margin: 0.2rem 0;"><b><span data-translate="composer.source">Source</span>:</b> ${pieceSource}</p>
+            `;
+            
+            // Only include IMSLP line if there's content
+            if (pieceIMSLP && pieceIMSLP.trim()) {
+              // Check if IMSLP content is a URL and make it clickable
+              let imslpContent = pieceIMSLP;
+              if (pieceIMSLP.startsWith('http://') || pieceIMSLP.startsWith('https://')) {
+                imslpContent = `<a href="${pieceIMSLP}" target="_blank" rel="noopener noreferrer" style="color: #800000; text-decoration: underline;">${window.LanguageManager.getTranslation('composer.link')}</a>`;
+              }
+              pieceDetailsHTML += `<p style="margin: 0.2rem 0;"><b><span data-translate="composer.imslp">IMSLP</span>:</b> ${imslpContent}</p>`;
+            }
+            
+            pieceDetailsHTML += `<p style="margin: 0.2rem 0;"><b><span data-translate="composer.notes">Notes</span>:</b> ${pieceNotes}</p>`;
+            
+            secondaryInfoContent.innerHTML = pieceDetailsHTML;
+            
+            // Translate the newly added content in the second box
+            if (window.LanguageManager) {
+              window.LanguageManager.translateComposerDetails(window.LanguageManager.currentLang);
+            }
+          }
+          
+          // Find and display other pieces by the same composer in the third box
+          const tertiaryInfoContent = document.getElementById('tertiary-info-content');
+          if (tertiaryInfoContent && composers && composers.length > 0) {
+            // Find other pieces by the same composer (matching on Composer field)
+            const otherPieces = composers.filter(piece => 
+              piece.Composer === composer.Composer && 
+              piece !== composer // Exclude the current piece
+            );
+            
+            // Store the current piece for swapping functionality
+            window.currentDisplayedPiece = composer;
+            window.currentComposerPieces = composers.filter(piece => piece.Composer === composer.Composer);
+            
+            if (otherPieces.length > 0) {
+              let otherPiecesHTML = '<div style="font-size: 0.9rem;">';
+              otherPieces.forEach((piece, index) => {
+                // Determine which title column to use based on language
+                let pieceTitle;
+                if (currentLang === 'de') {
+                  pieceTitle = piece.Titel || piece.Title || piece.Piece || 'Untitled'; // German title from "Titel" field
+                } else if (currentLang === 'ru') {
+                  pieceTitle = piece["Заголовок"] || piece.Title || piece.Piece || 'Untitled'; // Russian title from "Заголовок" field
+                } else {
+                  pieceTitle = piece.Title || piece.Piece || 'Untitled'; // English title from "Title" field
+                }
+                
+                const pieceYear = piece.Year ? ` (${piece.Year})` : '';
+                const pieceType = piece.Type ? ` - ${piece.Type}` : '';
+                otherPiecesHTML += `<p data-piece-index="${index}" style="margin: 0.2rem 0; padding: 0.3rem; background: #f8f8f8; border-radius: 4px; border-left: 3px solid #800000; cursor: pointer; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#e8e8e8'" onmouseout="this.style.backgroundColor='#f8f8f8'">${pieceTitle}${pieceYear}${pieceType}</p>`;
+              });
+              otherPiecesHTML += '</div>';
+              tertiaryInfoContent.innerHTML = otherPiecesHTML;
+              
+              // Add click event listeners to each piece
+              const pieceElements = tertiaryInfoContent.querySelectorAll('p[data-piece-index]');
+              pieceElements.forEach((element, index) => {
+                element.addEventListener('click', function() {
+                  const clickedPiece = otherPieces[index];
+                  if (clickedPiece && window.currentDisplayedPiece) {
+                    // Update the second box with the clicked piece
+                    updatePieceDetails(clickedPiece);
+                    
+                    // Swap the pieces: move current piece back to third box, clicked piece to second box
+                    const previousPiece = window.currentDisplayedPiece;
+                    window.currentDisplayedPiece = clickedPiece;
+                    
+                    // Regenerate the third box with the updated list (now including the previous piece)
+                    const newOtherPieces = window.currentComposerPieces.filter(piece => piece !== clickedPiece);
+                    updateThirdBox(newOtherPieces, currentLang);
+                  }
+                });
+              });
+            } else {
+              const noPiecesText = window.LanguageManager ? window.LanguageManager.getTranslation('composer.noPieces') : 'No other pieces found for this composer.';
+              tertiaryInfoContent.innerHTML = `<p style="margin: 0.3rem 0; color: #666; font-size: 0.95rem;">${noPiecesText}</p>`;
+            }
+          }
+          
+          // Clear the main composer details panel
+          composerDetailsPanel.innerHTML = '<p data-translate="composer.select">Select a piece or composer to see more details here.</p>';
           
           // Translate the newly added content
           if (window.LanguageManager) {
             window.LanguageManager.translateComposerDetails(window.LanguageManager.currentLang);
           }
+        }
+      }
+
+      // Function to update piece details in the second box
+      function updatePieceDetails(piece) {
+        const secondaryInfoContent = document.getElementById('secondary-info-content');
+        if (secondaryInfoContent) {
+          const currentLang = window.LanguageManager ? window.LanguageManager.currentLang : 'en';
+          
+          // Determine which title column to use based on language
+          let pieceTitle;
+          if (currentLang === 'de') {
+            pieceTitle = piece.Titel || piece.Title || piece.Piece || 'Untitled'; // German title from "Titel" field
+          } else if (currentLang === 'ru') {
+            pieceTitle = piece["Заголовок"] || piece.Title || piece.Piece || 'Untitled'; // Russian title from "Заголовок" field
+          } else {
+            pieceTitle = piece.Title || piece.Piece || 'Untitled'; // English title from "Title" field
+          }
+          
+          const pieceYear = piece.Year || '—';
+          const pieceInstrumentation = translateInstrumentation(piece.Instrumentation || '—');
+          const pieceSource = piece.Source || '—';
+          const pieceIMSLP = piece.IMSLP || '';
+          const pieceNotes = piece.Notes && piece.Notes.trim() ? piece.Notes : '—';
+          
+          let pieceDetailsHTML = `
+            <h4 style="margin: 0 0 0.5rem 0; color: #800000; font-size: 1.1rem;">${pieceTitle}</h4>
+            <p style="margin: 0.2rem 0;"><b><span data-translate="composer.year">Year</span>:</b> ${pieceYear}</p>
+            <p style="margin: 0.2rem 0;"><b><span data-translate="composer.instrumentation">Instrumentation</span>:</b> ${pieceInstrumentation}</p>
+            <p style="margin: 0.2rem 0;"><b><span data-translate="composer.source">Source</span>:</b> ${pieceSource}</p>
+          `;
+          
+          // Only include IMSLP line if there's content
+          if (pieceIMSLP && pieceIMSLP.trim()) {
+            // Check if IMSLP content is a URL and make it clickable
+            let imslpContent = pieceIMSLP;
+            if (pieceIMSLP.startsWith('http://') || pieceIMSLP.startsWith('https://')) {
+              const linkText = window.LanguageManager ? window.LanguageManager.getTranslation('composer.link') : 'Link';
+              imslpContent = `<a href="${pieceIMSLP}" target="_blank" rel="noopener noreferrer" style="color: #800000; text-decoration: underline;">${linkText}</a>`;
+            }
+            pieceDetailsHTML += `<p style="margin: 0.2rem 0;"><b><span data-translate="composer.imslp">IMSLP</span>:</b> ${imslpContent}</p>`;
+          }
+          
+          pieceDetailsHTML += `<p style="margin: 0.2rem 0;"><b><span data-translate="composer.notes">Notes</span>:</b> ${pieceNotes}</p>`;
+          
+          secondaryInfoContent.innerHTML = pieceDetailsHTML;
+          
+          // Translate the newly added content
+          if (window.LanguageManager) {
+            window.LanguageManager.translateComposerDetails(window.LanguageManager.currentLang);
+          }
+        }
+      }
+
+      // Function to update the third box with a new list of pieces
+      function updateThirdBox(pieces, currentLang) {
+        const tertiaryInfoContent = document.getElementById('tertiary-info-content');
+        if (!tertiaryInfoContent) return;
+        
+        if (pieces.length > 0) {
+          let otherPiecesHTML = '<div style="font-size: 0.9rem;">';
+          pieces.forEach((piece, index) => {
+            // Determine which title column to use based on language
+            let pieceTitle;
+            if (currentLang === 'de') {
+              pieceTitle = piece.Titel || piece.Title || piece.Piece || 'Untitled';
+            } else if (currentLang === 'ru') {
+              pieceTitle = piece["Заголовок"] || piece.Title || piece.Piece || 'Untitled';
+            } else {
+              pieceTitle = piece.Title || piece.Piece || 'Untitled';
+            }
+            
+            const pieceYear = piece.Year ? ` (${piece.Year})` : '';
+            const pieceType = piece.Type ? ` - ${piece.Type}` : '';
+            otherPiecesHTML += `<p data-piece-index="${index}" style="margin: 0.2rem 0; padding: 0.3rem; background: #f8f8f8; border-radius: 4px; border-left: 3px solid #800000; cursor: pointer; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#e8e8e8'" onmouseout="this.style.backgroundColor='#f8f8f8'">${pieceTitle}${pieceYear}${pieceType}</p>`;
+          });
+          otherPiecesHTML += '</div>';
+          tertiaryInfoContent.innerHTML = otherPiecesHTML;
+          
+          // Add click event listeners to each piece
+          const pieceElements = tertiaryInfoContent.querySelectorAll('p[data-piece-index]');
+          pieceElements.forEach((element, index) => {
+            element.addEventListener('click', function() {
+              const clickedPiece = pieces[index];
+              if (clickedPiece && window.currentDisplayedPiece) {
+                // Update the second box with the clicked piece
+                updatePieceDetails(clickedPiece);
+                
+                // Swap the pieces: move current piece back to third box, clicked piece to second box
+                const previousPiece = window.currentDisplayedPiece;
+                window.currentDisplayedPiece = clickedPiece;
+                
+                // Regenerate the third box with the updated list (now including the previous piece)
+                const newOtherPieces = window.currentComposerPieces.filter(piece => piece !== clickedPiece);
+                updateThirdBox(newOtherPieces, currentLang);
+              }
+            });
+          });
+        } else {
+          const noPiecesText = window.LanguageManager ? window.LanguageManager.getTranslation('composer.noPieces') : 'No other pieces found for this composer.';
+          tertiaryInfoContent.innerHTML = `<p style="margin: 0.3rem 0; color: #666; font-size: 0.95rem;">${noPiecesText}</p>`;
         }
       }
 
@@ -838,7 +1344,26 @@ console.log('Server-side searchQuery:', searchQuery);
       border-radius: 12px;
       padding: 1.5rem;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      height: 100%;
+      flex: 1;
+      min-height: 300px;
+    }
+    
+    .additional-info-box {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1.5rem;
+      border-left: 4px solid #800000;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+    
+    .additional-info-header {
+      color: #800000;
+      font-weight: bold;
+      font-size: 1rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.25rem;
+      border-bottom: 1px solid rgba(128, 0, 0, 0.2);
     }
     
     .composer-details-header {

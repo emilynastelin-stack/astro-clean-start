@@ -5,7 +5,7 @@ import os from 'os';
 import path from 'path';
 
 // Load service account JSON
-const creds = JSON.parse(fs.readFileSync('./service-account.json'));
+const creds = JSON.parse(fs.readFileSync('c:\\Users\\emily\\Downloads\\SERVICE-ACCOUNT.json'));
 
 // Your Google Sheet ID
 const SHEET_ID = '1UiK8QDq98C-9wCpQjdQAVpSdH8mZkpxYgMMEHM3uaGk';
