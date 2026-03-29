@@ -1386,21 +1386,25 @@ console.log('Server-side searchQuery:', searchQuery);
   <style>
     /* Background Images */
     body {
+      position: relative;
+      background: none;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
       background-image: url('https://i.imgur.com/ZENogwV.png');
       background-size: cover;
       background-position: center;
-      background-attachment: fixed;
       background-repeat: no-repeat;
+      z-index: -1;
+      pointer-events: none;
     }
 
-    /* Mobile background override */
     @media (max-width: 768px) {
-      body {
+      body::before {
         background-image: url('https://i.imgur.com/vfMSV3G.png');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        background-repeat: no-repeat;
       }
     }
 
