@@ -19,7 +19,7 @@ import MainLayout from '../layouts/MainLayout.astro';
       background-image: url('https://i.imgur.com/vQtH8Fz.png');
       background-size: cover;
       background-position: center;
-      background-attachment: fixed;
+      background-attachment: scroll;
       background-repeat: no-repeat;
     }
 
@@ -29,10 +29,10 @@ import MainLayout from '../layouts/MainLayout.astro';
       left: 0;
       right: 0;
       bottom: 0;
-      height: calc(80px + env(safe-area-inset-bottom));
-      background: #800000;
-      z-index: 998;
+      height: 140px;
+      background: linear-gradient(to bottom, rgba(128, 0, 0, 0), #800000 40%, #800000 100%);
       pointer-events: none;
+      z-index: 999;
     }
 
     main {
