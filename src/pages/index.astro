@@ -63,6 +63,26 @@ import MainLayout from '../layouts/MainLayout.astro';
     display: flex;
     gap: 1rem;
   }
+
+  /* Mobile bottom red strip (no button) */
+  .mobile-bottom-strip {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: #800000;
+    z-index: 998;
+    pointer-events: none;
+    display: none;
+  }
+
+  /* Only show on mobile */
+  @media (max-width: 768px) {
+    .mobile-bottom-strip {
+      display: block;
+    }
+  }
 </style>
 
 <MainLayout>
@@ -110,6 +130,7 @@ import MainLayout from '../layouts/MainLayout.astro';
       </div>
     </div>
   </main>
+  <div class="mobile-bottom-strip"></div>
 </MainLayout>
 
 <script>
