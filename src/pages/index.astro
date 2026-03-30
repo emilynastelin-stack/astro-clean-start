@@ -5,6 +5,7 @@ import MainLayout from '../layouts/MainLayout.astro';
 <style>
   /* Background Images */
   body {
+    background-color: #800000;
     background-image: url('https://i.imgur.com/SD9aUMF.png');
     background-size: cover;
     background-position: center;
@@ -15,16 +16,29 @@ import MainLayout from '../layouts/MainLayout.astro';
 
   /* Mobile background override */
   @media (max-width: 768px) {
-    html {
-      background: #800000;
-    }
-
     body {
       background-image: url('https://i.imgur.com/vQtH8Fz.png');
       background-size: cover;
       background-position: center;
-      background-attachment: fixed;
+      background-attachment: scroll;
       background-repeat: no-repeat;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: calc(env(safe-area-inset-bottom) + 16px);
+      background: linear-gradient(
+        to bottom,
+        rgba(128, 0, 0, 0),
+        rgba(128, 0, 0, 0.85) 70%,
+        #800000 100%
+      );
+      pointer-events: none;
+      z-index: 998;
     }
 
     main {
